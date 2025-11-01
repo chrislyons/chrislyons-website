@@ -1,7 +1,7 @@
 # Cloudflare Pages Configuration for Static Site
-# Site name: chrislyons-website
+# Worker name: hey
 
-name = "chrislyons-website"
+name = "hey"
 compatibility_date = "2025-04-01"
 
 # Build configuration
