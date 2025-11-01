@@ -1,0 +1,10 @@
+# robots.txt for chrislyons.boot.industries
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://chrislyons.boot.industries/sitemap.xml
+
+# Crawl delay (optional, in seconds)
+Crawl-delay: 1

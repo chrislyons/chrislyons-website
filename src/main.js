@@ -733,7 +733,33 @@ function renderWritingPage() {
 
 function renderEssaysPage() {
   contentLoader.updateDocumentTitle('Essays');
-  renderPlaceholderPage('Essays', 'Thoughts on technical systems and creative processes');
+
+  const pageContent = document.getElementById('page-content');
+  pageContent.innerHTML = `
+    <div class="fade-in max-w-3xl mx-auto">
+      ${PageHeader.render({
+        title: 'Essays',
+        subtitle: 'Thoughts & Explorations',
+        description: 'Essays exploring technical systems, creative processes, and research'
+      })}
+
+      <!-- Coming Soon -->
+      <div class="bg-gray-50 rounded-lg p-12 text-center mb-12">
+        <svg class="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+        </svg>
+        <h3 class="text-xl font-semibold text-gray-700 mb-2">Essays Coming Soon</h3>
+        <p class="text-gray-600">
+          This section will feature essays on technical systems, creative methodologies, and research explorations.
+        </p>
+      </div>
+
+      <!-- Back Navigation -->
+      <div class="mt-12 text-center">
+        <a href="/writing" class="link text-lg">← Back to Writing</a>
+      </div>
+    </div>
+  `;
 }
 
 function renderLyricsPage() {
@@ -805,17 +831,111 @@ function renderLyricsPage() {
 
 function renderPoemsPage() {
   contentLoader.updateDocumentTitle('Poems');
-  renderPlaceholderPage('Poems', 'Poetry collection');
+
+  const pageContent = document.getElementById('page-content');
+  pageContent.innerHTML = `
+    <div class="fade-in max-w-3xl mx-auto">
+      ${PageHeader.render({
+        title: 'Poems',
+        subtitle: 'Poetry Collection',
+        description: 'Poems exploring themes of technology, nature, and human experience'
+      })}
+
+      <!-- Coming Soon -->
+      <div class="bg-gray-50 rounded-lg p-12 text-center mb-12">
+        <svg class="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+        </svg>
+        <h3 class="text-xl font-semibold text-gray-700 mb-2">Poems Coming Soon</h3>
+        <p class="text-gray-600">
+          Poetry exploring the intersection of technical systems and natural patterns.
+        </p>
+      </div>
+
+      <!-- Back Navigation -->
+      <div class="mt-12 text-center">
+        <a href="/writing" class="link text-lg">← Back to Writing</a>
+      </div>
+    </div>
+  `;
 }
 
 function render27SuppositionsPage() {
   contentLoader.updateDocumentTitle('27 Suppositions');
-  renderPlaceholderPage('27 Suppositions', 'Long-form exploration');
+
+  const pageContent = document.getElementById('page-content');
+  pageContent.innerHTML = `
+    <div class="fade-in max-w-4xl mx-auto">
+      ${PageHeader.render({
+        title: '27 Suppositions',
+        subtitle: 'Long-form Exploration',
+        description: 'An extended exploration of creative and technical concepts'
+      })}
+
+      <!-- Coming Soon -->
+      <div class="bg-gray-50 rounded-lg p-12 text-center mb-12">
+        <svg class="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+        </svg>
+        <h3 class="text-xl font-semibold text-gray-700 mb-2">27 Suppositions</h3>
+        <p class="text-gray-600 mb-4">
+          A long-form work exploring 27 interconnected ideas about creativity, technology, and systems thinking.
+        </p>
+        <p class="text-sm text-gray-500">
+          Content will be published here soon.
+        </p>
+      </div>
+
+      <!-- Back Navigation -->
+      <div class="mt-12 text-center">
+        <a href="/writing" class="link text-lg">← Back to Writing</a>
+      </div>
+    </div>
+  `;
 }
 
 function renderProtocolsOfSoundPage() {
   contentLoader.updateDocumentTitle('Protocols of Sound');
-  renderPlaceholderPage('Protocols of Sound', '20th century audio technology');
+
+  const pageContent = document.getElementById('page-content');
+  pageContent.innerHTML = `
+    <div class="fade-in max-w-4xl mx-auto">
+      ${PageHeader.render({
+        title: 'Protocols of Sound',
+        subtitle: 'Historical Exploration',
+        description: 'A historical exploration of 20th century audio technology and recording practices'
+      })}
+
+      <!-- Overview -->
+      <div class="bg-white rounded-lg border border-gray-200 p-8 mb-12">
+        <h2 class="text-2xl font-bold mb-4 text-primary">About This Work</h2>
+        <p class="text-lg text-gray-700 mb-4">
+          <em>Protocols of Sound</em> examines the evolution of audio recording technology throughout the 20th century,
+          exploring how technical constraints shaped creative practices and how innovation emerged from limitations.
+        </p>
+        <p class="text-gray-600">
+          Topics include: early recording technology, magnetic tape development, multitrack recording,
+          signal processing evolution, and the transition from analog to digital workflows.
+        </p>
+      </div>
+
+      <!-- Coming Soon -->
+      <div class="bg-gray-50 rounded-lg p-12 text-center mb-12">
+        <svg class="w-16 h-16 mx-auto mb-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+        </svg>
+        <h3 class="text-xl font-semibold text-gray-700 mb-2">Full Text Coming Soon</h3>
+        <p class="text-gray-600">
+          The complete manuscript is currently being prepared for publication.
+        </p>
+      </div>
+
+      <!-- Back Navigation -->
+      <div class="mt-12 text-center">
+        <a href="/writing" class="link text-lg">← Back to Writing</a>
+      </div>
+    </div>
+  `;
 }
 
 function renderConnectPage() {
