@@ -1,18 +1,12 @@
-# Cloudflare Pages Configuration for Static Site
+# Cloudflare Workers Sites Configuration
 # Worker name: hey
 
 name = "hey"
 compatibility_date = "2025-04-01"
+main = "workers-site/index.js"
 
-# Build configuration
 [build]
 command = "npm run build"
 
-# Static asset handling
 [site]
 bucket = "./dist"
-
-# Routes (will be updated when custom domain is configured)
-# routes = [
-#   { pattern = "chrislyons.boot.industries/*", zone_name = "boot.industries" }
-# ]
