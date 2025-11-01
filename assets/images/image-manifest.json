@@ -1,0 +1,41 @@
+{
+  "images": [
+    {
+      "id": "boot-industries-diagram-1",
+      "page": "boot-industries",
+      "description": "Boot Industries technical system diagram",
+      "sourceUrl": "TBD - extract from Notion",
+      "localPath": "assets/images/boot-industries-diagram-1.jpg",
+      "alt": "Boot Industries carbon nanomaterials system technical diagram",
+      "downloaded": false
+    },
+    {
+      "id": "boot-industries-diagram-2",
+      "page": "boot-industries",
+      "description": "Boot Industries process flow diagram",
+      "sourceUrl": "TBD - extract from Notion",
+      "localPath": "assets/images/boot-industries-diagram-2.jpg",
+      "alt": "Boot Industries manufacturing process flow diagram",
+      "downloaded": false
+    },
+    {
+      "id": "boot-industries-rendering",
+      "page": "boot-industries",
+      "description": "Boot Industries artistic rendering",
+      "sourceUrl": "TBD - extract from Notion",
+      "localPath": "assets/images/boot-industries-rendering.jpg",
+      "alt": "Artistic rendering of Boot Industries product",
+      "downloaded": false
+    }
+  ],
+  "status": {
+    "totalImages": 3,
+    "downloaded": 0,
+    "pending": 3
+  },
+  "notes": [
+    "Image URLs need to be extracted from Notion pages manually",
+    "Additional images may exist on other pages",
+    "Consider WebP format for optimization during build"
+  ]
+}

@@ -1,0 +1,223 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* HK Grotesk Font-Face Declarations */
+
+@font-face {
+  font-family: 'HK Grotesk';
+  src: url('/fonts/HKGrotesk_3003/WEB/HKGrotesk-Regular.woff2') format('woff2'),
+       url('/fonts/HKGrotesk_3003/WEB/HKGrotesk-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'HK Grotesk';
+  src: url('/fonts/HKGrotesk_3003/WEB/HKGrotesk-Medium.woff2') format('woff2'),
+       url('/fonts/HKGrotesk_3003/WEB/HKGrotesk-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'HK Grotesk';
+  src: url('/fonts/HKGrotesk_3003/WEB/HKGrotesk-SemiBold.woff2') format('woff2'),
+       url('/fonts/HKGrotesk_3003/WEB/HKGrotesk-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'HK Grotesk';
+  src: url('/fonts/HKGrotesk_3003/WEB/HKGrotesk-Bold.woff2') format('woff2'),
+       url('/fonts/HKGrotesk_3003/WEB/HKGrotesk-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Base Styles */
+
+@layer base {
+  * {
+    @apply box-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply font-sans text-lg text-gray-900 bg-white antialiased;
+    min-height: 100vh;
+  }
+
+  /* Dark mode base styles - Notion-inspired navy blue */
+  .dark body {
+    background-color: #1a1f2e;
+    color: #e4e4e7;
+  }
+
+  /* Accessible focus styles */
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-secondary;
+  }
+
+  /* Skip to main content link for screen readers */
+  .skip-link {
+    @apply absolute -top-10 left-0 bg-primary text-white px-4 py-2 z-50;
+    @apply focus:top-0;
+  }
+}
+
+/* Component Styles */
+
+@layer components {
+  /* Responsive Container */
+  .container-custom {
+    @apply w-full mx-auto px-4 sm:px-6 lg:px-8;
+    max-width: 1200px;
+  }
+
+  /* Button Base */
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-md font-medium;
+    @apply transition-colors duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  .btn-primary {
+    @apply btn bg-primary text-white hover:bg-opacity-90 focus:ring-primary;
+  }
+
+  .btn-secondary {
+    @apply btn bg-secondary text-white hover:bg-opacity-90 focus:ring-secondary;
+  }
+
+  /* Card Component */
+  .card {
+    @apply bg-white rounded-lg shadow-md p-6 transition-shadow duration-200;
+    @apply hover:shadow-lg;
+  }
+
+  .dark .card {
+    background-color: #252b3b;
+    border: 1px solid #3a4255;
+    color: #e4e4e7;
+  }
+
+  /* Link Styles */
+  .link {
+    @apply text-secondary underline hover:text-primary;
+    @apply focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2;
+  }
+
+  .dark .link {
+    @apply text-blue-400 hover:text-blue-300;
+  }
+
+  /* Dark mode text colors */
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+    color: #f4f4f5;
+  }
+
+  .dark .text-gray-700 {
+    color: #d4d4d8;
+  }
+
+  .dark .text-gray-600 {
+    color: #a1a1aa;
+  }
+
+  .dark .text-gray-800 {
+    color: #e4e4e7;
+  }
+
+  .dark .text-gray-900 {
+    color: #f4f4f5;
+  }
+
+  .dark .text-primary {
+    color: #60a5fa;
+  }
+
+  .dark .text-secondary {
+    color: #818cf8;
+  }
+
+  /* Dark mode backgrounds */
+  .dark .bg-white {
+    background-color: #252b3b;
+  }
+
+  .dark .bg-gray-50 {
+    background-color: #1e2433;
+  }
+
+  .dark .bg-gray-100 {
+    background-color: #252b3b;
+  }
+
+  /* Dark mode borders */
+  .dark .border-gray-200 {
+    border-color: #3a4255;
+  }
+
+  /* Navigation dark mode */
+  .dark nav {
+    background-color: #1e2433;
+    border-bottom-color: #3a4255;
+  }
+
+  /* Screen Reader Only */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
+
+/* Utility Styles */
+
+@layer utilities {
+  /* Animation Utilities */
+  .fade-in {
+    animation: fadeIn 0.5s ease-in;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .slide-in {
+    animation: slideIn 0.3s ease-out;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(-10px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+}

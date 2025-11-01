@@ -1,0 +1,38 @@
+{
+  "version": "1.0.0",
+  "description": "chrislyons-website skills configuration with template references",
+  "templates": {
+    "ci-troubleshooter": {
+      "source": "~/dev/.claude/skill-templates/ci-troubleshooter",
+      "enabled": true,
+      "filePatterns": [".github/workflows/**/*.yml"],
+      "lazyLoad": true
+    },
+    "test-analyzer": {
+      "source": "~/dev/.claude/skill-templates/test-analyzer",
+      "enabled": true,
+      "filePatterns": ["tests/**/*", "**/*.test.*"],
+      "lazyLoad": true
+    },
+    "schema-linter": {
+      "source": "~/dev/.claude/skill-templates/schema-linter",
+      "enabled": true,
+      "filePatterns": ["**/*.{json,yaml,yml}"],
+      "excludePatterns": ["build/**", "node_modules/**"],
+      "lazyLoad": true
+    },
+    "dependency-audit": {
+      "source": "~/dev/.claude/skill-templates/dependency-audit",
+      "enabled": true,
+      "filePatterns": ["package.json", "pnpm-lock.yaml", "Cargo.toml", "Cargo.lock", "CMakeLists.txt"],
+      "triggerOnChange": true
+    },
+    "doc-standards": {
+      "source": "~/dev/.claude/skill-templates/doc-standards",
+      "enabled": true,
+      "filePatterns": ["docs/clw/**/*.md"],
+      "lazyLoad": true
+    }
+  },
+  "skills": {}
+}

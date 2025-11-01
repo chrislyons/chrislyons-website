@@ -1,0 +1,20 @@
+# Cloudflare Workers Configuration
+# Worker name matches the subdomain: hey.chrislyons.workers.dev
+
+name = "hey"
+main = "dist/index.html"
+compatibility_date = "2025-04-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Build configuration
+[build]
+command = "npm run build"
+
+# Static asset handling
+[site]
+bucket = "./dist"
+
+# Routes (will be updated when custom domain is configured)
+# routes = [
+#   { pattern = "chrislyons.boot.industries/*", zone_name = "boot.industries" }
+# ]

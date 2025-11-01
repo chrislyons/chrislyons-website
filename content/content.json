@@ -1,0 +1,200 @@
+{
+  "site": {
+    "title": "Chris Lyons",
+    "subtitle": "Technical Systems Architect | Audio Engineer | Researcher | Creator",
+    "description": "Building multichannel recording studios, broadcast systems, and researching emerging technologies since 2007.",
+    "email": "heychrislyons@gmail.com",
+    "domain": "chrislyons.boot.industries"
+  },
+  "navigation": [
+    {
+      "title": "Home",
+      "path": "/",
+      "id": "home"
+    },
+    {
+      "title": "Systems",
+      "path": "/systems",
+      "id": "systems",
+      "children": [
+        {
+          "title": "Boot Industries, Inc.",
+          "path": "/systems/boot-industries",
+          "id": "boot-industries",
+          "hidden": true
+        },
+        {
+          "title": "Hydrophobic Field Harvesters",
+          "path": "/systems/hydrophobic-field-harvesters",
+          "id": "hydrophobic"
+        }
+      ]
+    },
+    {
+      "title": "Sounds",
+      "path": "/sounds",
+      "id": "sounds",
+      "children": [
+        {
+          "title": "Discography",
+          "path": "/sounds/discography",
+          "id": "discography"
+        },
+        {
+          "title": "Audio Samples",
+          "path": "/sounds/audio-samples",
+          "id": "audio-samples"
+        }
+      ]
+    },
+    {
+      "title": "Writing",
+      "path": "/writing",
+      "id": "writing",
+      "children": [
+        {
+          "title": "Essays",
+          "path": "/writing/essays",
+          "id": "essays"
+        },
+        {
+          "title": "Lyrics",
+          "path": "/writing/lyrics",
+          "id": "lyrics"
+        },
+        {
+          "title": "Poems",
+          "path": "/writing/poems",
+          "id": "poems"
+        },
+        {
+          "title": "27 Suppositions",
+          "path": "/writing/27-suppositions",
+          "id": "27-suppositions"
+        },
+        {
+          "title": "Protocols of Sound",
+          "path": "/writing/protocols-of-sound",
+          "id": "protocols-of-sound"
+        }
+      ]
+    },
+    {
+      "title": "Connect",
+      "path": "/connect",
+      "id": "connect"
+    }
+  ],
+  "pages": {
+    "home": {
+      "title": "hey it's ChrisLyons.com",
+      "contentFile": "content/home.md",
+      "meta": {
+        "description": "Technical Systems Architect, Audio Engineer, Researcher, and Creator building reliable systems since 2007."
+      }
+    },
+    "systems": {
+      "title": "Systems",
+      "description": "Design & Studio Builds | Research & Inventions",
+      "meta": {
+        "description": "Studio design, broadcast systems, and research innovations by Chris Lyons."
+      }
+    },
+    "boot-industries": {
+      "title": "Boot Industries, Inc.",
+      "contentFile": "content/systems/boot-industries.md",
+      "hasImages": true,
+      "hasTables": true,
+      "meta": {
+        "description": "Carbon nanomaterials platform transforming agricultural waste into high-performance electrodes for energy storage."
+      }
+    },
+    "hydrophobic": {
+      "title": "Hydrophobic Field Harvesters",
+      "contentFile": "content/systems/hydrophobic-field-harvesters.md",
+      "hasTables": true,
+      "meta": {
+        "description": "Passive adsorbers for waterborne microplastics removal and environmental cleanup."
+      }
+    },
+    "sounds": {
+      "title": "Sounds",
+      "description": "Production Work | Compositions",
+      "meta": {
+        "description": "Music production, discography, and audio samples by Chris Lyons."
+      }
+    },
+    "discography": {
+      "title": "Discography",
+      "contentFile": "content/sounds/discography.md",
+      "placeholder": true,
+      "meta": {
+        "description": "Production work and releases by Chris Lyons."
+      }
+    },
+    "audio-samples": {
+      "title": "Audio Samples",
+      "contentFile": "content/sounds/audio-samples.md",
+      "placeholder": true,
+      "meta": {
+        "description": "Technical audio examples and recordings."
+      }
+    },
+    "writing": {
+      "title": "Writing",
+      "description": "Essays | Lyrics | Long-form Work",
+      "meta": {
+        "description": "Essays, lyrics, poems, and long-form writing by Chris Lyons."
+      }
+    },
+    "essays": {
+      "title": "Essays",
+      "contentFile": "content/writing/essays.md",
+      "placeholder": true,
+      "meta": {
+        "description": "Essays exploring technical systems, creative processes, and research."
+      }
+    },
+    "lyrics": {
+      "title": "Lyrics",
+      "contentFile": "content/writing/lyrics-index.md",
+      "songCount": 39,
+      "meta": {
+        "description": "Song lyrics by Chris Lyons - 39 compositions."
+      }
+    },
+    "poems": {
+      "title": "Poems",
+      "contentFile": "content/writing/poems.md",
+      "placeholder": true,
+      "meta": {
+        "description": "Poetry by Chris Lyons."
+      }
+    },
+    "27-suppositions": {
+      "title": "27 Suppositions",
+      "contentFile": "content/writing/27-suppositions.md",
+      "placeholder": true,
+      "longForm": true,
+      "meta": {
+        "description": "Long-form content exploring creative and technical concepts."
+      }
+    },
+    "protocols-of-sound": {
+      "title": "Protocols of Sound",
+      "contentFile": "content/writing/protocols-of-sound.md",
+      "placeholder": true,
+      "longForm": true,
+      "meta": {
+        "description": "Historical exploration of 20th century audio technology."
+      }
+    },
+    "connect": {
+      "title": "Connect",
+      "contentFile": "content/connect/contact.md",
+      "meta": {
+        "description": "Get in touch with Chris Lyons for collaborations and projects."
+      }
+    }
+  }
+}
