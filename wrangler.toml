@@ -1,10 +1,8 @@
-# Cloudflare Workers Configuration
-# Worker name matches the subdomain: hey.chrislyons.workers.dev
+# Cloudflare Pages Configuration for Static Site
+# Site name: chrislyons-website
 
-name = "hey"
-main = "dist/index.html"
+name = "chrislyons-website"
 compatibility_date = "2025-04-01"
-compatibility_flags = ["nodejs_compat"]
 
 # Build configuration
 [build]

@@ -677,7 +677,58 @@ function renderAudioSamplesPage() {
 
 function renderWritingPage() {
   contentLoader.updateDocumentTitle('Writing');
-  renderPlaceholderPage('Writing', 'Essays | Lyrics | Long-form Work');
+
+  const pageContent = document.getElementById('page-content');
+  pageContent.innerHTML = `
+    <div class="fade-in max-w-4xl mx-auto">
+      ${PageHeader.render({
+        title: 'Writing',
+        subtitle: 'Essays | Lyrics | Long-form Work',
+        description: 'Essays, song lyrics, poems, and long-form explorations spanning technical systems, creative processes, and sound'
+      })}
+
+      <!-- Writing Categories -->
+      <section class="mb-12">
+        ${Card.renderGrid([
+          {
+            title: 'Essays',
+            description: 'Thoughts on technical systems, creative processes, and research.',
+            link: '/writing/essays',
+            clickable: true
+          },
+          {
+            title: 'Lyrics',
+            description: '39 song compositions and collaborative works.',
+            link: '/writing/lyrics',
+            clickable: true
+          },
+          {
+            title: 'Poems',
+            description: 'Poetry collection exploring themes of technology and nature.',
+            link: '/writing/poems',
+            clickable: true
+          },
+          {
+            title: '27 Suppositions',
+            description: 'Long-form exploration of creative and technical concepts.',
+            link: '/writing/27-suppositions',
+            clickable: true
+          },
+          {
+            title: 'Protocols of Sound',
+            description: 'Historical exploration of 20th century audio technology.',
+            link: '/writing/protocols-of-sound',
+            clickable: true
+          }
+        ])}
+      </section>
+
+      <!-- Back Navigation -->
+      <div class="mt-12 text-center">
+        <a href="/" class="link text-lg">← Back to home</a>
+      </div>
+    </div>
+  `;
 }
 
 function renderEssaysPage() {
@@ -687,7 +738,69 @@ function renderEssaysPage() {
 
 function renderLyricsPage() {
   contentLoader.updateDocumentTitle('Lyrics');
-  renderPlaceholderPage('Lyrics', 'Song lyrics - 39 compositions');
+
+  const songs = [
+    '2-Bit Blues', 'All The Time', 'Anything Else', 'Blurred', 'Bootsteps',
+    'Coal', 'Dieter, The Winged Saint', 'Dimed', 'Drifting Bird',
+    'Failures in Forgiveness', 'Fins Of A Shark', 'Flares',
+    'Friday Morning Suicide (Again)', 'Friends', 'Hiding', 'Holding Pattern',
+    'I, the Hog-Tied Villain', 'Know My Love',
+    'Look Elsewhere For Wisdom (Look This Way With Love)', 'Mayday',
+    'Monday\'s Tea & Bagel', 'Moonbulbs', 'Mychoters', 'Pocket Fulla Stones',
+    'Sailors Of The Seven Seas', 'Saskachussets', 'So Gone', 'So Rral',
+    'Sunshine', 'Take My Heart', 'The Dumb Fambly Song',
+    'The Flashing Light In Your Eyes As You Move Rapidly Beneath The Treetops',
+    'The Hello Barrel', 'The House Song', 'The Wind & Me',
+    'There & Back Again', 'Weeds', 'Windowsill #1', 'Windowsill #2'
+  ];
+
+  const songList = songs.map((song, index) => `
+    <li class="py-3 px-4 hover:bg-gray-50 rounded-md transition-colors">
+      <div class="flex items-baseline justify-between">
+        <span class="text-lg text-gray-800">${song}</span>
+        <span class="text-sm text-gray-500 ml-4">${(index + 1).toString().padStart(2, '0')}</span>
+      </div>
+    </li>
+  `).join('');
+
+  const pageContent = document.getElementById('page-content');
+  pageContent.innerHTML = `
+    <div class="fade-in max-w-3xl mx-auto">
+      ${PageHeader.render({
+        title: 'Lyrics',
+        subtitle: 'Song Compositions',
+        description: 'A collection of 39 songs by Chris Lyons'
+      })}
+
+      <!-- Song Count -->
+      <div class="mb-8 text-center">
+        <p class="text-xl text-gray-600">
+          <strong>${songs.length}</strong> songs
+        </p>
+      </div>
+
+      <!-- Song List -->
+      <section class="mb-12">
+        <div class="bg-white rounded-lg border border-gray-200 shadow-sm">
+          <ul class="divide-y divide-gray-100">
+            ${songList}
+          </ul>
+        </div>
+      </section>
+
+      <!-- Note -->
+      <div class="bg-gray-50 rounded-lg p-6 mb-12 text-center">
+        <p class="text-base text-gray-600">
+          Individual song lyrics will be added soon.
+        </p>
+      </div>
+
+      <!-- Back Navigation -->
+      <div class="mt-12 text-center">
+        <a href="/writing" class="link text-lg">← Back to Writing</a>
+      </div>
+    </div>
+  `;
 }
 
 function renderPoemsPage() {
