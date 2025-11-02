@@ -782,10 +782,7 @@ function renderLyricsPage() {
 
   const songList = songs.map((song, index) => `
     <li class="py-3 px-4 hover:bg-gray-50 rounded-md transition-colors">
-      <div class="flex items-baseline justify-between">
-        <span class="text-lg text-gray-800">${song}</span>
-        <span class="text-sm text-gray-500 ml-4">${(index + 1).toString().padStart(2, '0')}</span>
-      </div>
+      <span class="text-lg text-gray-800">${song}</span>
     </li>
   `).join('');
 
