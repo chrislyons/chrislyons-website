@@ -17,11 +17,17 @@ export class Router {
       this.handleRoute(window.location.pathname, false);
     });
 
-    // Intercept link clicks
+    // Intercept link clicks (except for worker routes)
     document.addEventListener('click', (e) => {
       if (e.target.matches('a[href^="/"]')) {
-        e.preventDefault();
         const path = e.target.getAttribute('href');
+
+        // Don't intercept worker routes - let them perform full page navigation
+        if (path.startsWith('/blog') || path.startsWith('/admin')) {
+          return; // Allow default behavior (full page load)
+        }
+
+        e.preventDefault();
         this.navigate(path);
       }
     });
