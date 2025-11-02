@@ -136,7 +136,7 @@ function renderHomePage() {
   pageContent.innerHTML = `
     <div class="max-w-4xl mx-auto">
       <!-- Hero Section with Enhanced Animations -->
-      <header class="text-center mb-12 fade-in" style="animation-delay: 0.1s">
+      <header class="text-center mb-12 mt-12 fade-in" style="animation-delay: 0.6s">
         <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-primary leading-tight">
           hey it's ChrisLyons.com
         </h1>

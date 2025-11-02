@@ -79,7 +79,7 @@
 
   /* Beach mode - warm gold-yellow-blue variation of Daylight */
   [data-theme="beach"] body {
-    background-color: #fffef7;
+    background-color: #fef8e8;
     color: #2d3e50;
   }
 
@@ -155,8 +155,8 @@
 
   /* Beach mode cards */
   [data-theme="beach"] .card {
-    background-color: #fffcf0;
-    border: 1px solid #f0e8d0;
+    background-color: #fef8e8;
+    border: 1px solid #e8d5a8;
     color: #2d3e50;
   }
 
@@ -194,7 +194,7 @@
   }
 
   [data-theme="beach"] .link:hover {
-    color: #0e7490;
+    color: #ff6b8a;
   }
 
   /* ============================================
@@ -359,28 +359,49 @@
   }
 
   [data-theme="beach"] .text-secondary {
-    color: #f59e0b;
+    color: #d97706;
+  }
+
+  [data-theme="beach"] .text-accent {
+    color: #ff6b8a;
   }
 
   [data-theme="beach"] .bg-white {
-    background-color: #fffcf0;
+    background-color: #fef8e8;
   }
 
   [data-theme="beach"] .bg-gray-50 {
-    background-color: #fefce8;
+    background-color: #fef3d0;
   }
 
   [data-theme="beach"] .bg-gray-100 {
-    background-color: #fef9e7;
+    background-color: #fef0c7;
   }
 
   [data-theme="beach"] .border-gray-200 {
-    border-color: #f0e8d0;
+    border-color: #e8d5a8;
   }
 
   [data-theme="beach"] nav {
-    background-color: #fefce8;
-    border-bottom-color: #f0e8d0;
+    background-color: #fef3d0;
+    border-bottom-color: #e8d5a8;
+  }
+
+  [data-theme="beach"] .btn-primary:hover {
+    background-color: #ff6b8a;
+    border-color: #ff6b8a;
+  }
+
+  [data-theme="beach"] .bg-accent {
+    background-color: #ff6b8a;
+  }
+
+  [data-theme="beach"] .text-accent {
+    color: #ff6b8a;
+  }
+
+  [data-theme="beach"] .border-accent {
+    border-color: #ff6b8a;
   }
 
   /* Screen Reader Only */
@@ -402,7 +423,7 @@
 @layer utilities {
   /* Animation Utilities */
   .fade-in {
-    animation: fadeIn 0.5s ease-in;
+    animation: fadeIn 1.2s ease-in;
   }
 
   @keyframes fadeIn {

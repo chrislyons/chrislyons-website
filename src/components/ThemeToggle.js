@@ -53,8 +53,9 @@ export class ThemeToggle {
       return stored;
     }
 
-    // Default to night mode
-    return 'night';
+    // Shuffle mode: randomly select a theme if no preference stored
+    const randomIndex = Math.floor(Math.random() * this.THEMES.length);
+    return this.THEMES[randomIndex];
   }
 
   /**
