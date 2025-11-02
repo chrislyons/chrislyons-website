@@ -1139,3 +1139,313 @@ export function renderFontPicker(): string {
 }
 
 export { FONTS };
+
+// Canvas Creator view (Instagram Stories-style editor)
+export function renderCanvasCreator(): string {
+  return `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Canvas Creator - Infinite Canvas</title>
+      <link rel="stylesheet" href="${assetManifest.css}">
+      <style>
+        body {
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          background: #1a1f2e;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .creator-container {
+          display: flex;
+          height: 100vh;
+          color: #fff;
+        }
+
+        /* Top Toolbar */
+        .top-toolbar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 60px;
+          background: rgba(26, 31, 46, 0.95);
+          backdrop-filter: blur(10px);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 20px;
+          z-index: 100;
+        }
+
+        .top-toolbar-left, .top-toolbar-right {
+          display: flex;
+          gap: 12px;
+          align-items: center;
+        }
+
+        .toolbar-btn {
+          padding: 8px 16px;
+          background: rgba(255, 255, 255, 0.1);
+          border: none;
+          border-radius: 8px;
+          color: #fff;
+          cursor: pointer;
+          font-size: 14px;
+          transition: all 0.2s;
+        }
+
+        .toolbar-btn:hover {
+          background: rgba(255, 255, 255, 0.2);
+        }
+
+        .toolbar-btn.primary {
+          background: #9333ea;
+        }
+
+        .toolbar-btn.primary:hover {
+          background: #7c3aed;
+        }
+
+        /* Left Sidebar */
+        .left-sidebar {
+          width: 80px;
+          background: rgba(15, 20, 25, 0.95);
+          padding: 80px 0 20px 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 16px;
+          border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-btn {
+          width: 56px;
+          height: 56px;
+          background: rgba(255, 255, 255, 0.1);
+          border: none;
+          border-radius: 12px;
+          color: #fff;
+          font-size: 24px;
+          cursor: pointer;
+          transition: all 0.2s;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .sidebar-btn:hover {
+          background: rgba(147, 51, 234, 0.3);
+          transform: scale(1.05);
+        }
+
+        /* Canvas Area */
+        .canvas-area {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 80px 20px 20px 20px;
+          overflow: auto;
+        }
+
+        #canvas {
+          background: #ffffff;
+          position: relative;
+          box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+          cursor: default;
+        }
+
+        .canvas-element {
+          cursor: move;
+          user-select: none;
+        }
+
+        .canvas-element.selected {
+          outline: 2px solid #9333ea;
+          outline-offset: 2px;
+        }
+
+        /* Right Sidebar (Properties) */
+        .right-sidebar {
+          width: 300px;
+          background: rgba(15, 20, 25, 0.95);
+          padding: 80px 20px 20px 20px;
+          border-left: 1px solid rgba(255, 255, 255, 0.1);
+          overflow-y: auto;
+        }
+
+        .property-group {
+          margin-bottom: 24px;
+        }
+
+        .property-label {
+          font-size: 12px;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          color: #a1a1aa;
+          margin-bottom: 8px;
+        }
+
+        .property-input {
+          width: 100%;
+          padding: 8px 12px;
+          background: rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          border-radius: 6px;
+          color: #fff;
+          font-size: 14px;
+        }
+
+        .preset-buttons {
+          display: flex;
+          gap: 8px;
+        }
+
+        .preset-btn {
+          flex: 1;
+          padding: 8px;
+          background: rgba(255, 255, 255, 0.1);
+          border: none;
+          border-radius: 6px;
+          color: #fff;
+          font-size: 11px;
+          cursor: pointer;
+        }
+
+        .preset-btn.active {
+          background: #9333ea;
+        }
+
+        /* Modals */
+        dialog {
+          background: #1a1f2e;
+          color: #fff;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          border-radius: 12px;
+          padding: 24px;
+          max-width: 600px;
+        }
+
+        dialog::backdrop {
+          background: rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-title {
+          font-size: 20px;
+          font-weight: 600;
+          margin-bottom: 16px;
+        }
+
+        #gif-results {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 8px;
+          max-height: 400px;
+          overflow-y: auto;
+        }
+
+        #gif-results img {
+          width: 100%;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: transform 0.2s;
+        }
+
+        #gif-results img:hover {
+          transform: scale(1.05);
+        }
+
+        /* Element Toolbar (appears when element is selected) */
+        #element-toolbar {
+          position: fixed;
+          bottom: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: rgba(26, 31, 46, 0.95);
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          border-radius: 12px;
+          padding: 16px;
+          display: flex;
+          gap: 12px;
+          z-index: 101;
+        }
+
+        #element-toolbar.hidden {
+          display: none;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="creator-container">
+        <!-- Top Toolbar -->
+        <div class="top-toolbar">
+          <div class="top-toolbar-left">
+            <input type="text" id="canvas-title" class="property-input" placeholder="Canvas Title" style="width: 200px;">
+            <div class="preset-buttons">
+              <button class="preset-btn" data-preset="stories">Stories<br>1080×1920</button>
+              <button class="preset-btn" data-preset="square">Square<br>1080×1080</button>
+              <button class="preset-btn" data-preset="desktop">Desktop<br>1440×810</button>
+            </div>
+          </div>
+          <div class="top-toolbar-right">
+            <button class="toolbar-btn" id="btn-save-draft">Save Draft</button>
+            <button class="toolbar-btn primary" id="btn-publish">Publish</button>
+            <a href="/admin" class="toolbar-btn">Close</a>
+          </div>
+        </div>
+
+        <!-- Left Sidebar (Add Elements) -->
+        <div class="left-sidebar">
+          <button class="sidebar-btn" id="btn-add-text" title="Add Text">T</button>
+          <button class="sidebar-btn" id="btn-add-image" title="Add Image">🖼️</button>
+          <button class="sidebar-btn" id="btn-add-gif" title="Add GIF">🎬</button>
+          <button class="sidebar-btn" id="btn-add-sticker" title="Add Sticker">✨</button>
+        </div>
+
+        <!-- Canvas Area -->
+        <div class="canvas-area">
+          <div id="canvas" data-width="1080" data-height="1920" data-bg-type="solid" data-bg-value="#ffffff">
+            <!-- Elements will be added here dynamically -->
+          </div>
+        </div>
+
+        <!-- Right Sidebar (Properties) -->
+        <div class="right-sidebar">
+          <div class="property-group">
+            <div class="property-label">Background</div>
+            <input type="color" id="bg-color" class="property-input" value="#ffffff">
+          </div>
+
+          <div id="element-properties" class="hidden">
+            <!-- Element-specific properties will appear here when an element is selected -->
+          </div>
+        </div>
+      </div>
+
+      <!-- GIF Search Modal -->
+      <dialog id="gif-modal">
+        <div class="modal-title">Search Giphy</div>
+        <input type="text" id="gif-search-input" class="property-input" placeholder="Search for GIFs..." style="margin-bottom: 16px;">
+        <div id="gif-results"></div>
+        <button class="toolbar-btn" onclick="document.getElementById('gif-modal').close()" style="margin-top: 16px; width: 100%;">Cancel</button>
+      </dialog>
+
+      <!-- Element Toolbar (shows when element is selected) -->
+      <div id="element-toolbar" class="hidden">
+        <input type="text" id="text-font" class="property-input" placeholder="Font" style="width: 120px;">
+        <input type="number" id="text-size" class="property-input" placeholder="Size" style="width: 80px;">
+        <input type="color" id="text-color" class="property-input" style="width: 60px;">
+        <button class="toolbar-btn" onclick="canvasCreator.deleteElement(canvasCreator.selectedElement.id)">Delete</button>
+      </div>
+
+      <script src="/canvas-creator.js"></script>
+    </body>
+    </html>
+  `;
+}

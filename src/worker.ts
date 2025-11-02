@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { renderBlog, renderAdmin } from './templates';
+import { renderBlog, renderAdmin, renderCanvasCreator } from './templates';
 import assetManifest from './asset-manifest.json';
 
 // TypeScript type definitions for Cloudflare Workers environment
@@ -188,6 +188,53 @@ dynamicApp.get('/images/:filename', async (c) => {
       'Cache-Control': 'public, max-age=31536000, immutable',
     },
   });
+});
+
+// Canvas Creator routes
+dynamicApp.get('/admin/create', async (c) => {
+  return c.html(renderCanvasCreator());
+});
+
+dynamicApp.post('/admin/canvas', async (c) => {
+  const db = c.env.DB;
+  const body = await c.req.json();
+  const { title, background, dimensions, elements, published } = body;
+
+  const result = await db
+    .prepare(`INSERT INTO canvases (title, background, dimensions, elements, published, position_index)
+       VALUES (?, ?, ?, ?, ?, (SELECT COALESCE(MAX(position_index), 0) + 1 FROM canvases))`)
+    .bind(
+      title,
+      JSON.stringify(background),
+      JSON.stringify(dimensions),
+      JSON.stringify(elements),
+      published ? 1 : 0
+    )
+    .run();
+
+  const newCanvas = await db.prepare('SELECT * FROM canvases WHERE id = ?').bind(result.meta.last_row_id).first();
+  return c.json(newCanvas, 201);
+});
+
+dynamicApp.get('/admin/canvas/:id', async (c) => {
+  const db = c.env.DB;
+  const id = c.req.param('id');
+
+  const canvas = await db.prepare('SELECT * FROM canvases WHERE id = ?').bind(id).first();
+
+  if (!canvas) {
+    return c.notFound();
+  }
+
+  // Parse JSON fields
+  const result = {
+    ...canvas,
+    background: JSON.parse(canvas.background as string),
+    dimensions: JSON.parse(canvas.dimensions as string),
+    elements: JSON.parse(canvas.elements as string),
+  };
+
+  return c.json(result);
 });
 
 dynamicApp.get('/admin/giphy', async (c) => {
