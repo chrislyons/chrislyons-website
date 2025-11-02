@@ -423,7 +423,9 @@
 @layer utilities {
   /* Animation Utilities */
   .fade-in {
+    opacity: 0;
     animation: fadeIn 1.2s ease-in;
+    animation-fill-mode: both;
   }
 
   @keyframes fadeIn {
