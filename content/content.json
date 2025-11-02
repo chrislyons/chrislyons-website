@@ -8,50 +8,66 @@
   },
   "navigation": [
     {
-      "title": "Home",
-      "path": "/",
-      "id": "home"
-    },
-    {
-      "title": "Systems",
-      "path": "/systems",
-      "id": "systems",
+      "title": "Apps",
+      "path": "/apps",
+      "id": "apps",
       "children": [
         {
-          "title": "Boot Industries, Inc.",
-          "path": "/systems/boot-industries",
-          "id": "boot-industries",
-          "hidden": true
-        },
-        {
           "title": "Carbon ACX",
-          "path": "/systems/carbon-acx",
+          "path": "/apps/carbon-acx",
           "id": "carbon-acx"
         },
         {
-          "title": "Hydrophobic Field Harvesters",
-          "path": "/systems/hydrophobic-field-harvesters",
-          "id": "hydrophobic"
+          "title": "Clip Composer",
+          "path": "/apps/clip-composer",
+          "id": "clip-composer"
         },
         {
           "title": "ListMaker",
-          "path": "/systems/listmaker",
+          "path": "/apps/listmaker",
           "id": "listmaker"
         },
         {
-          "title": "Orpheus SDK",
-          "path": "/systems/orpheus-sdk",
-          "id": "orpheus-sdk"
+          "title": "Hotbox",
+          "path": "/apps/hotbox",
+          "id": "hotbox"
         },
         {
           "title": "Tidal MCP Server",
-          "path": "/systems/tidal-mcp",
+          "path": "/apps/tidal-mcp",
           "id": "tidal-mcp"
         },
         {
           "title": "WordBird",
-          "path": "/systems/wordbird",
+          "path": "/apps/wordbird",
           "id": "wordbird"
+        }
+      ]
+    },
+    {
+      "title": "Ideas",
+      "path": "/ideas",
+      "id": "ideas",
+      "children": [
+        {
+          "title": "27 Suppositions",
+          "path": "/ideas/27-suppositions",
+          "id": "27-suppositions"
+        },
+        {
+          "title": "Numa Network",
+          "path": "/ideas/numa-network",
+          "id": "numa-network"
+        },
+        {
+          "title": "OSD Events",
+          "path": "/ideas/osd-events",
+          "id": "osd-events"
+        },
+        {
+          "title": "Protocols of Sound",
+          "path": "/ideas/protocols-of-sound",
+          "id": "protocols-of-sound"
         }
       ]
     },
@@ -61,51 +77,19 @@
       "id": "sounds",
       "children": [
         {
+          "title": "Collected Lyrics",
+          "path": "/sounds/lyrics",
+          "id": "lyrics"
+        },
+        {
           "title": "Discography",
           "path": "/sounds/discography",
           "id": "discography"
         },
         {
-          "title": "Audio Samples",
-          "path": "/sounds/audio-samples",
-          "id": "audio-samples"
-        }
-      ]
-    },
-    {
-      "title": "Writing",
-      "path": "/writing",
-      "id": "writing",
-      "children": [
-        {
-          "title": "Essays",
-          "path": "/writing/essays",
-          "id": "essays"
-        },
-        {
-          "title": "Hotbox",
-          "path": "/writing/hotbox",
-          "id": "hotbox"
-        },
-        {
-          "title": "Lyrics",
-          "path": "/writing/lyrics",
-          "id": "lyrics"
-        },
-        {
-          "title": "Poems",
-          "path": "/writing/poems",
-          "id": "poems"
-        },
-        {
-          "title": "27 Suppositions",
-          "path": "/writing/27-suppositions",
-          "id": "27-suppositions"
-        },
-        {
-          "title": "Protocols of Sound",
-          "path": "/writing/protocols-of-sound",
-          "id": "protocols-of-sound"
+          "title": "Portfolio",
+          "path": "/sounds/portfolio",
+          "id": "portfolio"
         }
       ]
     },
@@ -123,28 +107,11 @@
         "description": "Technical Systems Architect, Audio Engineer, Researcher, and Creator building reliable systems since 2007."
       }
     },
-    "systems": {
-      "title": "Systems",
-      "description": "Design & Studio Builds | Research & Inventions",
+    "apps": {
+      "title": "Apps",
+      "description": "Software & Tools",
       "meta": {
-        "description": "Studio design, broadcast systems, and research innovations by Chris Lyons."
-      }
-    },
-    "boot-industries": {
-      "title": "Boot Industries, Inc.",
-      "contentFile": "content/systems/boot-industries.md",
-      "hasImages": true,
-      "hasTables": true,
-      "meta": {
-        "description": "Carbon nanomaterials platform transforming agricultural waste into high-performance electrodes for energy storage."
-      }
-    },
-    "hydrophobic": {
-      "title": "Hydrophobic Field Harvesters",
-      "contentFile": "content/systems/hydrophobic-field-harvesters.md",
-      "hasTables": true,
-      "meta": {
-        "description": "Passive adsorbers for waterborne microplastics removal and environmental cleanup."
+        "description": "Software applications and tools built by Chris Lyons."
       }
     },
     "carbon-acx": {
@@ -153,16 +120,22 @@
         "description": "Open reference stack for trustworthy carbon accounting. Turn auditable CSV inputs into reproducible datasets and interactive disclosures."
       }
     },
+    "clip-composer": {
+      "title": "Clip Composer",
+      "meta": {
+        "description": "Professional audio clip sequencer and session manager built on the Orpheus SDK. Real-time playback with sample-accurate timing control."
+      }
+    },
     "listmaker": {
       "title": "ListMaker",
       "meta": {
         "description": "Browser-based application for creating and managing structured lists with offline support and password protection."
       }
     },
-    "orpheus-sdk": {
-      "title": "Orpheus SDK",
+    "hotbox": {
+      "title": "Hotbox",
       "meta": {
-        "description": "Professional audio SDK for broadcast, live performance, and DAW applications. Deterministic session control with sample-accurate playback."
+        "description": "Narrative compiler for interactive essays. Citation-first LLM dialogues backed by deterministic authoring pipelines and verified facts."
       }
     },
     "tidal-mcp": {
@@ -177,11 +150,56 @@
         "description": "Offline-first dictionary and translator toolkit for web, desktop, and mobile. Verifiable data packs with privacy-focused design."
       }
     },
+    "ideas": {
+      "title": "Ideas",
+      "description": "Concepts & Research",
+      "meta": {
+        "description": "Long-form writing, research projects, and conceptual explorations by Chris Lyons."
+      }
+    },
+    "27-suppositions": {
+      "title": "27 Suppositions",
+      "contentFile": "content/ideas/27-suppositions.md",
+      "placeholder": true,
+      "longForm": true,
+      "meta": {
+        "description": "Long-form content exploring creative and technical concepts."
+      }
+    },
+    "numa-network": {
+      "title": "Numa Network",
+      "meta": {
+        "description": "Research into distributed systems and network architectures."
+      }
+    },
+    "osd-events": {
+      "title": "OSD Events",
+      "meta": {
+        "description": "On-screen display event system for live performance and broadcast applications."
+      }
+    },
+    "protocols-of-sound": {
+      "title": "Protocols of Sound",
+      "contentFile": "content/ideas/protocols-of-sound.md",
+      "placeholder": true,
+      "longForm": true,
+      "meta": {
+        "description": "Historical exploration of 20th century audio technology."
+      }
+    },
     "sounds": {
       "title": "Sounds",
       "description": "Production Work | Compositions",
       "meta": {
         "description": "Music production, discography, and audio samples by Chris Lyons."
+      }
+    },
+    "lyrics": {
+      "title": "Collected Lyrics",
+      "contentFile": "content/sounds/lyrics-index.md",
+      "songCount": 39,
+      "meta": {
+        "description": "Song lyrics by Chris Lyons - 39 compositions."
       }
     },
     "discography": {
@@ -192,67 +210,12 @@
         "description": "Production work and releases by Chris Lyons."
       }
     },
-    "audio-samples": {
-      "title": "Audio Samples",
-      "contentFile": "content/sounds/audio-samples.md",
+    "portfolio": {
+      "title": "Portfolio",
+      "contentFile": "content/sounds/portfolio.md",
       "placeholder": true,
       "meta": {
-        "description": "Technical audio examples and recordings."
-      }
-    },
-    "writing": {
-      "title": "Writing",
-      "description": "Essays | Lyrics | Long-form Work",
-      "meta": {
-        "description": "Essays, lyrics, poems, and long-form writing by Chris Lyons."
-      }
-    },
-    "essays": {
-      "title": "Essays",
-      "contentFile": "content/writing/essays.md",
-      "placeholder": true,
-      "meta": {
-        "description": "Essays exploring technical systems, creative processes, and research."
-      }
-    },
-    "hotbox": {
-      "title": "Hotbox",
-      "meta": {
-        "description": "Narrative compiler for interactive essays. Citation-first LLM dialogues backed by deterministic authoring pipelines and verified facts."
-      }
-    },
-    "lyrics": {
-      "title": "Lyrics",
-      "contentFile": "content/writing/lyrics-index.md",
-      "songCount": 39,
-      "meta": {
-        "description": "Song lyrics by Chris Lyons - 39 compositions."
-      }
-    },
-    "poems": {
-      "title": "Poems",
-      "contentFile": "content/writing/poems.md",
-      "placeholder": true,
-      "meta": {
-        "description": "Poetry by Chris Lyons."
-      }
-    },
-    "27-suppositions": {
-      "title": "27 Suppositions",
-      "contentFile": "content/writing/27-suppositions.md",
-      "placeholder": true,
-      "longForm": true,
-      "meta": {
-        "description": "Long-form content exploring creative and technical concepts."
-      }
-    },
-    "protocols-of-sound": {
-      "title": "Protocols of Sound",
-      "contentFile": "content/writing/protocols-of-sound.md",
-      "placeholder": true,
-      "longForm": true,
-      "meta": {
-        "description": "Historical exploration of 20th century audio technology."
+        "description": "Professional audio portfolio and technical recordings."
       }
     },
     "connect": {
