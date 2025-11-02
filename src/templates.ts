@@ -162,15 +162,11 @@ function renderFloatingNav(currentPath: string = ''): string {
               type="button"
               id="theme-toggle"
               class="p-2 rounded-md text-gray-700 dark:text-gray-200 hover:text-primary dark:hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-secondary transition-colors"
-              aria-label="Toggle theme"
-              title="Toggle dark/light mode"
+              aria-label="Cycle theme"
+              title="Cycle through themes"
             >
-              <svg class="w-5 h-5 theme-icon-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
+              <svg id="theme-icon" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-              </svg>
-              <svg class="w-5 h-5 theme-icon-light hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
-                <circle cx="12" cy="12" r="4"></circle>
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 2v2M12 20v2m-8-10H2m20 0h-2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"></path>
               </svg>
             </button>
           </div>
@@ -182,15 +178,11 @@ function renderFloatingNav(currentPath: string = ''): string {
               type="button"
               id="theme-toggle-mobile"
               class="p-2 rounded-md text-gray-700 dark:text-gray-200 hover:text-primary dark:hover:text-blue-400 focus:outline-none focus:ring-2 focus:ring-secondary transition-colors"
-              aria-label="Toggle theme"
-              title="Toggle dark/light mode"
+              aria-label="Cycle theme"
+              title="Cycle through themes"
             >
-              <svg class="w-5 h-5 theme-icon-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
+              <svg id="theme-icon-mobile" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-              </svg>
-              <svg class="w-5 h-5 theme-icon-light hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
-                <circle cx="12" cy="12" r="4"></circle>
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 2v2M12 20v2m-8-10H2m20 0h-2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"></path>
               </svg>
             </button>
             <!-- Mobile menu button -->
@@ -250,33 +242,62 @@ function renderFloatingNav(currentPath: string = ''): string {
     </nav>
 
     <script>
-      // Theme management
+      // Theme management (four themes: night, daylight, forest, beach)
       const STORAGE_KEY = 'chrislyons-theme';
+      const THEMES = ['night', 'daylight', 'forest', 'beach'];
+
+      // Theme icons (SVG paths)
+      const THEME_ICONS = {
+        night: '<path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>',
+        daylight: '<circle cx="12" cy="12" r="4"></circle><path stroke-linecap="round" stroke-linejoin="round" d="M12 2v2M12 20v2m-8-10H2m20 0h-2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"></path>',
+        forest: '<path stroke-linecap="round" stroke-linejoin="round" d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>',
+        beach: '<path stroke-linecap="round" stroke-linejoin="round" d="M12 2 6 8l6 6 6-6Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="m8 12-3 3 3 3 3-3Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="m14 12 3 3-3 3-3-3Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="m12 14 0 8"></path><path stroke-linecap="round" stroke-linejoin="round" d="m9 20 3 2 3-2"></path>'
+      };
 
       function getInitialTheme() {
         const stored = localStorage.getItem(STORAGE_KEY);
-        if (stored === 'light' || stored === 'dark') return stored;
-        return 'dark'; // Default to dark
+
+        // Migrate old values
+        if (stored === 'dark') return 'night';
+        if (stored === 'light') return 'daylight';
+
+        if (THEMES.includes(stored)) return stored;
+        return 'night'; // Default to night
       }
 
       function applyTheme(theme) {
         document.documentElement.setAttribute('data-theme', theme);
-        document.documentElement.style.setProperty('color-scheme', theme);
 
-        if (theme === 'dark') {
+        // Set color-scheme for browser UI
+        const isDark = theme === 'night' || theme === 'forest';
+        document.documentElement.style.setProperty('color-scheme', isDark ? 'dark' : 'light');
+
+        // Update dark class for backward compatibility
+        if (isDark) {
           document.documentElement.classList.add('dark');
-          document.querySelectorAll('.theme-icon-dark').forEach(el => el.classList.remove('hidden'));
-          document.querySelectorAll('.theme-icon-light').forEach(el => el.classList.add('hidden'));
         } else {
           document.documentElement.classList.remove('dark');
-          document.querySelectorAll('.theme-icon-dark').forEach(el => el.classList.add('hidden'));
-          document.querySelectorAll('.theme-icon-light').forEach(el => el.classList.remove('hidden'));
         }
+
+        // Update icon
+        updateThemeIcon(theme);
       }
 
-      function toggleTheme() {
-        const current = localStorage.getItem(STORAGE_KEY) || 'dark';
-        const newTheme = current === 'light' ? 'dark' : 'light';
+      function updateThemeIcon(theme) {
+        const icon = document.getElementById('theme-icon');
+        const iconMobile = document.getElementById('theme-icon-mobile');
+        const svgContent = THEME_ICONS[theme] || THEME_ICONS.night;
+
+        if (icon) icon.innerHTML = svgContent;
+        if (iconMobile) iconMobile.innerHTML = svgContent;
+      }
+
+      function cycleTheme() {
+        const current = localStorage.getItem(STORAGE_KEY) || 'night';
+        const currentIndex = THEMES.indexOf(current);
+        const nextIndex = (currentIndex + 1) % THEMES.length;
+        const newTheme = THEMES[nextIndex];
+
         localStorage.setItem(STORAGE_KEY, newTheme);
         applyTheme(newTheme);
       }
@@ -285,8 +306,8 @@ function renderFloatingNav(currentPath: string = ''): string {
       applyTheme(getInitialTheme());
 
       // Theme toggle listeners
-      document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
-      document.getElementById('theme-toggle-mobile')?.addEventListener('click', toggleTheme);
+      document.getElementById('theme-toggle')?.addEventListener('click', cycleTheme);
+      document.getElementById('theme-toggle-mobile')?.addEventListener('click', cycleTheme);
 
       // Mobile menu toggle
       const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -466,32 +487,89 @@ export function renderBlog(entries: Entry[]): string {
       <link href="${fontUrl}" rel="stylesheet">
       <link rel="stylesheet" href="${assetManifest.css}">
       <style>
+        /* Default/Daylight theme */
         body {
           background: linear-gradient(to bottom, #faf5ff 0%, #ffffff 100%);
           min-height: 100vh;
         }
+
+        /* Night theme */
+        [data-theme="night"] body,
         .dark body {
           background: linear-gradient(to bottom, #1a1f2e 0%, #0f1419 100%);
           color: #e4e4e7;
         }
+        [data-theme="night"] .text-gray-900,
         .dark .text-gray-900 {
           color: #f4f4f5;
         }
+        [data-theme="night"] .text-gray-600,
         .dark .text-gray-600 {
           color: #a1a1aa;
         }
+        [data-theme="night"] .text-gray-500,
         .dark .text-gray-500 {
           color: #71717a;
         }
-        /* Ensure entry content text adjusts to dark mode */
+        [data-theme="night"] .entry-content p,
         .dark .entry-content p {
           color: #e4e4e7 !important;
         }
+        [data-theme="night"] .entry-content blockquote,
         .dark .entry-content blockquote {
           color: #e4e4e7 !important;
         }
+        [data-theme="night"] .caption,
         .dark .caption {
           color: #a1a1aa !important;
+        }
+
+        /* Forest theme */
+        [data-theme="forest"] body {
+          background: linear-gradient(to bottom, #1a2e1f 0%, #0f1a13 100%);
+          color: #e7f4e4;
+        }
+        [data-theme="forest"] .text-gray-900 {
+          color: #f0fdf4;
+        }
+        [data-theme="forest"] .text-gray-600 {
+          color: #a8c9af;
+        }
+        [data-theme="forest"] .text-gray-500 {
+          color: #7a9b82;
+        }
+        [data-theme="forest"] .entry-content p {
+          color: #e7f4e4 !important;
+        }
+        [data-theme="forest"] .entry-content blockquote {
+          color: #e7f4e4 !important;
+        }
+        [data-theme="forest"] .caption {
+          color: #a8c9af !important;
+        }
+
+        /* Beach theme */
+        [data-theme="beach"] body {
+          background: linear-gradient(to bottom, #fffef7 0%, #fefce8 100%);
+          color: #2d3e50;
+        }
+        [data-theme="beach"] .text-gray-900 {
+          color: #0c4a6e;
+        }
+        [data-theme="beach"] .text-gray-600 {
+          color: #64748b;
+        }
+        [data-theme="beach"] .text-gray-500 {
+          color: #94a3b8;
+        }
+        [data-theme="beach"] .entry-content p {
+          color: #2d3e50 !important;
+        }
+        [data-theme="beach"] .entry-content blockquote {
+          color: #2d3e50 !important;
+        }
+        [data-theme="beach"] .caption {
+          color: #64748b !important;
         }
       </style>
     </head>
@@ -586,39 +664,109 @@ export function renderAdmin(entries: Entry[]): string {
       <link href="${fontUrl}" rel="stylesheet">
       <link rel="stylesheet" href="${assetManifest.css}">
       <style>
+        /* Default/Daylight theme */
         body {
           background: linear-gradient(to bottom, #f3e8ff 0%, #faf5ff 100%);
           min-height: 100vh;
         }
+
+        /* Night theme */
+        [data-theme="night"] body,
         .dark body {
-          background: linear-gradient(to bottom, #1e2433 0%, #1a1f2e 100%);
+          background: linear-gradient(to bottom, #1a1f2e 0%, #0f1419 100%);
           color: #e4e4e7;
         }
+        [data-theme="night"] .text-gray-900,
         .dark .text-gray-900 {
           color: #f4f4f5;
         }
+        [data-theme="night"] .text-gray-600,
         .dark .text-gray-600 {
           color: #a1a1aa;
         }
+        [data-theme="night"] .text-gray-500,
         .dark .text-gray-500 {
           color: #71717a;
         }
+        [data-theme="night"] .bg-purple-600,
         .dark .bg-purple-600 {
           background-color: #7c3aed;
         }
-        /* Ensure entry content text adjusts to dark mode */
+        [data-theme="night"] .entry-content p,
         .dark .entry-content p {
           color: #e4e4e7 !important;
         }
+        [data-theme="night"] .entry-content blockquote,
         .dark .entry-content blockquote {
           color: #e4e4e7 !important;
         }
+        [data-theme="night"] .caption,
         .dark .caption {
           color: #a1a1aa !important;
         }
-        /* Admin-specific dark mode adjustments */
+        [data-theme="night"] .entry,
         .dark .entry {
           border-color: #374151;
+        }
+
+        /* Forest theme */
+        [data-theme="forest"] body {
+          background: linear-gradient(to bottom, #1a2e1f 0%, #0f1a13 100%);
+          color: #e7f4e4;
+        }
+        [data-theme="forest"] .text-gray-900 {
+          color: #f0fdf4;
+        }
+        [data-theme="forest"] .text-gray-600 {
+          color: #a8c9af;
+        }
+        [data-theme="forest"] .text-gray-500 {
+          color: #7a9b82;
+        }
+        [data-theme="forest"] .bg-purple-600 {
+          background-color: #4ade80;
+        }
+        [data-theme="forest"] .entry-content p {
+          color: #e7f4e4 !important;
+        }
+        [data-theme="forest"] .entry-content blockquote {
+          color: #e7f4e4 !important;
+        }
+        [data-theme="forest"] .caption {
+          color: #a8c9af !important;
+        }
+        [data-theme="forest"] .entry {
+          border-color: #2d4a34;
+        }
+
+        /* Beach theme */
+        [data-theme="beach"] body {
+          background: linear-gradient(to bottom, #fffef7 0%, #fefce8 100%);
+          color: #2d3e50;
+        }
+        [data-theme="beach"] .text-gray-900 {
+          color: #0c4a6e;
+        }
+        [data-theme="beach"] .text-gray-600 {
+          color: #64748b;
+        }
+        [data-theme="beach"] .text-gray-500 {
+          color: #94a3b8;
+        }
+        [data-theme="beach"] .bg-purple-600 {
+          background-color: #0ea5e9;
+        }
+        [data-theme="beach"] .entry-content p {
+          color: #2d3e50 !important;
+        }
+        [data-theme="beach"] .entry-content blockquote {
+          color: #2d3e50 !important;
+        }
+        [data-theme="beach"] .caption {
+          color: #64748b !important;
+        }
+        [data-theme="beach"] .entry {
+          border-color: #cbd5e1;
         }
       </style>
     </head>
