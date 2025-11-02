@@ -789,7 +789,7 @@ function renderLyricsPage() {
       ${PageHeader.render({
         title: 'Lyrics',
         subtitle: 'Song Compositions',
-        description: 'A collection of 39 songs by Chris Lyons'
+        description: 'Songs by Chris Lyons'
       })}
 
       <!-- Song Count -->
