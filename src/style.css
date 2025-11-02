@@ -58,18 +58,6 @@
     transition: background-color 0.4s ease, color 0.4s ease;
   }
 
-  /* Smooth theme transitions */
-  * {
-    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
-  }
-
-  /* Exclude animations and transforms from theme transitions */
-  *:not(.fade-in):not(.slide-in) {
-    transition-property: background-color, color, border-color;
-    transition-duration: 0.4s;
-    transition-timing-function: ease;
-  }
-
   /* Theme-specific base styles */
 
   /* Moonlight mode (formerly Dark mode) - Notion-inspired navy blue */

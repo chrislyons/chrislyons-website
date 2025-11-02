@@ -140,13 +140,15 @@ function renderHomePage() {
         <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-primary leading-tight">
           hey it's ChrisLyons.com
         </h1>
+        <!-- Temporarily hidden - will be re-enabled later
         <p class="text-lg md:text-xl lg:text-2xl text-gray-700 leading-relaxed px-4">
           Since 2007 I've been building multichannel recording studios and broadcast systems,
           researching emerging technologies and writing, producing, and recording music and voice.
         </p>
+        -->
       </header>
 
-      <!-- Mission Statement -->
+      <!-- Mission Statement - Temporarily hidden - will be re-enabled later
       <section class="mb-12 fade-in" style="animation-delay: 0.8s">
         <p class="text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed text-center max-w-3xl mx-auto px-4">
           My focus is creating reliable systems that serve the people who use them.
@@ -155,6 +157,7 @@ function renderHomePage() {
           bio-manufacturing methods and microplastics filtration systems.
         </p>
       </section>
+      -->
     </div>
   `;
 }

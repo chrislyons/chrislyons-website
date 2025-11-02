@@ -133,17 +133,19 @@ export class Navigation {
         </button>
 
         <!-- Dropdown menu -->
-        <div class="absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
-          <div class="py-1" role="menu" aria-orientation="vertical">
-            ${item.children.map(child => `
-              <a
-                href="${child.path}"
-                class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100 hover:text-primary transition-colors focus:outline-none focus:bg-gray-100"
-                role="menuitem"
-              >
-                ${child.title}
-              </a>
-            `).join('')}
+        <div class="absolute left-0 mt-0 pt-2 w-56 z-10">
+          <div class="rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 pointer-events-auto">
+            <div class="py-1" role="menu" aria-orientation="vertical">
+              ${item.children.map(child => `
+                <a
+                  href="${child.path}"
+                  class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100 hover:text-primary transition-colors focus:outline-none focus:bg-gray-100"
+                  role="menuitem"
+                >
+                  ${child.title}
+                </a>
+              `).join('')}
+            </div>
           </div>
         </div>
       </div>
