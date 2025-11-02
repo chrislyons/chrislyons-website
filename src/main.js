@@ -1452,12 +1452,13 @@ function renderConnectPage() {
       <div class="mb-8">
         <a
           href="mailto:${email}"
-          class="text-2xl font-medium text-secondary hover:text-primary underline transition-colors"
+          class="btn btn-primary text-xl"
           aria-label="Send email to ${email}"
         >
-          ${email}
+          Email Me
         </a>
       </div>
+      <p class="text-gray-600">${email}</p>
     </div>
   `;
 }
