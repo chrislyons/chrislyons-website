@@ -54,9 +54,36 @@
   body {
     @apply font-sans text-lg text-gray-900 bg-white antialiased;
     min-height: 100vh;
+    font-feature-settings: "ss02";
   }
 
-  /* Dark mode base styles - Notion-inspired navy blue */
+  /* Theme-specific base styles */
+
+  /* Night mode (formerly Dark mode) - Notion-inspired navy blue */
+  [data-theme="night"] body {
+    background-color: #1a1f2e;
+    color: #e4e4e7;
+  }
+
+  /* Daylight mode (formerly Light mode) - default light theme */
+  [data-theme="daylight"] body {
+    background-color: #ffffff;
+    color: #111827;
+  }
+
+  /* Forest mode - dark green variation of Night mode */
+  [data-theme="forest"] body {
+    background-color: #1a2e1f;
+    color: #e7f4e4;
+  }
+
+  /* Beach mode - warm gold-yellow-blue variation of Daylight */
+  [data-theme="beach"] body {
+    background-color: #fffef7;
+    color: #2d3e50;
+  }
+
+  /* Legacy dark mode support (maps to night) */
   .dark body {
     background-color: #1a1f2e;
     color: #e4e4e7;
@@ -104,10 +131,33 @@
     @apply hover:shadow-lg;
   }
 
+  /* Night mode cards */
+  [data-theme="night"] .card,
   .dark .card {
     background-color: #252b3b;
     border: 1px solid #3a4255;
     color: #e4e4e7;
+  }
+
+  /* Daylight mode cards (default) */
+  [data-theme="daylight"] .card {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    color: #111827;
+  }
+
+  /* Forest mode cards */
+  [data-theme="forest"] .card {
+    background-color: #253b2e;
+    border: 1px solid #3a5544;
+    color: #e7f4e4;
+  }
+
+  /* Beach mode cards */
+  [data-theme="beach"] .card {
+    background-color: #fffcf0;
+    border: 1px solid #f0e8d0;
+    color: #2d3e50;
   }
 
   /* Link Styles */
@@ -116,61 +166,221 @@
     @apply focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2;
   }
 
+  /* Night mode links */
+  [data-theme="night"] .link,
   .dark .link {
-    @apply text-blue-400 hover:text-blue-300;
+    color: #60a5fa;
   }
 
-  /* Dark mode text colors */
+  [data-theme="night"] .link:hover,
+  .dark .link:hover {
+    color: #93c5fd;
+  }
+
+  /* Daylight mode links (default styles apply) */
+
+  /* Forest mode links */
+  [data-theme="forest"] .link {
+    color: #86efac;
+  }
+
+  [data-theme="forest"] .link:hover {
+    color: #bbf7d0;
+  }
+
+  /* Beach mode links */
+  [data-theme="beach"] .link {
+    color: #0891b2;
+  }
+
+  [data-theme="beach"] .link:hover {
+    color: #0e7490;
+  }
+
+  /* ============================================
+     NIGHT MODE (formerly Dark mode)
+     ============================================ */
+
+  [data-theme="night"] h1,
+  [data-theme="night"] h2,
+  [data-theme="night"] h3,
+  [data-theme="night"] h4,
+  [data-theme="night"] h5,
+  [data-theme="night"] h6,
   .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
     color: #f4f4f5;
   }
 
+  [data-theme="night"] .text-gray-700,
   .dark .text-gray-700 {
     color: #d4d4d8;
   }
 
+  [data-theme="night"] .text-gray-600,
   .dark .text-gray-600 {
     color: #a1a1aa;
   }
 
+  [data-theme="night"] .text-gray-800,
   .dark .text-gray-800 {
     color: #e4e4e7;
   }
 
+  [data-theme="night"] .text-gray-900,
   .dark .text-gray-900 {
     color: #f4f4f5;
   }
 
+  [data-theme="night"] .text-primary,
   .dark .text-primary {
     color: #60a5fa;
   }
 
+  [data-theme="night"] .text-secondary,
   .dark .text-secondary {
     color: #818cf8;
   }
 
-  /* Dark mode backgrounds */
+  [data-theme="night"] .bg-white,
   .dark .bg-white {
     background-color: #252b3b;
   }
 
+  [data-theme="night"] .bg-gray-50,
   .dark .bg-gray-50 {
     background-color: #1e2433;
   }
 
+  [data-theme="night"] .bg-gray-100,
   .dark .bg-gray-100 {
     background-color: #252b3b;
   }
 
-  /* Dark mode borders */
+  [data-theme="night"] .border-gray-200,
   .dark .border-gray-200 {
     border-color: #3a4255;
   }
 
-  /* Navigation dark mode */
+  [data-theme="night"] nav,
   .dark nav {
     background-color: #1e2433;
     border-bottom-color: #3a4255;
+  }
+
+  /* ============================================
+     FOREST MODE
+     ============================================ */
+
+  [data-theme="forest"] h1,
+  [data-theme="forest"] h2,
+  [data-theme="forest"] h3,
+  [data-theme="forest"] h4,
+  [data-theme="forest"] h5,
+  [data-theme="forest"] h6 {
+    color: #f0fdf4;
+  }
+
+  [data-theme="forest"] .text-gray-700 {
+    color: #d4e8d8;
+  }
+
+  [data-theme="forest"] .text-gray-600 {
+    color: #a8c9af;
+  }
+
+  [data-theme="forest"] .text-gray-800 {
+    color: #e7f4e4;
+  }
+
+  [data-theme="forest"] .text-gray-900 {
+    color: #f0fdf4;
+  }
+
+  [data-theme="forest"] .text-primary {
+    color: #4ade80;
+  }
+
+  [data-theme="forest"] .text-secondary {
+    color: #86efac;
+  }
+
+  [data-theme="forest"] .bg-white {
+    background-color: #253b2e;
+  }
+
+  [data-theme="forest"] .bg-gray-50 {
+    background-color: #1e3328;
+  }
+
+  [data-theme="forest"] .bg-gray-100 {
+    background-color: #253b2e;
+  }
+
+  [data-theme="forest"] .border-gray-200 {
+    border-color: #3a5544;
+  }
+
+  [data-theme="forest"] nav {
+    background-color: #1e3328;
+    border-bottom-color: #3a5544;
+  }
+
+  /* ============================================
+     BEACH MODE
+     ============================================ */
+
+  [data-theme="beach"] h1,
+  [data-theme="beach"] h2,
+  [data-theme="beach"] h3,
+  [data-theme="beach"] h4,
+  [data-theme="beach"] h5,
+  [data-theme="beach"] h6 {
+    color: #0c4a6e;
+  }
+
+  [data-theme="beach"] .text-gray-700 {
+    color: #475569;
+  }
+
+  [data-theme="beach"] .text-gray-600 {
+    color: #64748b;
+  }
+
+  [data-theme="beach"] .text-gray-800 {
+    color: #334155;
+  }
+
+  [data-theme="beach"] .text-gray-900 {
+    color: #1e293b;
+  }
+
+  [data-theme="beach"] .text-primary {
+    color: #0891b2;
+  }
+
+  [data-theme="beach"] .text-secondary {
+    color: #f59e0b;
+  }
+
+  [data-theme="beach"] .bg-white {
+    background-color: #fffcf0;
+  }
+
+  [data-theme="beach"] .bg-gray-50 {
+    background-color: #fefce8;
+  }
+
+  [data-theme="beach"] .bg-gray-100 {
+    background-color: #fef9e7;
+  }
+
+  [data-theme="beach"] .border-gray-200 {
+    border-color: #f0e8d0;
+  }
+
+  [data-theme="beach"] nav {
+    background-color: #fefce8;
+    border-bottom-color: #f0e8d0;
   }
 
   /* Screen Reader Only */

@@ -1,13 +1,17 @@
 /**
  * Theme Toggle Component
  *
- * Implements dark/light mode switching with localStorage persistence
- * Based on wordbird-web pattern, adapted for vanilla JavaScript
+ * Implements four-theme switching with localStorage persistence:
+ * - Night (dark mode)
+ * - Daylight (light mode)
+ * - Forest (dark green variation)
+ * - Beach (warm light variation)
  */
 
 export class ThemeToggle {
   constructor() {
     this.STORAGE_KEY = 'chrislyons-theme';
+    this.THEMES = ['night', 'daylight', 'forest', 'beach'];
     this.theme = this.resolveInitialTheme();
     this.applyTheme(this.theme);
     this.setupMediaQueryListener();
@@ -32,15 +36,25 @@ export class ThemeToggle {
    * Resolve initial theme on page load
    */
   resolveInitialTheme() {
-    if (typeof window === 'undefined') return 'dark';
+    if (typeof window === 'undefined') return 'night';
 
     const stored = window.localStorage.getItem(this.STORAGE_KEY);
-    if (stored === 'light' || stored === 'dark') {
+
+    // Migrate old theme values
+    if (stored === 'dark') {
+      return 'night';
+    }
+    if (stored === 'light') {
+      return 'daylight';
+    }
+
+    // Check if stored theme is valid
+    if (this.THEMES.includes(stored)) {
       return stored;
     }
 
-    // Default to dark mode (changed from light mode)
-    return 'dark';
+    // Default to night mode
+    return 'night';
   }
 
   /**
@@ -50,10 +64,13 @@ export class ThemeToggle {
     if (typeof document === 'undefined') return;
 
     document.documentElement.setAttribute('data-theme', theme);
-    document.documentElement.style.setProperty('color-scheme', theme);
 
-    // Update Tailwind dark mode class
-    if (theme === 'dark') {
+    // Set color-scheme for browser UI
+    const isDark = theme === 'night' || theme === 'forest';
+    document.documentElement.style.setProperty('color-scheme', isDark ? 'dark' : 'light');
+
+    // Update Tailwind dark mode class for backward compatibility
+    if (isDark) {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
@@ -63,10 +80,13 @@ export class ThemeToggle {
   }
 
   /**
-   * Toggle theme
+   * Cycle to next theme
    */
   toggle() {
-    const newTheme = this.theme === 'light' ? 'dark' : 'light';
+    const currentIndex = this.THEMES.indexOf(this.theme);
+    const nextIndex = (currentIndex + 1) % this.THEMES.length;
+    const newTheme = this.THEMES[nextIndex];
+
     this.applyTheme(newTheme);
 
     if (typeof window !== 'undefined') {
@@ -82,12 +102,12 @@ export class ThemeToggle {
 
     const handler = (event) => {
       const stored = window.localStorage.getItem(this.STORAGE_KEY);
-      if (stored === 'light' || stored === 'dark') {
+      if (this.THEMES.includes(stored) || stored === 'dark' || stored === 'light') {
         // User has explicit preference, don't change
         return;
       }
       // No explicit preference, follow system
-      const newTheme = event.matches ? 'dark' : 'light';
+      const newTheme = event.matches ? 'night' : 'daylight';
       this.applyTheme(newTheme);
     };
 
@@ -96,20 +116,37 @@ export class ThemeToggle {
   }
 
   /**
+   * Get theme display name
+   */
+  getThemeLabel(theme) {
+    const labels = {
+      'night': 'Moonlight',
+      'daylight': 'Daylight',
+      'forest': 'Forest',
+      'beach': 'Beach'
+    };
+    return labels[theme] || theme;
+  }
+
+  /**
    * Render theme toggle button
    */
   render() {
-    const label = this.theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
-    const icon = this.theme === 'dark' ? this.renderMoonIcon() : this.renderSunIcon();
+    const currentLabel = this.getThemeLabel(this.theme);
+    const currentIndex = this.THEMES.indexOf(this.theme);
+    const nextIndex = (currentIndex + 1) % this.THEMES.length;
+    const nextTheme = this.THEMES[nextIndex];
+    const nextLabel = this.getThemeLabel(nextTheme);
+
+    const icon = this.renderIcon(this.theme);
 
     return `
       <button
         type="button"
         id="theme-toggle"
         class="p-2 rounded-md text-gray-400 hover:text-gray-300 dark:text-gray-400 dark:hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
-        aria-pressed="${this.theme === 'dark'}"
-        aria-label="${label}"
-        title="${label}"
+        aria-label="Current theme: ${currentLabel}. Click to switch to ${nextLabel}"
+        title="Current: ${currentLabel} • Next: ${nextLabel}"
       >
         ${icon}
       </button>
@@ -117,7 +154,25 @@ export class ThemeToggle {
   }
 
   /**
-   * Render moon icon (for dark mode)
+   * Render icon based on theme
+   */
+  renderIcon(theme) {
+    switch(theme) {
+      case 'night':
+        return this.renderMoonIcon();
+      case 'daylight':
+        return this.renderSunIcon();
+      case 'forest':
+        return this.renderLeafIcon();
+      case 'beach':
+        return this.renderKiteIcon();
+      default:
+        return this.renderMoonIcon();
+    }
+  }
+
+  /**
+   * Render moon icon (for night mode)
    */
   renderMoonIcon() {
     return `
@@ -138,7 +193,7 @@ export class ThemeToggle {
   }
 
   /**
-   * Render sun icon (for light mode)
+   * Render sun icon (for daylight mode)
    */
   renderSunIcon() {
     return `
@@ -162,6 +217,53 @@ export class ThemeToggle {
         <path d="M20 12h2"></path>
         <path d="m6.34 17.66-1.41 1.41"></path>
         <path d="m19.07 4.93-1.41 1.41"></path>
+      </svg>
+    `;
+  }
+
+  /**
+   * Render leaf icon (for forest mode)
+   */
+  renderLeafIcon() {
+    return `
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.75"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+        <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+      </svg>
+    `;
+  }
+
+  /**
+   * Render kite icon (for beach mode)
+   */
+  renderKiteIcon() {
+    return `
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.75"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M12 2 6 8l6 6 6-6Z"></path>
+        <path d="m8 12-3 3 3 3 3-3Z"></path>
+        <path d="m14 12 3 3-3 3-3-3Z"></path>
+        <path d="m12 14 0 8"></path>
+        <path d="m9 20 3 2 3-2"></path>
       </svg>
     `;
   }
