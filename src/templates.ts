@@ -242,34 +242,36 @@ function renderFloatingNav(currentPath: string = ''): string {
     </nav>
 
     <script>
-      // Theme management (four themes: night, daylight, forest, beach)
+      // Theme management (six themes: moonlight, daylight, forest, beach, plum, char)
       const STORAGE_KEY = 'chrislyons-theme';
-      const THEMES = ['night', 'daylight', 'forest', 'beach'];
+      const THEMES = ['moonlight', 'daylight', 'forest', 'beach', 'plum', 'char'];
 
       // Theme icons (SVG paths)
       const THEME_ICONS = {
-        night: '<path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>',
+        moonlight: '<path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>',
         daylight: '<circle cx="12" cy="12" r="4"></circle><path stroke-linecap="round" stroke-linejoin="round" d="M12 2v2M12 20v2m-8-10H2m20 0h-2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"></path>',
         forest: '<path stroke-linecap="round" stroke-linejoin="round" d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>',
-        beach: '<path stroke-linecap="round" stroke-linejoin="round" d="M12 2 6 8l6 6 6-6Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="m8 12-3 3 3 3 3-3Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="m14 12 3 3-3 3-3-3Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="m12 14 0 8"></path><path stroke-linecap="round" stroke-linejoin="round" d="m9 20 3 2 3-2"></path>'
+        beach: '<path stroke-linecap="round" stroke-linejoin="round" d="M12 2 6 8l6 6 6-6Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="m8 12-3 3 3 3 3-3Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="m14 12 3 3-3 3-3-3Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="m12 14 0 8"></path><path stroke-linecap="round" stroke-linejoin="round" d="m9 20 3 2 3-2"></path>',
+        plum: '<ellipse cx="12" cy="13" rx="7" ry="8"></ellipse><path stroke-linecap="round" stroke-linejoin="round" d="M12 5 Q 12 2, 14 2 Q 15 2, 15 3 Q 15 4, 13 5"></path><line stroke-linecap="round" stroke-linejoin="round" x1="12" y1="5" x2="12" y2="8"></line>',
+        char: '<path stroke-linecap="round" stroke-linejoin="round" d="M8.5 14.5 A6 6 0 0 0 15.5 14.5 A5 5 0 0 1 12 20 A5 5 0 0 1 8.5 14.5Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M12 11 Q 9 8, 11 4 Q 12 2, 13 4 Q 15 8, 12 11Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M12 11 Q 11 9, 12 7"></path>'
       };
 
       function getInitialTheme() {
         const stored = localStorage.getItem(STORAGE_KEY);
 
         // Migrate old values
-        if (stored === 'dark') return 'night';
+        if (stored === 'dark') return 'moonlight';
         if (stored === 'light') return 'daylight';
 
         if (THEMES.includes(stored)) return stored;
-        return 'night'; // Default to night
+        return 'moonlight'; // Default to moonlight
       }
 
       function applyTheme(theme) {
         document.documentElement.setAttribute('data-theme', theme);
 
         // Set color-scheme for browser UI
-        const isDark = theme === 'night' || theme === 'forest';
+        const isDark = theme === 'moonlight' || theme === 'forest';
         document.documentElement.style.setProperty('color-scheme', isDark ? 'dark' : 'light');
 
         // Update dark class for backward compatibility
@@ -286,14 +288,14 @@ function renderFloatingNav(currentPath: string = ''): string {
       function updateThemeIcon(theme) {
         const icon = document.getElementById('theme-icon');
         const iconMobile = document.getElementById('theme-icon-mobile');
-        const svgContent = THEME_ICONS[theme] || THEME_ICONS.night;
+        const svgContent = THEME_ICONS[theme] || THEME_ICONS.moonlight;
 
         if (icon) icon.innerHTML = svgContent;
         if (iconMobile) iconMobile.innerHTML = svgContent;
       }
 
       function cycleTheme() {
-        const current = localStorage.getItem(STORAGE_KEY) || 'night';
+        const current = localStorage.getItem(STORAGE_KEY) || 'moonlight';
         const currentIndex = THEMES.indexOf(current);
         const nextIndex = (currentIndex + 1) % THEMES.length;
         const newTheme = THEMES[nextIndex];
@@ -493,33 +495,33 @@ export function renderBlog(entries: Entry[]): string {
           min-height: 100vh;
         }
 
-        /* Night theme */
-        [data-theme="night"] body,
+        /* Moonlight theme */
+        [data-theme="moonlight"] body,
         .dark body {
           background: linear-gradient(to bottom, #1a1f2e 0%, #0f1419 100%);
           color: #e4e4e7;
         }
-        [data-theme="night"] .text-gray-900,
+        [data-theme="moonlight"] .text-gray-900,
         .dark .text-gray-900 {
           color: #f4f4f5;
         }
-        [data-theme="night"] .text-gray-600,
+        [data-theme="moonlight"] .text-gray-600,
         .dark .text-gray-600 {
           color: #a1a1aa;
         }
-        [data-theme="night"] .text-gray-500,
+        [data-theme="moonlight"] .text-gray-500,
         .dark .text-gray-500 {
           color: #71717a;
         }
-        [data-theme="night"] .entry-content p,
+        [data-theme="moonlight"] .entry-content p,
         .dark .entry-content p {
           color: #e4e4e7 !important;
         }
-        [data-theme="night"] .entry-content blockquote,
+        [data-theme="moonlight"] .entry-content blockquote,
         .dark .entry-content blockquote {
           color: #e4e4e7 !important;
         }
-        [data-theme="night"] .caption,
+        [data-theme="moonlight"] .caption,
         .dark .caption {
           color: #a1a1aa !important;
         }
@@ -570,6 +572,54 @@ export function renderBlog(entries: Entry[]): string {
         }
         [data-theme="beach"] .caption {
           color: #64748b !important;
+        }
+
+        /* Plum theme */
+        [data-theme="plum"] body {
+          background: linear-gradient(to bottom, #faf5ff 0%, #f3e8ff 100%);
+          color: #581c87;
+        }
+        [data-theme="plum"] .text-gray-900 {
+          color: #6b21a8;
+        }
+        [data-theme="plum"] .text-gray-600 {
+          color: #a78bfa;
+        }
+        [data-theme="plum"] .text-gray-500 {
+          color: #c4b5fd;
+        }
+        [data-theme="plum"] .entry-content p {
+          color: #581c87 !important;
+        }
+        [data-theme="plum"] .entry-content blockquote {
+          color: #581c87 !important;
+        }
+        [data-theme="plum"] .caption {
+          color: #a78bfa !important;
+        }
+
+        /* Char theme */
+        [data-theme="char"] body {
+          background: linear-gradient(to bottom, #fff7ed 0%, #ffedd5 100%);
+          color: #7c2d12;
+        }
+        [data-theme="char"] .text-gray-900 {
+          color: #9a3412;
+        }
+        [data-theme="char"] .text-gray-600 {
+          color: #ea580c;
+        }
+        [data-theme="char"] .text-gray-500 {
+          color: #f97316;
+        }
+        [data-theme="char"] .entry-content p {
+          color: #7c2d12 !important;
+        }
+        [data-theme="char"] .entry-content blockquote {
+          color: #7c2d12 !important;
+        }
+        [data-theme="char"] .caption {
+          color: #ea580c !important;
         }
       </style>
     </head>
@@ -670,41 +720,41 @@ export function renderAdmin(entries: Entry[]): string {
           min-height: 100vh;
         }
 
-        /* Night theme */
-        [data-theme="night"] body,
+        /* Moonlight theme */
+        [data-theme="moonlight"] body,
         .dark body {
           background: linear-gradient(to bottom, #1a1f2e 0%, #0f1419 100%);
           color: #e4e4e7;
         }
-        [data-theme="night"] .text-gray-900,
+        [data-theme="moonlight"] .text-gray-900,
         .dark .text-gray-900 {
           color: #f4f4f5;
         }
-        [data-theme="night"] .text-gray-600,
+        [data-theme="moonlight"] .text-gray-600,
         .dark .text-gray-600 {
           color: #a1a1aa;
         }
-        [data-theme="night"] .text-gray-500,
+        [data-theme="moonlight"] .text-gray-500,
         .dark .text-gray-500 {
           color: #71717a;
         }
-        [data-theme="night"] .bg-purple-600,
+        [data-theme="moonlight"] .bg-purple-600,
         .dark .bg-purple-600 {
           background-color: #7c3aed;
         }
-        [data-theme="night"] .entry-content p,
+        [data-theme="moonlight"] .entry-content p,
         .dark .entry-content p {
           color: #e4e4e7 !important;
         }
-        [data-theme="night"] .entry-content blockquote,
+        [data-theme="moonlight"] .entry-content blockquote,
         .dark .entry-content blockquote {
           color: #e4e4e7 !important;
         }
-        [data-theme="night"] .caption,
+        [data-theme="moonlight"] .caption,
         .dark .caption {
           color: #a1a1aa !important;
         }
-        [data-theme="night"] .entry,
+        [data-theme="moonlight"] .entry,
         .dark .entry {
           border-color: #374151;
         }
@@ -767,6 +817,66 @@ export function renderAdmin(entries: Entry[]): string {
         }
         [data-theme="beach"] .entry {
           border-color: #cbd5e1;
+        }
+
+        /* Plum theme */
+        [data-theme="plum"] body {
+          background: linear-gradient(to bottom, #faf5ff 0%, #f3e8ff 100%);
+          color: #581c87;
+        }
+        [data-theme="plum"] .text-gray-900 {
+          color: #6b21a8;
+        }
+        [data-theme="plum"] .text-gray-600 {
+          color: #a78bfa;
+        }
+        [data-theme="plum"] .text-gray-500 {
+          color: #c4b5fd;
+        }
+        [data-theme="plum"] .bg-purple-600 {
+          background-color: #9333ea;
+        }
+        [data-theme="plum"] .entry-content p {
+          color: #581c87 !important;
+        }
+        [data-theme="plum"] .entry-content blockquote {
+          color: #581c87 !important;
+        }
+        [data-theme="plum"] .caption {
+          color: #a78bfa !important;
+        }
+        [data-theme="plum"] .entry {
+          border-color: #d8b4fe;
+        }
+
+        /* Char theme */
+        [data-theme="char"] body {
+          background: linear-gradient(to bottom, #fff7ed 0%, #ffedd5 100%);
+          color: #7c2d12;
+        }
+        [data-theme="char"] .text-gray-900 {
+          color: #9a3412;
+        }
+        [data-theme="char"] .text-gray-600 {
+          color: #ea580c;
+        }
+        [data-theme="char"] .text-gray-500 {
+          color: #f97316;
+        }
+        [data-theme="char"] .bg-purple-600 {
+          background-color: #dc2626;
+        }
+        [data-theme="char"] .entry-content p {
+          color: #7c2d12 !important;
+        }
+        [data-theme="char"] .entry-content blockquote {
+          color: #7c2d12 !important;
+        }
+        [data-theme="char"] .caption {
+          color: #ea580c !important;
+        }
+        [data-theme="char"] .entry {
+          border-color: #fdba74;
         }
       </style>
     </head>

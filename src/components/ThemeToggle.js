@@ -1,18 +1,20 @@
 /**
  * Theme Toggle Component
  *
- * Implements four-theme switching with localStorage persistence:
+ * Implements six-theme switching with localStorage persistence:
  * - Night (dark mode)
  * - Daylight (light mode)
  * - Forest (dark green variation)
  * - Beach (warm light variation)
+ * - Plum (purple/fuchsia light variation)
+ * - Char (burnt orange variation)
  */
 
 export class ThemeToggle {
   constructor() {
     this.STORAGE_KEY = 'chrislyons-theme';
     this.LAST_THEME_KEY = 'chrislyons-last-theme';
-    this.THEMES = ['night', 'daylight', 'forest', 'beach'];
+    this.THEMES = ['moonlight', 'daylight', 'forest', 'beach', 'plum', 'char'];
     this.theme = this.resolveInitialTheme();
     this.applyTheme(this.theme);
     this.setupMediaQueryListener();
@@ -40,7 +42,7 @@ export class ThemeToggle {
    * User can still cycle themes during session via toggle button
    */
   resolveInitialTheme() {
-    if (typeof window === 'undefined') return 'night';
+    if (typeof window === 'undefined') return 'moonlight';
 
     // Get the last theme shown (from previous page load or manual toggle)
     const lastTheme = window.localStorage.getItem(this.LAST_THEME_KEY);
@@ -69,7 +71,7 @@ export class ThemeToggle {
     document.documentElement.setAttribute('data-theme', theme);
 
     // Set color-scheme for browser UI
-    const isDark = theme === 'night' || theme === 'forest';
+    const isDark = theme === 'moonlight' || theme === 'forest';
     document.documentElement.style.setProperty('color-scheme', isDark ? 'dark' : 'light');
 
     // Update Tailwind dark mode class for backward compatibility
@@ -112,7 +114,7 @@ export class ThemeToggle {
         return;
       }
       // No explicit preference, follow system
-      const newTheme = event.matches ? 'night' : 'daylight';
+      const newTheme = event.matches ? 'moonlight' : 'daylight';
       this.applyTheme(newTheme);
     };
 
@@ -128,7 +130,9 @@ export class ThemeToggle {
       'night': 'Moonlight',
       'daylight': 'Daylight',
       'forest': 'Forest',
-      'beach': 'Beach'
+      'beach': 'Beach',
+      'plum': 'Plum',
+      'char': 'Char'
     };
     return labels[theme] || theme;
   }
@@ -163,7 +167,7 @@ export class ThemeToggle {
    */
   renderIcon(theme) {
     switch(theme) {
-      case 'night':
+      case 'moonlight':
         return this.renderMoonIcon();
       case 'daylight':
         return this.renderSunIcon();
@@ -171,6 +175,10 @@ export class ThemeToggle {
         return this.renderLeafIcon();
       case 'beach':
         return this.renderKiteIcon();
+      case 'plum':
+        return this.renderPlumIcon();
+      case 'char':
+        return this.renderCharIcon();
       default:
         return this.renderMoonIcon();
     }
@@ -269,6 +277,52 @@ export class ThemeToggle {
         <path d="m14 12 3 3-3 3-3-3Z"></path>
         <path d="m12 14 0 8"></path>
         <path d="m9 20 3 2 3-2"></path>
+      </svg>
+    `;
+  }
+
+  /**
+   * Render plum icon (for plum mode)
+   */
+  renderPlumIcon() {
+    return `
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.75"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <ellipse cx="12" cy="13" rx="7" ry="8"></ellipse>
+        <path d="M12 5 Q 12 2, 14 2 Q 15 2, 15 3 Q 15 4, 13 5"></path>
+        <line x1="12" y1="5" x2="12" y2="8"></line>
+      </svg>
+    `;
+  }
+
+  /**
+   * Render char icon (for char mode)
+   */
+  renderCharIcon() {
+    return `
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.75"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="M8.5 14.5 A6 6 0 0 0 15.5 14.5 A5 5 0 0 1 12 20 A5 5 0 0 1 8.5 14.5Z"></path>
+        <path d="M12 11 Q 9 8, 11 4 Q 12 2, 13 4 Q 15 8, 12 11Z"></path>
+        <path d="M12 11 Q 11 9, 12 7"></path>
       </svg>
     `;
   }

@@ -59,8 +59,8 @@
 
   /* Theme-specific base styles */
 
-  /* Night mode (formerly Dark mode) - Notion-inspired navy blue */
-  [data-theme="night"] body {
+  /* Moonlight mode (formerly Dark mode) - Notion-inspired navy blue */
+  [data-theme="moonlight"] body {
     background-color: #1a1f2e;
     color: #e4e4e7;
   }
@@ -83,7 +83,19 @@
     color: #2d3e50;
   }
 
-  /* Legacy dark mode support (maps to night) */
+  /* Plum mode - purple/fuchsia light variation */
+  [data-theme="plum"] body {
+    background-color: #faf5ff;
+    color: #581c87;
+  }
+
+  /* Char mode - burnt orange light variation */
+  [data-theme="char"] body {
+    background-color: #fff7ed;
+    color: #7c2d12;
+  }
+
+  /* Legacy dark mode support (maps to moonlight) */
   .dark body {
     background-color: #1a1f2e;
     color: #e4e4e7;
@@ -132,7 +144,7 @@
   }
 
   /* Night mode cards */
-  [data-theme="night"] .card,
+  [data-theme="moonlight"] .card,
   .dark .card {
     background-color: #252b3b;
     border: 1px solid #3a4255;
@@ -167,12 +179,12 @@
   }
 
   /* Night mode links */
-  [data-theme="night"] .link,
+  [data-theme="moonlight"] .link,
   .dark .link {
     color: #60a5fa;
   }
 
-  [data-theme="night"] .link:hover,
+  [data-theme="moonlight"] .link:hover,
   .dark .link:hover {
     color: #93c5fd;
   }
@@ -201,67 +213,67 @@
      NIGHT MODE (formerly Dark mode)
      ============================================ */
 
-  [data-theme="night"] h1,
-  [data-theme="night"] h2,
-  [data-theme="night"] h3,
-  [data-theme="night"] h4,
-  [data-theme="night"] h5,
-  [data-theme="night"] h6,
+  [data-theme="moonlight"] h1,
+  [data-theme="moonlight"] h2,
+  [data-theme="moonlight"] h3,
+  [data-theme="moonlight"] h4,
+  [data-theme="moonlight"] h5,
+  [data-theme="moonlight"] h6,
   .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
     color: #f4f4f5;
   }
 
-  [data-theme="night"] .text-gray-700,
+  [data-theme="moonlight"] .text-gray-700,
   .dark .text-gray-700 {
     color: #d4d4d8;
   }
 
-  [data-theme="night"] .text-gray-600,
+  [data-theme="moonlight"] .text-gray-600,
   .dark .text-gray-600 {
     color: #a1a1aa;
   }
 
-  [data-theme="night"] .text-gray-800,
+  [data-theme="moonlight"] .text-gray-800,
   .dark .text-gray-800 {
     color: #e4e4e7;
   }
 
-  [data-theme="night"] .text-gray-900,
+  [data-theme="moonlight"] .text-gray-900,
   .dark .text-gray-900 {
     color: #f4f4f5;
   }
 
-  [data-theme="night"] .text-primary,
+  [data-theme="moonlight"] .text-primary,
   .dark .text-primary {
     color: #60a5fa;
   }
 
-  [data-theme="night"] .text-secondary,
+  [data-theme="moonlight"] .text-secondary,
   .dark .text-secondary {
     color: #818cf8;
   }
 
-  [data-theme="night"] .bg-white,
+  [data-theme="moonlight"] .bg-white,
   .dark .bg-white {
     background-color: #252b3b;
   }
 
-  [data-theme="night"] .bg-gray-50,
+  [data-theme="moonlight"] .bg-gray-50,
   .dark .bg-gray-50 {
     background-color: #1e2433;
   }
 
-  [data-theme="night"] .bg-gray-100,
+  [data-theme="moonlight"] .bg-gray-100,
   .dark .bg-gray-100 {
     background-color: #252b3b;
   }
 
-  [data-theme="night"] .border-gray-200,
+  [data-theme="moonlight"] .border-gray-200,
   .dark .border-gray-200 {
     border-color: #3a4255;
   }
 
-  [data-theme="night"] nav,
+  [data-theme="moonlight"] nav,
   .dark nav {
     background-color: #1e2433;
     border-bottom-color: #3a4255;
@@ -402,6 +414,184 @@
 
   [data-theme="beach"] .border-accent {
     border-color: #ff6b8a;
+  }
+
+  /* ============================================
+     PLUM MODE
+     ============================================ */
+
+  [data-theme="plum"] h1,
+  [data-theme="plum"] h2,
+  [data-theme="plum"] h3,
+  [data-theme="plum"] h4,
+  [data-theme="plum"] h5,
+  [data-theme="plum"] h6 {
+    color: #6b21a8;
+  }
+
+  [data-theme="plum"] .text-gray-700 {
+    color: #7c3aed;
+  }
+
+  [data-theme="plum"] .text-gray-600 {
+    color: #a78bfa;
+  }
+
+  [data-theme="plum"] .text-gray-800 {
+    color: #581c87;
+  }
+
+  [data-theme="plum"] .text-gray-900 {
+    color: #4c1d95;
+  }
+
+  [data-theme="plum"] .text-primary {
+    color: #a855f7;
+  }
+
+  [data-theme="plum"] .text-secondary {
+    color: #d946ef;
+  }
+
+  [data-theme="plum"] .text-accent {
+    color: #e879f9;
+  }
+
+  [data-theme="plum"] .bg-white {
+    background-color: #faf5ff;
+  }
+
+  [data-theme="plum"] .bg-gray-50 {
+    background-color: #f3e8ff;
+  }
+
+  [data-theme="plum"] .bg-gray-100 {
+    background-color: #e9d5ff;
+  }
+
+  [data-theme="plum"] .border-gray-200 {
+    border-color: #d8b4fe;
+  }
+
+  [data-theme="plum"] nav {
+    background-color: #f3e8ff;
+    border-bottom-color: #d8b4fe;
+  }
+
+  [data-theme="plum"] .card {
+    background-color: #faf5ff;
+    border: 1px solid #d8b4fe;
+    color: #581c87;
+  }
+
+  [data-theme="plum"] .link {
+    color: #c026d3;
+  }
+
+  [data-theme="plum"] .link:hover {
+    color: #e879f9;
+  }
+
+  [data-theme="plum"] .btn-primary:hover {
+    background-color: #e879f9;
+    border-color: #e879f9;
+  }
+
+  [data-theme="plum"] .bg-accent {
+    background-color: #e879f9;
+  }
+
+  [data-theme="plum"] .border-accent {
+    border-color: #e879f9;
+  }
+
+  /* ============================================
+     CHAR MODE
+     ============================================ */
+
+  [data-theme="char"] h1,
+  [data-theme="char"] h2,
+  [data-theme="char"] h3,
+  [data-theme="char"] h4,
+  [data-theme="char"] h5,
+  [data-theme="char"] h6 {
+    color: #9a3412;
+  }
+
+  [data-theme="char"] .text-gray-700 {
+    color: #c2410c;
+  }
+
+  [data-theme="char"] .text-gray-600 {
+    color: #ea580c;
+  }
+
+  [data-theme="char"] .text-gray-800 {
+    color: #7c2d12;
+  }
+
+  [data-theme="char"] .text-gray-900 {
+    color: #431407;
+  }
+
+  [data-theme="char"] .text-primary {
+    color: #dc2626;
+  }
+
+  [data-theme="char"] .text-secondary {
+    color: #f97316;
+  }
+
+  [data-theme="char"] .text-accent {
+    color: #fb923c;
+  }
+
+  [data-theme="char"] .bg-white {
+    background-color: #fff7ed;
+  }
+
+  [data-theme="char"] .bg-gray-50 {
+    background-color: #ffedd5;
+  }
+
+  [data-theme="char"] .bg-gray-100 {
+    background-color: #fed7aa;
+  }
+
+  [data-theme="char"] .border-gray-200 {
+    border-color: #fdba74;
+  }
+
+  [data-theme="char"] nav {
+    background-color: #ffedd5;
+    border-bottom-color: #fdba74;
+  }
+
+  [data-theme="char"] .card {
+    background-color: #fff7ed;
+    border: 1px solid #fdba74;
+    color: #7c2d12;
+  }
+
+  [data-theme="char"] .link {
+    color: #dc2626;
+  }
+
+  [data-theme="char"] .link:hover {
+    color: #fb923c;
+  }
+
+  [data-theme="char"] .btn-primary:hover {
+    background-color: #fb923c;
+    border-color: #fb923c;
+  }
+
+  [data-theme="char"] .bg-accent {
+    background-color: #fb923c;
+  }
+
+  [data-theme="char"] .border-accent {
+    border-color: #fb923c;
   }
 
   /* Screen Reader Only */
