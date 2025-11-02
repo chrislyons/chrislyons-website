@@ -100,13 +100,11 @@
     }
   ],
   "pages": {
-    "27-suppositions": {
-      "title": "27 Suppositions",
-      "contentFile": "content/ideas/27-suppositions.md",
-      "placeholder": true,
-      "longForm": true,
+    "home": {
+      "title": "hey it's ChrisLyons.com",
+      "contentFile": "content/home.md",
       "meta": {
-        "description": "Long-form content exploring creative and technical concepts."
+        "description": "Technical Systems Architect, Audio Engineer, Researcher, and Creator building reliable systems since 2007."
       }
     },
     "apps": {
@@ -128,32 +126,28 @@
         "description": "Professional audio clip sequencer and session manager built on the Orpheus SDK. Real-time playback with sample-accurate timing control."
       }
     },
-    "connect": {
-      "title": "Connect",
-      "contentFile": "content/connect/contact.md",
-      "meta": {
-        "description": "Get in touch with Chris Lyons for collaborations and projects."
-      }
-    },
-    "discography": {
-      "title": "Discography",
-      "contentFile": "content/sounds/discography.md",
-      "placeholder": true,
-      "meta": {
-        "description": "Production work and releases by Chris Lyons."
-      }
-    },
-    "home": {
-      "title": "hey it's ChrisLyons.com",
-      "contentFile": "content/home.md",
-      "meta": {
-        "description": "Technical Systems Architect, Audio Engineer, Researcher, and Creator building reliable systems since 2007."
-      }
-    },
     "hotbox": {
       "title": "Hotbox",
       "meta": {
         "description": "Narrative compiler for interactive essays. Citation-first LLM dialogues backed by deterministic authoring pipelines and verified facts."
+      }
+    },
+    "listmaker": {
+      "title": "ListMaker",
+      "meta": {
+        "description": "Browser-based application for creating and managing structured lists with offline support and password protection."
+      }
+    },
+    "tidal-mcp": {
+      "title": "Tidal MCP Server",
+      "meta": {
+        "description": "Model Context Protocol server for managing your Tidal music library. Built for DJs with BPM filtering, playlist creation, and advanced search."
+      }
+    },
+    "wordbird": {
+      "title": "WordBird",
+      "meta": {
+        "description": "Offline-first dictionary and translator toolkit for web, desktop, and mobile. Verifiable data packs with privacy-focused design."
       }
     },
     "ideas": {
@@ -163,18 +157,13 @@
         "description": "Long-form writing, research projects, and conceptual explorations by Chris Lyons."
       }
     },
-    "listmaker": {
-      "title": "ListMaker",
+    "27-suppositions": {
+      "title": "27 Suppositions",
+      "contentFile": "content/ideas/27-suppositions.md",
+      "placeholder": true,
+      "longForm": true,
       "meta": {
-        "description": "Browser-based application for creating and managing structured lists with offline support and password protection."
-      }
-    },
-    "lyrics": {
-      "title": "Collected Lyrics",
-      "contentFile": "content/sounds/lyrics-index.md",
-      "songCount": 39,
-      "meta": {
-        "description": "Song lyrics by Chris Lyons - 39 compositions."
+        "description": "Long-form content exploring creative and technical concepts."
       }
     },
     "numa-network": {
@@ -187,14 +176,6 @@
       "title": "OSD Events",
       "meta": {
         "description": "On-screen display event system for live performance and broadcast applications."
-      }
-    },
-    "portfolio": {
-      "title": "Portfolio",
-      "contentFile": "content/sounds/portfolio.md",
-      "placeholder": true,
-      "meta": {
-        "description": "Professional audio portfolio and technical recordings."
       }
     },
     "protocols-of-sound": {
@@ -213,16 +194,35 @@
         "description": "Music production, discography, and audio samples by Chris Lyons."
       }
     },
-    "tidal-mcp": {
-      "title": "Tidal MCP Server",
+    "lyrics": {
+      "title": "Collected Lyrics",
+      "contentFile": "content/sounds/lyrics-index.md",
+      "songCount": 39,
       "meta": {
-        "description": "Model Context Protocol server for managing your Tidal music library. Built for DJs with BPM filtering, playlist creation, and advanced search."
+        "description": "Song lyrics by Chris Lyons - 39 compositions."
       }
     },
-    "wordbird": {
-      "title": "WordBird",
+    "discography": {
+      "title": "Discography",
+      "contentFile": "content/sounds/discography.md",
+      "placeholder": true,
       "meta": {
-        "description": "Offline-first dictionary and translator toolkit for web, desktop, and mobile. Verifiable data packs with privacy-focused design."
+        "description": "Production work and releases by Chris Lyons."
+      }
+    },
+    "portfolio": {
+      "title": "Portfolio",
+      "contentFile": "content/sounds/portfolio.md",
+      "placeholder": true,
+      "meta": {
+        "description": "Professional audio portfolio and technical recordings."
+      }
+    },
+    "connect": {
+      "title": "Connect",
+      "contentFile": "content/connect/contact.md",
+      "meta": {
+        "description": "Get in touch with Chris Lyons for collaborations and projects."
       }
     }
   }
