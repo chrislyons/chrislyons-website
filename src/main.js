@@ -1458,7 +1458,6 @@ function renderConnectPage() {
           Email Me
         </a>
       </div>
-      <p class="text-gray-600">${email}</p>
     </div>
   `;
 }
