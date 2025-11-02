@@ -34,26 +34,13 @@ export class ThemeToggle {
 
   /**
    * Resolve initial theme on page load
+   * SHUFFLE MODE: Always randomize theme on page load, ignoring localStorage cache
+   * User can still cycle themes during session via toggle button
    */
   resolveInitialTheme() {
     if (typeof window === 'undefined') return 'night';
 
-    const stored = window.localStorage.getItem(this.STORAGE_KEY);
-
-    // Migrate old theme values
-    if (stored === 'dark') {
-      return 'night';
-    }
-    if (stored === 'light') {
-      return 'daylight';
-    }
-
-    // Check if stored theme is valid
-    if (this.THEMES.includes(stored)) {
-      return stored;
-    }
-
-    // Shuffle mode: randomly select a theme if no preference stored
+    // Always shuffle on page load - ignore stored preference
     const randomIndex = Math.floor(Math.random() * this.THEMES.length);
     return this.THEMES[randomIndex];
   }

@@ -147,7 +147,7 @@ function renderHomePage() {
       </header>
 
       <!-- Mission Statement -->
-      <section class="mb-12 fade-in" style="animation-delay: 0.2s">
+      <section class="mb-12 fade-in" style="animation-delay: 0.8s">
         <p class="text-base md:text-lg lg:text-xl text-gray-600 leading-relaxed text-center max-w-3xl mx-auto px-4">
           My focus is creating reliable systems that serve the people who use them.
           My 'Numa' initiative is aimed at better supporting creative communities through
