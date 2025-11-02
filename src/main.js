@@ -937,10 +937,10 @@ function renderConnectPage() {
       <div class="mb-8">
         <a
           href="mailto:${email}"
-          class="text-2xl font-medium text-secondary hover:text-primary underline transition-colors"
+          class="btn btn-primary"
           aria-label="Send email to ${email}"
         >
-          ${email}
+          email
         </a>
       </div>
     </div>
