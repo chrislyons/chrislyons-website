@@ -16,14 +16,16 @@ export class Navigation {
   }
 
   /**
-   * Filter out hidden navigation items
+   * Filter out hidden navigation items and sort children alphabetically
    */
   filterHidden(items) {
     return items
       .filter(item => !item.hidden)
       .map(item => ({
         ...item,
-        children: item.children ? this.filterHidden(item.children) : undefined
+        children: item.children
+          ? this.filterHidden(item.children).sort((a, b) => a.title.localeCompare(b.title))
+          : undefined
       }));
   }
 
