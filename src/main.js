@@ -179,23 +179,8 @@ function renderHomePage() {
           bio-manufacturing methods and microplastics filtration systems.
         </p>
       </section>
-
-      <!-- Collapsible Navigation Section with Brown Background -->
-      <section class="fade-in" style="animation-delay: 0.3s">
-        ${CollapsibleSection.render({
-          id: 'home-pages-navigation',
-          title: 'Pages (hidden)',
-          content: navigationCardsContent,
-          initiallyOpen: false,
-          headerClass: '',
-          contentClass: ''
-        })}
-      </section>
     </div>
   `;
-
-  // Attach event listeners for collapsible section
-  CollapsibleSection.attachEventListeners('home-pages-navigation');
 }
 
 /**
@@ -952,10 +937,10 @@ function renderConnectPage() {
       <div class="mb-8">
         <a
           href="mailto:${email}"
-          class="text-2xl font-medium text-secondary hover:text-primary underline transition-colors"
+          class="btn btn-primary"
           aria-label="Send email to ${email}"
         >
-          ${email}
+          email
         </a>
       </div>
     </div>
