@@ -55,6 +55,19 @@
     @apply font-sans text-lg text-gray-900 bg-white antialiased;
     min-height: 100vh;
     font-feature-settings: "ss02";
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  /* Smooth theme transitions */
+  * {
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+  }
+
+  /* Exclude animations and transforms from theme transitions */
+  *:not(.fade-in):not(.slide-in) {
+    transition-property: background-color, color, border-color;
+    transition-duration: 0.4s;
+    transition-timing-function: ease;
   }
 
   /* Theme-specific base styles */

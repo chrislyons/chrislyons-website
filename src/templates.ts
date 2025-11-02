@@ -489,6 +489,15 @@ export function renderBlog(entries: Entry[]): string {
       <link href="${fontUrl}" rel="stylesheet">
       <link rel="stylesheet" href="${assetManifest.css}">
       <style>
+        /* Smooth theme transitions */
+        body {
+          transition: background 0.4s ease, color 0.4s ease;
+        }
+
+        * {
+          transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+        }
+
         /* Default/Daylight theme */
         body {
           background: linear-gradient(to bottom, #faf5ff 0%, #ffffff 100%);
@@ -714,6 +723,15 @@ export function renderAdmin(entries: Entry[]): string {
       <link href="${fontUrl}" rel="stylesheet">
       <link rel="stylesheet" href="${assetManifest.css}">
       <style>
+        /* Smooth theme transitions */
+        body {
+          transition: background 0.4s ease, color 0.4s ease;
+        }
+
+        * {
+          transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+        }
+
         /* Default/Daylight theme */
         body {
           background: linear-gradient(to bottom, #f3e8ff 0%, #faf5ff 100%);
