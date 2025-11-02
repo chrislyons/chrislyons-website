@@ -16,10 +16,10 @@ binding = "DB"
 database_name = "blog-db"
 database_id = "741a89af-1617-491f-991b-0bde7cf81d69"
 
-# R2 Bucket for blog images
-[[r2_buckets]]
-binding = "BLOG_IMAGES"
-bucket_name = "blog-images"
+# R2 Bucket for blog images (commented out until permissions are configured)
+# [[r2_buckets]]
+# binding = "BLOG_IMAGES"
+# bucket_name = "blog-images"
 
 # Secrets (set with: npx wrangler secret put GIPHY_API_KEY)
 # GIPHY_API_KEY - Set this via CLI
