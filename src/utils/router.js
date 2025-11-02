@@ -17,20 +17,11 @@ export class Router {
       this.handleRoute(window.location.pathname, false);
     });
 
-    // Intercept link clicks (except for blog and admin routes which are handled by the worker)
+    // Intercept link clicks
     document.addEventListener('click', (e) => {
-      // Find the closest anchor tag (handles clicks on child elements)
-      const link = e.target.closest('a[href^="/"]');
-
-      if (link) {
-        const path = link.getAttribute('href');
-
-        // Don't intercept blog and admin routes - let them do full page navigation
-        if (path.startsWith('/blog') || path.startsWith('/admin')) {
-          return; // Allow default behavior (full page load)
-        }
-
+      if (e.target.matches('a[href^="/"]')) {
         e.preventDefault();
+        const path = e.target.getAttribute('href');
         this.navigate(path);
       }
     });
