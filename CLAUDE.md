@@ -143,6 +143,79 @@ chrislyons-website/
 
 ---
 
+## Development Setup
+
+### Architecture Overview
+
+This project uses a **dual-server architecture**:
+
+1. **Vite Dev Server** (port 5173) — Serves SPA routes
+   - Routes: `/`, `/apps/*`, `/ideas/*`, `/sounds/*`, `/connect`
+   - Client-side routing with vanilla JavaScript
+
+2. **Cloudflare Worker** (port 8787 in development) — Serves dynamic routes
+   - Routes: `/blog`, `/admin`
+   - Server-side rendering with Hono framework
+   - Database: D1 (SQLite), Storage: R2
+
+### Development Commands
+
+**Option 1: SPA Only** (default)
+```bash
+npm run dev
+```
+- Runs Vite on port 5173
+- `/blog` and `/admin` show development message with instructions
+
+**Option 2: Worker Only**
+```bash
+npm run dev:worker
+```
+- Runs Cloudflare Worker on port 8787
+- Access `/blog` and `/admin` at `http://localhost:8787`
+
+**Option 3: Full Stack** (both servers)
+```bash
+npm run dev:all
+```
+- Runs both Vite (5173) AND Worker (8787) simultaneously
+- Access everything at `http://localhost:5173`
+- Vite proxy forwards `/blog` and `/admin` to Worker automatically
+
+### Theme System
+
+The site supports **four color themes**:
+
+1. **Moonlight** (dark mode) — Navy blue accessibility theme
+2. **Daylight** (light mode) — Clean white accessibility theme
+3. **Forest** — Dark green variation
+4. **Beach** — Warm gold-yellow-blue variation
+
+- Theme selector cycles through all four modes
+- Each theme has chromatically complementary colors
+- Preference persists in localStorage
+- Icons: Moon, Sun, Leaf, Kite
+
+**Implementation Details:** See `docs/clw/CLW006 Four-Theme System Implementation.md`
+
+### Build Configuration
+
+**Important Files:**
+- `vite.config.js` — Vite SPA mode, proxy configuration for worker routes
+- `postcss.config.mjs` — PostCSS configuration (must use .mjs extension)
+- `wrangler.toml` — Cloudflare Worker configuration
+- `package.json` — Scripts and dependencies
+
+**Build Process:**
+```bash
+npm run build
+```
+- Runs Vite build
+- Generates asset manifest (`scripts/generate-asset-manifest.js`)
+- Output: `dist/` directory
+
+---
+
 ## Quick Reference
 
 ### Common Tasks
@@ -178,4 +251,4 @@ chrislyons-website/
 
 ---
 
-**Last Updated:** 2025-11-01
+**Last Updated:** 2025-11-02
