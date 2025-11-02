@@ -18,6 +18,9 @@ target/
 *.so
 *.dylib
 
+# Build-generated files
+src/asset-manifest.json
+
 # Test coverage
 coverage/
 .nyc_output/

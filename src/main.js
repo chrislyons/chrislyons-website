@@ -93,29 +93,27 @@ function setupRoutes() {
   // Home page
   router.on('/', renderHomePage);
 
-  // Systems section
-  router.on('/systems', renderSystemsPage);
-  router.on('/systems/boot-industries', renderBootIndustriesPage);
-  router.on('/systems/carbon-acx', renderCarbonAcxPage);
-  router.on('/systems/hydrophobic-field-harvesters', renderHydrophobicPage);
-  router.on('/systems/listmaker', renderListMakerPage);
-  router.on('/systems/orpheus-sdk', renderOrpheusSDKPage);
-  router.on('/systems/tidal-mcp', renderTidalMCPPage);
-  router.on('/systems/wordbird', renderWordBirdPage);
+  // Apps section (new)
+  router.on('/apps', renderAppsPage);
+  router.on('/apps/carbon-acx', renderCarbonAcxPage);
+  router.on('/apps/clip-composer', renderClipComposerPage);
+  router.on('/apps/hotbox', renderHotboxPage);
+  router.on('/apps/listmaker', renderListMakerPage);
+  router.on('/apps/tidal-mcp', renderTidalMCPPage);
+  router.on('/apps/wordbird', renderWordBirdPage);
+
+  // Ideas section (new)
+  router.on('/ideas', renderIdeasPage);
+  router.on('/ideas/27-suppositions', render27SuppositionsPage);
+  router.on('/ideas/numa-network', renderNumaNetworkPage);
+  router.on('/ideas/osd-events', renderOSDEventsPage);
+  router.on('/ideas/protocols-of-sound', renderProtocolsOfSoundPage);
 
   // Sounds section
   router.on('/sounds', renderSoundsPage);
+  router.on('/sounds/lyrics', renderLyricsPage);
   router.on('/sounds/discography', renderDiscographyPage);
-  router.on('/sounds/audio-samples', renderAudioSamplesPage);
-
-  // Writing section
-  router.on('/writing', renderWritingPage);
-  router.on('/writing/essays', renderEssaysPage);
-  router.on('/writing/hotbox', renderHotboxPage);
-  router.on('/writing/lyrics', renderLyricsPage);
-  router.on('/writing/poems', renderPoemsPage);
-  router.on('/writing/27-suppositions', render27SuppositionsPage);
-  router.on('/writing/protocols-of-sound', renderProtocolsOfSoundPage);
+  router.on('/sounds/portfolio', renderPortfolioPage);
 
   // Connect page
   router.on('/connect', renderConnectPage);
@@ -133,34 +131,6 @@ function renderHomePage() {
 
   contentLoader.updateDocumentTitle('');
   contentLoader.updateMetaDescription(siteData.description);
-
-  // Generate collapsible navigation cards content
-  const navigationCardsContent = Card.renderGrid([
-    {
-      title: 'Systems',
-      description: 'Design & Studio Builds | Research & Inventions',
-      link: '/systems',
-      clickable: true
-    },
-    {
-      title: 'Sounds',
-      description: 'Production Work | Compositions',
-      link: '/sounds',
-      clickable: true
-    },
-    {
-      title: 'Writing',
-      description: 'Essays | Lyrics | Long-form Work',
-      link: '/writing',
-      clickable: true
-    },
-    {
-      title: 'Connect',
-      description: 'Get in touch',
-      link: '/connect',
-      clickable: true
-    }
-  ]);
 
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
@@ -185,6 +155,90 @@ function renderHomePage() {
           bio-manufacturing methods and microplastics filtration systems.
         </p>
       </section>
+    </div>
+  `;
+}
+
+/**
+ * Render Apps landing page
+ */
+function renderAppsPage() {
+  contentLoader.updateDocumentTitle('Apps');
+
+  // Get Apps navigation item and children
+  const navigation = contentLoader.getNavigation();
+  const appsNav = navigation.find(item => item.id === 'apps');
+  const children = appsNav?.children || [];
+
+  // Build cards for children
+  const projectCards = children.map(child => {
+    const pageData = contentLoader.getPageData(child.id);
+    return {
+      title: child.title,
+      description: pageData?.meta?.description || '',
+      link: child.path,
+      clickable: true
+    };
+  });
+
+  const pageContent = document.getElementById('page-content');
+  pageContent.innerHTML = `
+    <div class="fade-in max-w-4xl mx-auto">
+      ${PageHeader.render({
+        title: 'Apps',
+        subtitle: 'Software & Tools',
+        description: 'Software applications and tools built by Chris Lyons'
+      })}
+
+      <section class="mb-12">
+        ${projectCards.length > 0 ? Card.renderGrid(projectCards) : '<p class="text-gray-600">No apps currently available.</p>'}
+      </section>
+
+      <div class="mt-12 text-center">
+        <a href="/" class="link text-lg">← Back to home</a>
+      </div>
+    </div>
+  `;
+}
+
+/**
+ * Render Ideas landing page
+ */
+function renderIdeasPage() {
+  contentLoader.updateDocumentTitle('Ideas');
+
+  // Get Ideas navigation item and children
+  const navigation = contentLoader.getNavigation();
+  const ideasNav = navigation.find(item => item.id === 'ideas');
+  const children = ideasNav?.children || [];
+
+  // Build cards for children
+  const projectCards = children.map(child => {
+    const pageData = contentLoader.getPageData(child.id);
+    return {
+      title: child.title,
+      description: pageData?.meta?.description || '',
+      link: child.path,
+      clickable: true
+    };
+  });
+
+  const pageContent = document.getElementById('page-content');
+  pageContent.innerHTML = `
+    <div class="fade-in max-w-4xl mx-auto">
+      ${PageHeader.render({
+        title: 'Ideas',
+        subtitle: 'Concepts & Research',
+        description: 'Long-form writing, research projects, and conceptual explorations by Chris Lyons'
+      })}
+
+      <section class="mb-12">
+        ${projectCards.length > 0 ? Card.renderGrid(projectCards) : '<p class="text-gray-600">No ideas currently available.</p>'}
+      </section>
+
+      <div class="mt-12 text-center">
+        <a href="/" class="link text-lg">← Back to home</a>
+      </div>
     </div>
   `;
 }
@@ -1432,10 +1486,36 @@ function renderHotboxPage() {
       </section>
 
       <div class="mt-12 text-center">
-        <a href="/writing" class="link text-lg">← Back to Writing</a>
+        <a href="/ideas" class="link text-lg">← Back to Ideas</a>
       </div>
     </div>
   `;
+}
+
+// Missing placeholder pages for new structure
+
+function renderClipComposerPage() {
+  contentLoader.updateDocumentTitle('Clip Composer');
+  const pageData = contentLoader.getPageData('clip-composer');
+  renderPlaceholderPage('Clip Composer', pageData?.meta?.description || 'Professional audio clip sequencer');
+}
+
+function renderNumaNetworkPage() {
+  contentLoader.updateDocumentTitle('Numa Network');
+  const pageData = contentLoader.getPageData('numa-network');
+  renderPlaceholderPage('Numa Network', pageData?.meta?.description || 'Research into distributed systems and network architectures');
+}
+
+function renderOSDEventsPage() {
+  contentLoader.updateDocumentTitle('OSD Events');
+  const pageData = contentLoader.getPageData('osd-events');
+  renderPlaceholderPage('OSD Events', pageData?.meta?.description || 'On-screen display event system');
+}
+
+function renderPortfolioPage() {
+  contentLoader.updateDocumentTitle('Portfolio');
+  const pageData = contentLoader.getPageData('portfolio');
+  renderPlaceholderPage('Portfolio', pageData?.meta?.description || 'Professional audio portfolio and technical recordings');
 }
 
 function renderConnectPage() {

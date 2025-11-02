@@ -98,6 +98,7 @@ export class Navigation {
   renderNavItem(item) {
     const isActive = this.currentPath === item.path;
     const hasChildren = item.children && item.children.length > 0;
+    const isConnect = item.id === 'connect';
 
     if (!hasChildren) {
       return `
@@ -109,6 +110,7 @@ export class Navigation {
               : 'text-gray-700 hover:text-primary hover:bg-gray-50'
           } transition-colors focus:outline-none focus:ring-2 focus:ring-secondary"
           ${isActive ? 'aria-current="page"' : ''}
+          ${isConnect ? 'data-admin-trapdoor="true"' : ''}
         >
           ${item.title}
         </a>
@@ -198,6 +200,19 @@ export class Navigation {
    * Attach event listeners after rendering
    */
   attachEventListeners() {
+    // Admin trapdoor: Alt+Shift+Click on Connect
+    document.querySelectorAll('[data-admin-trapdoor="true"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        // Check for Alt+Shift+Click
+        const modifierPressed = e.altKey && e.shiftKey;
+
+        if (modifierPressed) {
+          e.preventDefault();
+          window.location.href = '/admin';
+        }
+      });
+    });
+
     const mobileMenuButton = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
 

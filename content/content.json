@@ -55,6 +55,11 @@
           "id": "27-suppositions"
         },
         {
+          "title": "Blog",
+          "path": "/blog",
+          "id": "blog"
+        },
+        {
           "title": "Numa Network",
           "path": "/ideas/numa-network",
           "id": "numa-network"
