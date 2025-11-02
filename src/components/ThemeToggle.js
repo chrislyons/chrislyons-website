@@ -11,6 +11,7 @@
 export class ThemeToggle {
   constructor() {
     this.STORAGE_KEY = 'chrislyons-theme';
+    this.LAST_THEME_KEY = 'chrislyons-last-theme';
     this.THEMES = ['night', 'daylight', 'forest', 'beach'];
     this.theme = this.resolveInitialTheme();
     this.applyTheme(this.theme);
@@ -35,14 +36,28 @@ export class ThemeToggle {
   /**
    * Resolve initial theme on page load
    * SHUFFLE MODE: Always randomize theme on page load, ignoring localStorage cache
+   * Never picks the same theme twice in a row (n+1 logic)
    * User can still cycle themes during session via toggle button
    */
   resolveInitialTheme() {
     if (typeof window === 'undefined') return 'night';
 
-    // Always shuffle on page load - ignore stored preference
-    const randomIndex = Math.floor(Math.random() * this.THEMES.length);
-    return this.THEMES[randomIndex];
+    // Get the last theme shown (from previous page load or manual toggle)
+    const lastTheme = window.localStorage.getItem(this.LAST_THEME_KEY);
+
+    // Filter out the last theme to ensure we never repeat (n+1 logic)
+    const availableThemes = lastTheme
+      ? this.THEMES.filter(theme => theme !== lastTheme)
+      : this.THEMES;
+
+    // Randomly select from available themes
+    const randomIndex = Math.floor(Math.random() * availableThemes.length);
+    const selectedTheme = availableThemes[randomIndex];
+
+    // Store this as the last theme for next page load
+    window.localStorage.setItem(this.LAST_THEME_KEY, selectedTheme);
+
+    return selectedTheme;
   }
 
   /**
@@ -79,6 +94,8 @@ export class ThemeToggle {
 
     if (typeof window !== 'undefined') {
       window.localStorage.setItem(this.STORAGE_KEY, newTheme);
+      // Also update last theme to prevent showing same theme on next page load
+      window.localStorage.setItem(this.LAST_THEME_KEY, newTheme);
     }
   }
 
