@@ -271,7 +271,7 @@ function renderFloatingNav(currentPath: string = ''): string {
         document.documentElement.setAttribute('data-theme', theme);
 
         // Set color-scheme for browser UI
-        const isDark = theme === 'moonlight' || theme === 'forest';
+        const isDark = theme === 'moonlight' || theme === 'forest' || theme === 'char';
         document.documentElement.style.setProperty('color-scheme', isDark ? 'dark' : 'light');
 
         // Update dark class for backward compatibility
@@ -607,28 +607,28 @@ export function renderBlog(entries: Entry[]): string {
           color: #a78bfa !important;
         }
 
-        /* Char theme */
+        /* Char theme - Dark burnt orange/ember */
         [data-theme="char"] body {
-          background: linear-gradient(to bottom, #fff7ed 0%, #ffedd5 100%);
-          color: #7c2d12;
+          background: linear-gradient(to bottom, #2d1410 0%, #1a0f0a 100%);
+          color: #fef3d0;
         }
         [data-theme="char"] .text-gray-900 {
-          color: #9a3412;
+          color: #fef3d0;
         }
         [data-theme="char"] .text-gray-600 {
-          color: #ea580c;
+          color: #fdba74;
         }
         [data-theme="char"] .text-gray-500 {
-          color: #f97316;
+          color: #fed7aa;
         }
         [data-theme="char"] .entry-content p {
-          color: #7c2d12 !important;
+          color: #fef3d0 !important;
         }
         [data-theme="char"] .entry-content blockquote {
-          color: #7c2d12 !important;
+          color: #fef3d0 !important;
         }
         [data-theme="char"] .caption {
-          color: #ea580c !important;
+          color: #fdba74 !important;
         }
       </style>
     </head>
@@ -867,34 +867,34 @@ export function renderAdmin(entries: Entry[]): string {
           border-color: #d8b4fe;
         }
 
-        /* Char theme */
+        /* Char theme - Dark burnt orange/ember */
         [data-theme="char"] body {
-          background: linear-gradient(to bottom, #fff7ed 0%, #ffedd5 100%);
-          color: #7c2d12;
+          background: linear-gradient(to bottom, #2d1410 0%, #1a0f0a 100%);
+          color: #fef3d0;
         }
         [data-theme="char"] .text-gray-900 {
-          color: #9a3412;
+          color: #fef3d0;
         }
         [data-theme="char"] .text-gray-600 {
-          color: #ea580c;
+          color: #fdba74;
         }
         [data-theme="char"] .text-gray-500 {
-          color: #f97316;
+          color: #fed7aa;
         }
         [data-theme="char"] .bg-purple-600 {
           background-color: #dc2626;
         }
         [data-theme="char"] .entry-content p {
-          color: #7c2d12 !important;
+          color: #fef3d0 !important;
         }
         [data-theme="char"] .entry-content blockquote {
-          color: #7c2d12 !important;
+          color: #fef3d0 !important;
         }
         [data-theme="char"] .caption {
-          color: #ea580c !important;
+          color: #fdba74 !important;
         }
         [data-theme="char"] .entry {
-          border-color: #fdba74;
+          border-color: #5a3320;
         }
       </style>
     </head>

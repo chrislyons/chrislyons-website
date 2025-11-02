@@ -7,7 +7,7 @@
  * - Forest (dark green variation)
  * - Beach (warm light variation)
  * - Plum (purple/fuchsia light variation)
- * - Char (burnt orange variation)
+ * - Char (dark burnt orange/ember variation)
  */
 
 export class ThemeToggle {
@@ -71,7 +71,7 @@ export class ThemeToggle {
     document.documentElement.setAttribute('data-theme', theme);
 
     // Set color-scheme for browser UI
-    const isDark = theme === 'moonlight' || theme === 'forest';
+    const isDark = theme === 'moonlight' || theme === 'forest' || theme === 'char';
     document.documentElement.style.setProperty('color-scheme', isDark ? 'dark' : 'light');
 
     // Update Tailwind dark mode class for backward compatibility
