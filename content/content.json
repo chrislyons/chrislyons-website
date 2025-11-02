@@ -24,9 +24,34 @@
           "hidden": true
         },
         {
+          "title": "Carbon ACX",
+          "path": "/systems/carbon-acx",
+          "id": "carbon-acx"
+        },
+        {
           "title": "Hydrophobic Field Harvesters",
           "path": "/systems/hydrophobic-field-harvesters",
           "id": "hydrophobic"
+        },
+        {
+          "title": "ListMaker",
+          "path": "/systems/listmaker",
+          "id": "listmaker"
+        },
+        {
+          "title": "Orpheus SDK",
+          "path": "/systems/orpheus-sdk",
+          "id": "orpheus-sdk"
+        },
+        {
+          "title": "Tidal MCP Server",
+          "path": "/systems/tidal-mcp",
+          "id": "tidal-mcp"
+        },
+        {
+          "title": "WordBird",
+          "path": "/systems/wordbird",
+          "id": "wordbird"
         }
       ]
     },
@@ -56,6 +81,11 @@
           "title": "Essays",
           "path": "/writing/essays",
           "id": "essays"
+        },
+        {
+          "title": "Hotbox",
+          "path": "/writing/hotbox",
+          "id": "hotbox"
         },
         {
           "title": "Lyrics",
@@ -117,6 +147,36 @@
         "description": "Passive adsorbers for waterborne microplastics removal and environmental cleanup."
       }
     },
+    "carbon-acx": {
+      "title": "Carbon ACX",
+      "meta": {
+        "description": "Open reference stack for trustworthy carbon accounting. Turn auditable CSV inputs into reproducible datasets and interactive disclosures."
+      }
+    },
+    "listmaker": {
+      "title": "ListMaker",
+      "meta": {
+        "description": "Browser-based application for creating and managing structured lists with offline support and password protection."
+      }
+    },
+    "orpheus-sdk": {
+      "title": "Orpheus SDK",
+      "meta": {
+        "description": "Professional audio SDK for broadcast, live performance, and DAW applications. Deterministic session control with sample-accurate playback."
+      }
+    },
+    "tidal-mcp": {
+      "title": "Tidal MCP Server",
+      "meta": {
+        "description": "Model Context Protocol server for managing your Tidal music library. Built for DJs with BPM filtering, playlist creation, and advanced search."
+      }
+    },
+    "wordbird": {
+      "title": "WordBird",
+      "meta": {
+        "description": "Offline-first dictionary and translator toolkit for web, desktop, and mobile. Verifiable data packs with privacy-focused design."
+      }
+    },
     "sounds": {
       "title": "Sounds",
       "description": "Production Work | Compositions",
@@ -153,6 +213,12 @@
       "placeholder": true,
       "meta": {
         "description": "Essays exploring technical systems, creative processes, and research."
+      }
+    },
+    "hotbox": {
+      "title": "Hotbox",
+      "meta": {
+        "description": "Narrative compiler for interactive essays. Citation-first LLM dialogues backed by deterministic authoring pipelines and verified facts."
       }
     },
     "lyrics": {

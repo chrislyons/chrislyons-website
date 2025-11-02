@@ -96,7 +96,12 @@ function setupRoutes() {
   // Systems section
   router.on('/systems', renderSystemsPage);
   router.on('/systems/boot-industries', renderBootIndustriesPage);
+  router.on('/systems/carbon-acx', renderCarbonAcxPage);
   router.on('/systems/hydrophobic-field-harvesters', renderHydrophobicPage);
+  router.on('/systems/listmaker', renderListMakerPage);
+  router.on('/systems/orpheus-sdk', renderOrpheusSDKPage);
+  router.on('/systems/tidal-mcp', renderTidalMCPPage);
+  router.on('/systems/wordbird', renderWordBirdPage);
 
   // Sounds section
   router.on('/sounds', renderSoundsPage);
@@ -106,6 +111,7 @@ function setupRoutes() {
   // Writing section
   router.on('/writing', renderWritingPage);
   router.on('/writing/essays', renderEssaysPage);
+  router.on('/writing/hotbox', renderHotboxPage);
   router.on('/writing/lyrics', renderLyricsPage);
   router.on('/writing/poems', renderPoemsPage);
   router.on('/writing/27-suppositions', render27SuppositionsPage);
@@ -682,6 +688,12 @@ function renderWritingPage() {
             clickable: true
           },
           {
+            title: 'Hotbox',
+            description: 'Narrative compiler for interactive essays backed by verified facts.',
+            link: '/writing/hotbox',
+            clickable: true
+          },
+          {
             title: 'Lyrics',
             description: '39 song compositions and collaborative works.',
             link: '/writing/lyrics',
@@ -913,6 +925,519 @@ function renderProtocolsOfSoundPage() {
       </div>
 
       <!-- Back Navigation -->
+      <div class="mt-12 text-center">
+        <a href="/writing" class="link text-lg">← Back to Writing</a>
+      </div>
+    </div>
+  `;
+}
+
+// New Systems Project Pages
+
+function renderCarbonAcxPage() {
+  contentLoader.updateDocumentTitle('Carbon ACX');
+
+  const pageContent = document.getElementById('page-content');
+  pageContent.innerHTML = `
+    <div class="fade-in max-w-4xl mx-auto">
+      ${PageHeader.render({
+        title: 'Carbon ACX',
+        subtitle: 'Open Carbon Accounting Stack',
+        description: 'Trustworthy carbon accounting from auditable CSV inputs to interactive disclosures'
+      })}
+
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold mb-6 text-primary">What is Carbon ACX?</h2>
+        <div class="bg-gray-50 rounded-lg p-6 space-y-4">
+          <p class="text-lg text-gray-700 leading-relaxed">
+            Carbon ACX is an <strong>open reference stack</strong> for trustworthy carbon accounting.
+            It turns auditable CSV inputs into reproducible datasets, then ships the same disclosures
+            through interactive tooling, static websites, and edge delivery—so teams can communicate
+            climate performance with confidence.
+          </p>
+          <p class="text-gray-700">
+            Every chart, data layer, and disclosure ships from a manifest that records byte hashes,
+            schema versions, and provenance so downstream clients can trust figure lineage before rendering.
+          </p>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold mb-6 text-primary">Key Features</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 class="text-xl font-semibold mb-3 text-secondary">Measurement You Can Inspect</h3>
+            <p class="text-gray-700">
+              Python derivation engine keeps validation logic, figure generation, and manifests in the
+              same code path—every published number carries lineage and checksums.
+            </p>
+          </div>
+          <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 class="text-xl font-semibold mb-3 text-secondary">Delivery Everywhere</h3>
+            <p class="text-gray-700">
+              Cloudflare Pages serves packaged artifacts, while Worker APIs power on-demand calculations
+              with strict input hygiene for programmatic integrations.
+            </p>
+          </div>
+          <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 class="text-xl font-semibold mb-3 text-secondary">Reproducible Datasets</h3>
+            <p class="text-gray-700">
+              Canonical CSVs for activities, emission factors, and grid intensity live under version control,
+              ready for rebuilds and audits.
+            </p>
+          </div>
+          <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 class="text-xl font-semibold mb-3 text-secondary">Multiple Interfaces</h3>
+            <p class="text-gray-700">
+              Dash operations client for analysts, static React site for stakeholders, and edge APIs
+              for integrations—all consuming identical artifacts.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold mb-6 text-primary">Use Cases</h2>
+        <ul class="list-disc list-inside space-y-2 text-gray-700 bg-gray-50 rounded-lg p-6">
+          <li>Organizations tracking operational emissions across professional services, online services, and industrial operations</li>
+          <li>Climate disclosure teams requiring auditable, reproducible datasets</li>
+          <li>Analysts exploring scenario simulations and defense supply chain impacts</li>
+          <li>Teams integrating carbon accounting into existing technical stacks</li>
+        </ul>
+      </section>
+
+      <div class="mt-12 text-center">
+        <a href="/systems" class="link text-lg">← Back to Systems</a>
+      </div>
+    </div>
+  `;
+}
+
+function renderListMakerPage() {
+  contentLoader.updateDocumentTitle('ListMaker');
+
+  const pageContent = document.getElementById('page-content');
+  pageContent.innerHTML = `
+    <div class="fade-in max-w-4xl mx-auto">
+      ${PageHeader.render({
+        title: 'ListMaker',
+        subtitle: 'Browser-Based List Management',
+        description: 'Create and manage structured lists with offline support and password protection'
+      })}
+
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold mb-6 text-primary">What is ListMaker?</h2>
+        <div class="bg-gray-50 rounded-lg p-6 space-y-4">
+          <p class="text-lg text-gray-700 leading-relaxed">
+            ListMaker is a browser-based application for creating and managing structured lists with
+            custom columns, sections, and data types. All data stays local in your browser—no server
+            required, no accounts needed.
+          </p>
+          <p class="text-gray-700">
+            Perfect for task management, inventory tracking, project planning, or any scenario where
+            you need organized, searchable data that stays private and works offline.
+          </p>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold mb-6 text-primary">Features</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 class="text-xl font-semibold mb-3 text-secondary">Structured Data</h3>
+            <p class="text-gray-700">
+              Define custom columns with different data types (text, number, select), mark fields as
+              required, and organize rows into collapsible sections.
+            </p>
+          </div>
+          <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 class="text-xl font-semibold mb-3 text-secondary">Powerful Search</h3>
+            <p class="text-gray-700">
+              Live search across all fields with keyboard shortcuts, result navigation, and automatic
+              section expansion for matched items.
+            </p>
+          </div>
+          <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 class="text-xl font-semibold mb-3 text-secondary">Privacy First</h3>
+            <p class="text-gray-700">
+              Password protection with bcrypt hashing, local-only storage, and optional cloud backup
+              via Cloudflare R2 integration.
+            </p>
+          </div>
+          <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 class="text-xl font-semibold mb-3 text-secondary">Export Anywhere</h3>
+            <p class="text-gray-700">
+              Export to CSV for spreadsheets, JSON for programmatic access, or print-friendly HTML
+              for documentation.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold mb-6 text-primary">Modes</h2>
+        <div class="space-y-4">
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-semibold mb-2 text-gray-800">Command Mode</h3>
+            <p class="text-gray-700">
+              Full editing capabilities—create, update, and delete rows and sections. Perfect for
+              active project management.
+            </p>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-xl font-semibold mb-2 text-gray-800">Patch Mode</h3>
+            <p class="text-gray-700">
+              Read-only viewing for sharing and collaboration. Lists remain searchable and exportable
+              but cannot be modified.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="mt-12 text-center">
+        <a href="/systems" class="link text-lg">← Back to Systems</a>
+      </div>
+    </div>
+  `;
+}
+
+function renderOrpheusSDKPage() {
+  contentLoader.updateDocumentTitle('Orpheus SDK');
+
+  const pageContent = document.getElementById('page-content');
+  pageContent.innerHTML = `
+    <div class="fade-in max-w-4xl mx-auto">
+      ${PageHeader.render({
+        title: 'Orpheus SDK',
+        subtitle: 'Professional Audio SDK',
+        description: 'C++20 SDK for broadcast, live performance, and DAW applications with sample-accurate control'
+      })}
+
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold mb-6 text-primary">What is Orpheus SDK?</h2>
+        <div class="bg-gray-50 rounded-lg p-6 space-y-4">
+          <p class="text-lg text-gray-700 leading-relaxed">
+            Orpheus is a <strong>host-neutral C++20 SDK</strong> that provides deterministic session/transport
+            control, sample-accurate clip playback, and real-time audio infrastructure. Built for 24/7
+            broadcast reliability with zero-allocation audio threads and lock-free command processing.
+          </p>
+          <p class="text-gray-700">
+            Designed for professional applications that demand sample-accurate (±0 sample) tolerance,
+            deterministic behavior, and real-time safety.
+          </p>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold mb-6 text-primary">Core Capabilities</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 class="text-xl font-semibold mb-3 text-secondary">Transport & Playback</h3>
+            <ul class="list-disc list-inside space-y-1 text-gray-700">
+              <li>Multi-clip transport (tested with 16 clips)</li>
+              <li>Per-clip gain control (-96 to +12 dB)</li>
+              <li>Seamless loop mode</li>
+              <li>Sample-accurate trim points</li>
+            </ul>
+          </div>
+          <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 class="text-xl font-semibold mb-3 text-secondary">Audio I/O</h3>
+            <ul class="list-disc list-inside space-y-1 text-gray-700">
+              <li>WAV/AIFF/FLAC via libsndfile</li>
+              <li>CoreAudio (macOS)</li>
+              <li>WASAPI/ASIO (Windows)</li>
+              <li>Multi-channel (2-32 channels)</li>
+            </ul>
+          </div>
+          <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 class="text-xl font-semibold mb-3 text-secondary">Real-Time Safety</h3>
+            <ul class="list-disc list-inside space-y-1 text-gray-700">
+              <li>Zero allocations on audio thread</li>
+              <li>Lock-free command processing</li>
+              <li>Deterministic: same input → same output</li>
+              <li>AddressSanitizer clean</li>
+            </ul>
+          </div>
+          <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 class="text-xl font-semibold mb-3 text-secondary">Developer Tools</h3>
+            <ul class="list-disc list-inside space-y-1 text-gray-700">
+              <li>Session graphs & tempo maps</li>
+              <li>Click-track rendering</li>
+              <li>Comprehensive test suite (32 tests)</li>
+              <li>ABI negotiation</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold mb-6 text-primary">Applications</h2>
+        <div class="bg-gray-50 rounded-lg p-6">
+          <p class="text-lg font-semibold text-gray-800 mb-4">Orpheus Clip Composer (in development):</p>
+          <p class="text-gray-700 mb-4">
+            Professional soundboard for broadcast playout, theater sound design, and live performance.
+            Features include 960-button clip triggering, waveform editing, multi-channel routing, and iOS remote control.
+          </p>
+          <p class="text-sm text-gray-600">
+            Target markets: Broadcast playout, theater sound design, live performance production
+          </p>
+        </div>
+      </section>
+
+      <div class="mt-12 text-center">
+        <a href="/systems" class="link text-lg">← Back to Systems</a>
+      </div>
+    </div>
+  `;
+}
+
+function renderTidalMCPPage() {
+  contentLoader.updateDocumentTitle('Tidal MCP Server');
+
+  const pageContent = document.getElementById('page-content');
+  pageContent.innerHTML = `
+    <div class="fade-in max-w-4xl mx-auto">
+      ${PageHeader.render({
+        title: 'Tidal MCP Server',
+        subtitle: 'Music Library Management via Claude',
+        description: 'Model Context Protocol server for managing your Tidal library through conversational AI'
+      })}
+
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold mb-6 text-primary">What is Tidal MCP Server?</h2>
+        <div class="bg-gray-50 rounded-lg p-6 space-y-4">
+          <p class="text-lg text-gray-700 leading-relaxed">
+            A <strong>Model Context Protocol (MCP)</strong> server that lets you manage your Tidal music
+            library through Claude Desktop. Built for DJs and music curators with comprehensive playlist
+            management, full catalog search, advanced filtering, and intelligent caching.
+          </p>
+          <p class="text-gray-700">
+            18 tools, 14 filter types (including BPM), ~90% BPM coverage via Spotify integration,
+            and visual browsing with album artwork in markdown tables.
+          </p>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold mb-6 text-primary">Features for DJs</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 class="text-xl font-semibold mb-3 text-secondary">BPM-Matched Mixing</h3>
+            <p class="text-gray-700">
+              ~90% track coverage with Spotify integration (up from ~3-5% Tidal-only). Filter by BPM
+              range, exclude radio edits, discover extended mixes.
+            </p>
+          </div>
+          <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 class="text-xl font-semibold mb-3 text-secondary">Advanced Filtering</h3>
+            <p class="text-gray-700">
+              14 filter types: explicit content, year ranges, artist exclusions, version filtering,
+              duration constraints, popularity ranges, audio quality.
+            </p>
+          </div>
+          <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 class="text-xl font-semibold mb-3 text-secondary">Catalog Search</h3>
+            <p class="text-gray-700">
+              Search your collection AND Tidal's full catalog. Create playlists from any tracks,
+              albums, or artists—not just saved items.
+            </p>
+          </div>
+          <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 class="text-xl font-semibold mb-3 text-secondary">Smart Playlists</h3>
+            <p class="text-gray-700">
+              Build genre-specific sets with precise duration control, clean versions for broadcast,
+              artist network exploration for set planning.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold mb-6 text-primary">Example Use Cases</h2>
+        <div class="bg-gray-50 rounded-lg p-6 space-y-3">
+          <div class="border-l-4 border-secondary pl-4">
+            <p class="text-gray-700">
+              <strong>"Create a 120-140 BPM techno playlist, exclude radio edits, minimum 6 minutes per track"</strong>
+            </p>
+          </div>
+          <div class="border-l-4 border-secondary pl-4">
+            <p class="text-gray-700">
+              <strong>"Find deep house from 2020-2024, no explicit tracks, HiRes quality only"</strong>
+            </p>
+          </div>
+          <div class="border-l-4 border-secondary pl-4">
+            <p class="text-gray-700">
+              <strong>"Search Tidal catalog for artists similar to Nina Kraviz"</strong>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="mt-12 text-center">
+        <a href="/systems" class="link text-lg">← Back to Systems</a>
+      </div>
+    </div>
+  `;
+}
+
+function renderWordBirdPage() {
+  contentLoader.updateDocumentTitle('WordBird');
+
+  const pageContent = document.getElementById('page-content');
+  pageContent.innerHTML = `
+    <div class="fade-in max-w-4xl mx-auto">
+      ${PageHeader.render({
+        title: 'WordBird',
+        subtitle: 'Offline-First Dictionary Toolkit',
+        description: 'Offline-first dictionary and translator for web, desktop, and mobile with verifiable data packs'
+      })}
+
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold mb-6 text-primary">What is WordBird?</h2>
+        <div class="bg-gray-50 rounded-lg p-6 space-y-4">
+          <p class="text-lg text-gray-700 leading-relaxed">
+            WordBird gives language learners, translators, and researchers a <strong>trustworthy dictionary
+            experience</strong> even when the network drops. Every surface—browser PWA, native shells, and
+            integrations—resolves lookups locally so the experience stays fast, private, and predictable.
+          </p>
+          <p class="text-gray-700">
+            Pack downloads are integrity-checked, licensed for redistribution, and ready for classroom,
+            newsroom, or humanitarian deployments that cannot rely on constant connectivity.
+          </p>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold mb-6 text-primary">Key Features</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 class="text-xl font-semibold mb-3 text-secondary">Instant, Offline Search</h3>
+            <p class="text-gray-700">
+              Explore definitions, synonyms, antonyms, and idioms without leaving the device. Multiword
+              expressions and part-of-speech filters mirror a printed dictionary workflow.
+            </p>
+          </div>
+          <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 class="text-xl font-semibold mb-3 text-secondary">Cross-Platform</h3>
+            <p class="text-gray-700">
+              Same workspace on web, desktop, and mobile. Tauri quick panel and deep links respond to
+              keyboard shortcuts for lightning-fast lookups.
+            </p>
+          </div>
+          <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 class="text-xl font-semibold mb-3 text-secondary">Verifiable Data Packs</h3>
+            <p class="text-gray-700">
+              Language packs travel with SHA-256 digests, attribution, and ShareAlike metadata, making
+              institutional rollouts auditable from the first install.
+            </p>
+          </div>
+          <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 class="text-xl font-semibold mb-3 text-secondary">Privacy Respecting</h3>
+            <p class="text-gray-700">
+              CLI tooling and URL hooks let teams wire WordBird into research notebooks or translation
+              pipelines without introducing telemetry.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold mb-6 text-primary">Who Benefits</h2>
+        <ul class="list-disc list-inside space-y-2 text-gray-700 bg-gray-50 rounded-lg p-6">
+          <li><strong>Learners and educators</strong> who need consistent offline access to curated lexical references</li>
+          <li><strong>Translators and journalists</strong> who must verify terminology quickly while safeguarding sensitive work</li>
+          <li><strong>Developers and researchers</strong> who want to embed dictionary intelligence locally using documented APIs</li>
+          <li><strong>Air-gapped environments</strong> requiring verified data packs with removable media distribution</li>
+        </ul>
+      </section>
+
+      <div class="mt-12 text-center">
+        <a href="/systems" class="link text-lg">← Back to Systems</a>
+      </div>
+    </div>
+  `;
+}
+
+// Writing Section: Hotbox
+
+function renderHotboxPage() {
+  contentLoader.updateDocumentTitle('Hotbox');
+
+  const pageContent = document.getElementById('page-content');
+  pageContent.innerHTML = `
+    <div class="fade-in max-w-4xl mx-auto">
+      ${PageHeader.render({
+        title: 'Hotbox',
+        subtitle: 'Narrative Compiler',
+        description: 'Interactive essays delivered as scoped, citation-first LLM dialogues backed by deterministic authoring pipelines'
+      })}
+
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold mb-6 text-primary">What is Hotbox?</h2>
+        <div class="bg-gray-50 rounded-lg p-6 space-y-4">
+          <p class="text-lg text-gray-700 leading-relaxed">
+            Hotbox is a <strong>narrative compiler</strong>—a system for assembling sophisticated, citation-grounded
+            long-form essays from verified, reusable facts. Authors compose book-length narratives by snapping
+            together <em>claims</em> (atomic, sourced facts) into <em>beats</em> (story goals) inside a shared
+            knowledge graph. The essay stays human; the evidence stays machine-readable.
+          </p>
+          <p class="text-gray-700">
+            Readers experience these essays as scoped, citation-first dialogues backed by deterministic authoring
+            pipelines—every answer is sourced, reproducible, and safe for exploring complex histories or policy debates.
+          </p>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold mb-6 text-primary">Key Features</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 class="text-xl font-semibold mb-3 text-secondary">Coverage-First Chat</h3>
+            <p class="text-gray-700">
+              Worker reruns coverage checks, aligns quotes, escalates to a second model when coverage drops
+              below 85%, and logs hashed debug data for auditors.
+            </p>
+          </div>
+          <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 class="text-xl font-semibold mb-3 text-secondary">Validator-Gated Authoring</h3>
+            <p class="text-gray-700">
+              Author Console surfaces progress, artifacts, and token-gated access. Compose → stitch →
+              validate → render → index commands ensure rigor.
+            </p>
+          </div>
+          <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 class="text-xl font-semibold mb-3 text-secondary">Beat-Driven Composition</h3>
+            <p class="text-gray-700">
+              Authors define story structure in beats.yaml, populate verified claims in claims.csv, and
+              generate beat packs that bundle metadata for LLM-powered draft generation.
+            </p>
+          </div>
+          <div class="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 class="text-xl font-semibold mb-3 text-secondary">Research-Grade Search</h3>
+            <p class="text-gray-700">
+              Hybrid dense/sparse ranking, snippet highlighting, casefile enrichment, and cached responses
+              drive the search UI for draft QA and editorial review.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-3xl font-bold mb-6 text-primary">Authoring Workflow</h2>
+        <div class="bg-gray-50 rounded-lg p-6">
+          <ol class="list-decimal list-inside space-y-2 text-gray-700">
+            <li><strong>Define structure</strong> – Create beats.yaml with goals, tones, and transitions</li>
+            <li><strong>Populate claims</strong> – Fill claims.csv with atomic, citable facts (priority A/B/C)</li>
+            <li><strong>Link entities</strong> – Define relationships in edges.csv that reuse Core Registry entities</li>
+            <li><strong>Build beat packs</strong> – Generate JSON bundles pairing beat metadata with relevant claims</li>
+            <li><strong>Compose drafts</strong> – Use LLM to generate drafts from beat packs</li>
+            <li><strong>Stitch chapter</strong> – Merge beat drafts into cohesive chapters</li>
+            <li><strong>Validate</strong> – Check for orphan claims, citation resolution, coverage thresholds</li>
+            <li><strong>Ingest for retrieval</strong> – Generate embeddings for passage-level and beat-level retrieval</li>
+          </ol>
+        </div>
+      </section>
+
       <div class="mt-12 text-center">
         <a href="/writing" class="link text-lg">← Back to Writing</a>
       </div>
