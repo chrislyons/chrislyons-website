@@ -792,13 +792,6 @@ function renderLyricsPage() {
         description: 'Songs by Chris Lyons'
       })}
 
-      <!-- Song Count -->
-      <div class="mb-8 text-center">
-        <p class="text-xl text-gray-600">
-          <strong>${songs.length}</strong> songs
-        </p>
-      </div>
-
       <!-- Song List -->
       <section class="mb-12">
         <div class="bg-white rounded-lg border border-gray-200 shadow-sm">
