@@ -1,6 +1,7 @@
 {
   "name": "chrislyons-website",
   "version": "1.0.0",
+  "type": "module",
   "description": "Brief project description here.",
   "main": "index.js",
   "directories": {
@@ -9,7 +10,9 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "dev:worker": "wrangler dev --port 8787 --local",
+    "dev:all": "npm run dev & npm run dev:worker",
+    "build": "vite build && node scripts/generate-asset-manifest.js",
     "preview": "vite preview"
   },
   "keywords": [],
@@ -22,6 +25,6 @@
     "vite": "^7.1.12"
   },
   "dependencies": {
-    "@cloudflare/kv-asset-handler": "^0.4.0"
+    "hono": "^4.10.4"
   }
 }

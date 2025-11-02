@@ -1,12 +1,33 @@
-# Cloudflare Workers Sites Configuration
+# Cloudflare Workers Configuration
 # Worker name: hey
 
 name = "hey"
-compatibility_date = "2025-04-01"
-main = "workers-site/index.js"
+compatibility_date = "2024-11-01"
+main = "src/worker.ts"
+
+# Development settings
+[dev]
+port = 8787
+local_protocol = "http"
+
+# D1 Database for blog entries
+[[d1_databases]]
+binding = "DB"
+database_name = "blog-db"
+database_id = "741a89af-1617-491f-991b-0bde7cf81d69"
+
+# R2 Bucket for blog images
+[[r2_buckets]]
+binding = "BLOG_IMAGES"
+bucket_name = "blog-images"
+
+# Secrets (set with: npx wrangler secret put GIPHY_API_KEY)
+# GIPHY_API_KEY - Set this via CLI
 
 [build]
 command = "npm run build"
 
-[site]
-bucket = "./dist"
+# Modern assets configuration (replaces deprecated [site])
+[assets]
+directory = "./dist"
+binding = "ASSETS"
