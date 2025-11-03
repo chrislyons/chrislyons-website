@@ -79,8 +79,8 @@ const NAV_DATA = [
     path: "/ideas",
     id: "ideas",
     children: [
-      { title: "27 Suppositions", path: "/ideas/27-suppositions" },
       { title: "Blog", path: "/blog" },
+      { title: "27 Suppositions", path: "/ideas/27-suppositions" },
       { title: "Numa Network", path: "/ideas/numa-network" },
       { title: "OSD Events", path: "/ideas/osd-events" },
       { title: "Protocols of Sound", path: "/ideas/protocols-of-sound" }
@@ -133,12 +133,12 @@ function renderFloatingNav(currentPath: string = ''): string {
                         <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                       </svg>
                     </button>
-                    <div class="absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
+                    <div class="dropdown-menu absolute left-0 mt-2 w-56 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10">
                       <div class="py-1" role="menu" aria-orientation="vertical">
                         ${item.children.map(child => `
                           <a
                             href="${child.path}"
-                            class="block px-4 py-2 text-base text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-primary dark:hover:text-blue-400 transition-colors focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-700"
+                            class="dropdown-item block px-4 py-2 text-base transition-colors focus:outline-none"
                             role="menuitem"
                           >
                             ${child.title}
@@ -310,6 +310,22 @@ function renderFloatingNav(currentPath: string = ''): string {
       // Theme toggle listeners
       document.getElementById('theme-toggle')?.addEventListener('click', cycleTheme);
       document.getElementById('theme-toggle-mobile')?.addEventListener('click', cycleTheme);
+
+      // Keyboard shortcut: '\\' to cycle themes
+      document.addEventListener('keydown', (e) => {
+        if (e.key === '\\\\' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+          const activeElement = document.activeElement;
+          const isTyping = activeElement && (
+            activeElement.tagName === 'INPUT' ||
+            activeElement.tagName === 'TEXTAREA' ||
+            activeElement.isContentEditable
+          );
+          if (!isTyping) {
+            e.preventDefault();
+            cycleTheme();
+          }
+        }
+      });
 
       // Mobile menu toggle
       const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -609,7 +625,7 @@ export function renderBlog(entries: Entry[]): string {
 
         /* Char theme - Dark burnt orange/ember */
         [data-theme="char"] body {
-          background: linear-gradient(to bottom, #2d1410 0%, #1a0f0a 100%);
+          background: linear-gradient(to bottom, #4a2c14 0%, #3d2414 100%);
           color: #fef3d0;
         }
         [data-theme="char"] .text-gray-900 {
@@ -869,7 +885,7 @@ export function renderAdmin(entries: Entry[]): string {
 
         /* Char theme - Dark burnt orange/ember */
         [data-theme="char"] body {
-          background: linear-gradient(to bottom, #2d1410 0%, #1a0f0a 100%);
+          background: linear-gradient(to bottom, #4a2c14 0%, #3d2414 100%);
           color: #fef3d0;
         }
         [data-theme="char"] .text-gray-900 {
@@ -894,7 +910,7 @@ export function renderAdmin(entries: Entry[]): string {
           color: #fdba74 !important;
         }
         [data-theme="char"] .entry {
-          border-color: #5a3320;
+          border-color: #7a4a30;
         }
       </style>
     </head>
@@ -995,92 +1011,119 @@ function getAdminScript(): string {
       });
     });
 
-    function openEditor(type, entryId = null) {
+    function openEditor(type, entryId = null, entry = null) {
       currentBlockType = type;
       currentEditingId = entryId;
       const modalContent = document.getElementById('edit-modal-content');
 
+      const content = entry ? JSON.parse(entry.content) : null;
+      const metadata = entry && entry.metadata ? JSON.parse(entry.metadata) : null;
+      const published = entry ? entry.published === 1 : false;
+
       switch (type) {
-        case 'text': modalContent.innerHTML = getTextEditor(); break;
-        case 'image': modalContent.innerHTML = getImageEditor(); setupImageUpload(); break;
-        case 'gif': modalContent.innerHTML = getGifEditor(); setupGifSearch(); break;
-        case 'quote': modalContent.innerHTML = getQuoteEditor(); break;
+        case 'text': modalContent.innerHTML = getTextEditor(content, published); break;
+        case 'image': modalContent.innerHTML = getImageEditor(content, published); setupImageUpload(content); break;
+        case 'gif': modalContent.innerHTML = getGifEditor(content, published); setupGifSearch(); break;
+        case 'quote': modalContent.innerHTML = getQuoteEditor(content, published); break;
       }
 
       editBlockModal.showModal();
     }
 
-    function getTextEditor() {
+    function getTextEditor(content = null, published = false) {
+      const text = content ? content.text || '' : '';
+      const font = content ? content.font || 'Inter' : 'Inter';
+      const fontSize = content ? parseInt(content.fontSize) || 18 : 18;
+      const publishedAttr = published ? 'checked' : '';
+
       return \`<h2 class="text-2xl font-bold mb-6">Text Block</h2>
         <div class="space-y-4">
           <div><label class="block text-sm font-semibold mb-2">Text Content</label>
-            <textarea id="text-content" class="w-full p-3 border border-gray-300 rounded-lg min-h-32" placeholder="Write your thoughts..."></textarea></div>
+            <textarea id="text-content" class="w-full p-3 border border-gray-300 rounded-lg min-h-32" placeholder="Write your thoughts...">\${text}</textarea></div>
           <div class="grid grid-cols-2 gap-4">
             <div><label class="block text-sm font-semibold mb-2">Font</label>
               <select id="font-picker" class="w-full p-3 border border-gray-300 rounded-lg">
-                \${FONTS.map(f => \`<option value="\${f.name}">\${f.name}</option>\`).join('')}</select></div>
+                \${FONTS.map(f => \`<option value="\${f.name}" \${f.name === font ? 'selected' : ''}>\${f.name}</option>\`).join('')}</select></div>
             <div><label class="block text-sm font-semibold mb-2">Size</label>
-              <div class="flex items-center gap-3"><input type="range" id="font-size" min="14" max="48" value="18" class="flex-1">
-                <span id="size-display" class="text-sm font-mono">18px</span></div></div></div>
-          <div class="flex items-center gap-3"><input type="checkbox" id="published" class="w-5 h-5">
+              <div class="flex items-center gap-3"><input type="range" id="font-size" min="14" max="48" value="\${fontSize}" class="flex-1">
+                <span id="size-display" class="text-sm font-mono">\${fontSize}px</span></div></div></div>
+          <div class="flex items-center gap-3"><input type="checkbox" id="published" class="w-5 h-5" \${publishedAttr}>
             <label for="published" class="text-sm font-semibold">Publish immediately</label></div>
           <div class="flex gap-3 mt-6">
             <button id="save-btn" class="flex-1 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 font-semibold">Save</button>
             <button id="cancel-btn" class="px-6 py-3 bg-gray-200 rounded-lg hover:bg-gray-300">Cancel</button></div></div>\`;
     }
 
-    function getImageEditor() {
+    function getImageEditor(content = null, published = false) {
+      const caption = content ? content.caption || '' : '';
+      const imageUrl = content ? content.url || '' : '';
+      const publishedAttr = published ? 'checked' : '';
+      const showPreview = imageUrl ? '' : 'hidden';
+      const showPrompt = imageUrl ? 'hidden' : '';
+
       return \`<h2 class="text-2xl font-bold mb-6">Image Block</h2>
         <div class="space-y-4">
           <div><label class="block text-sm font-semibold mb-2">Upload Image</label>
             <div id="upload-area" class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-purple-500 transition cursor-pointer">
               <input type="file" id="image-upload" accept="image/*" class="hidden">
-              <div id="upload-prompt"><div class="text-4xl mb-2">📸</div><p class="text-gray-600">Click to upload or drag and drop</p></div>
-              <div id="image-preview" class="hidden"><img id="preview-img" class="max-w-full max-h-64 mx-auto rounded-lg"></div></div></div>
+              <div id="upload-prompt" class="\${showPrompt}"><div class="text-4xl mb-2">📸</div><p class="text-gray-600">Click to upload or drag and drop</p></div>
+              <div id="image-preview" class="\${showPreview}"><img id="preview-img" src="\${imageUrl}" class="max-w-full max-h-64 mx-auto rounded-lg"></div></div></div>
           <div><label class="block text-sm font-semibold mb-2">Caption (optional)</label>
-            <input type="text" id="image-caption" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="Add a caption..."></div>
-          <div class="flex items-center gap-3"><input type="checkbox" id="published" class="w-5 h-5">
+            <input type="text" id="image-caption" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="Add a caption..." value="\${caption}"></div>
+          <div class="flex items-center gap-3"><input type="checkbox" id="published" class="w-5 h-5" \${publishedAttr}>
             <label for="published" class="text-sm font-semibold">Publish immediately</label></div>
           <div class="flex gap-3 mt-6">
             <button id="save-btn" class="flex-1 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 font-semibold">Save</button>
             <button id="cancel-btn" class="px-6 py-3 bg-gray-200 rounded-lg hover:bg-gray-300">Cancel</button></div></div>\`;
     }
 
-    function getGifEditor() {
+    function getGifEditor(content = null, published = false) {
+      const gifUrl = content ? content.url || '' : '';
+      const gifTitle = content ? content.title || '' : '';
+      const publishedAttr = published ? 'checked' : '';
+      const resultsDisplay = gifUrl ? \`<div class="col-span-3 text-center py-4"><img src="\${gifUrl}" class="max-w-md mx-auto rounded-lg"><p class="mt-2 text-sm text-gray-500">\${gifTitle}</p></div>\` : '<div class="col-span-3 text-center text-gray-400 py-8">Search for GIFs to get started</div>';
+
       return \`<h2 class="text-2xl font-bold mb-6">GIF Block</h2>
         <div class="space-y-4">
           <div><label class="block text-sm font-semibold mb-2">Search Giphy</label>
             <input type="text" id="gif-search" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="Search for GIFs..."></div>
           <div id="gif-results" class="grid grid-cols-3 gap-2 max-h-96 overflow-y-auto">
-            <div class="col-span-3 text-center text-gray-400 py-8">Search for GIFs to get started</div></div>
-          <input type="hidden" id="selected-gif-url"><input type="hidden" id="selected-gif-title">
-          <div class="flex items-center gap-3"><input type="checkbox" id="published" class="w-5 h-5">
+            \${resultsDisplay}</div>
+          <input type="hidden" id="selected-gif-url" value="\${gifUrl}"><input type="hidden" id="selected-gif-title" value="\${gifTitle}">
+          <div class="flex items-center gap-3"><input type="checkbox" id="published" class="w-5 h-5" \${publishedAttr}>
             <label for="published" class="text-sm font-semibold">Publish immediately</label></div>
           <div class="flex gap-3 mt-6">
             <button id="save-btn" class="flex-1 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 font-semibold">Save</button>
             <button id="cancel-btn" class="px-6 py-3 bg-gray-200 rounded-lg hover:bg-gray-300">Cancel</button></div></div>\`;
     }
 
-    function getQuoteEditor() {
+    function getQuoteEditor(content = null, published = false) {
+      const quoteText = content ? content.text || '' : '';
+      const quoteAuthor = content ? content.author || '' : '';
+      const quoteFont = content ? content.font || 'Georgia' : 'Georgia';
+      const publishedAttr = published ? 'checked' : '';
+
       return \`<h2 class="text-2xl font-bold mb-6">Quote Block</h2>
         <div class="space-y-4">
           <div><label class="block text-sm font-semibold mb-2">Quote Text</label>
-            <textarea id="quote-text" class="w-full p-3 border border-gray-300 rounded-lg min-h-24" placeholder="Enter the quote..."></textarea></div>
+            <textarea id="quote-text" class="w-full p-3 border border-gray-300 rounded-lg min-h-24" placeholder="Enter the quote...">\${quoteText}</textarea></div>
           <div><label class="block text-sm font-semibold mb-2">Author (optional)</label>
-            <input type="text" id="quote-author" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="Author name..."></div>
+            <input type="text" id="quote-author" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="Author name..." value="\${quoteAuthor}"></div>
           <div><label class="block text-sm font-semibold mb-2">Font</label>
             <select id="font-picker" class="w-full p-3 border border-gray-300 rounded-lg">
-              \${FONTS.map(f => \`<option value="\${f.name}">\${f.name}</option>\`).join('')}</select></div>
-          <div class="flex items-center gap-3"><input type="checkbox" id="published" class="w-5 h-5">
+              \${FONTS.map(f => \`<option value="\${f.name}" \${f.name === quoteFont ? 'selected' : ''}>\${f.name}</option>\`).join('')}</select></div>
+          <div class="flex items-center gap-3"><input type="checkbox" id="published" class="w-5 h-5" \${publishedAttr}>
             <label for="published" class="text-sm font-semibold">Publish immediately</label></div>
           <div class="flex gap-3 mt-6">
             <button id="save-btn" class="flex-1 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 font-semibold">Save</button>
             <button id="cancel-btn" class="px-6 py-3 bg-gray-200 rounded-lg hover:bg-gray-300">Cancel</button></div></div>\`;
     }
 
-    function setupImageUpload() {
+    function setupImageUpload(content = null) {
       const uploadArea = document.getElementById('upload-area');
       const fileInput = document.getElementById('image-upload');
+      const existingUrl = content ? content.url : null;
+
       uploadArea.addEventListener('click', () => fileInput.click());
       fileInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
@@ -1098,22 +1141,52 @@ function getAdminScript(): string {
       setTimeout(() => {
         document.getElementById('save-btn').addEventListener('click', async (e) => {
           const file = fileInput.files[0];
-          if (!file) return alert('Please select an image');
           const btn = e.target;
-          btn.textContent = 'Uploading...';
+
+          // If editing and no new file is selected, use existing URL
+          let imageUrl = existingUrl;
+
+          if (file) {
+            btn.textContent = 'Uploading...';
+            btn.disabled = true;
+            try {
+              const formData = new FormData();
+              formData.append('file', file);
+              const uploadRes = await fetch('/admin/upload', { method: 'POST', body: formData });
+              const { url } = await uploadRes.json();
+              imageUrl = url;
+            } catch (error) {
+              alert('Failed to upload: ' + error.message);
+              btn.textContent = 'Save';
+              btn.disabled = false;
+              return;
+            }
+          } else if (!existingUrl) {
+            return alert('Please select an image');
+          }
+
+          btn.textContent = 'Saving...';
           btn.disabled = true;
+
           try {
-            const formData = new FormData();
-            formData.append('file', file);
-            const uploadRes = await fetch('/admin/upload', { method: 'POST', body: formData });
-            const { url } = await uploadRes.json();
-            await fetch('/admin/entry', {
-              method: 'POST',
+            const content = {
+              url: imageUrl,
+              caption: document.getElementById('image-caption').value,
+              alt: document.getElementById('image-caption').value || 'Image'
+            };
+            const published = document.getElementById('published').checked;
+
+            // Check if editing or creating
+            const method = currentEditingId ? 'PUT' : 'POST';
+            const endpoint = currentEditingId ? \`/admin/entry/\${currentEditingId}\` : '/admin/entry';
+
+            await fetch(endpoint, {
+              method,
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 type: 'image',
-                content: { url, caption: document.getElementById('image-caption').value, alt: document.getElementById('image-caption').value || 'Image' },
-                published: document.getElementById('published').checked
+                content,
+                published
               })
             });
             editBlockModal.close();
@@ -1162,13 +1235,20 @@ function getAdminScript(): string {
           btn.textContent = 'Saving...';
           btn.disabled = true;
           try {
-            await fetch('/admin/entry', {
-              method: 'POST',
+            const content = { url, title: document.getElementById('selected-gif-title').value };
+            const published = document.getElementById('published').checked;
+
+            // Check if editing or creating
+            const method = currentEditingId ? 'PUT' : 'POST';
+            const endpoint = currentEditingId ? \`/admin/entry/\${currentEditingId}\` : '/admin/entry';
+
+            await fetch(endpoint, {
+              method,
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 type: 'gif',
-                content: { url, title: document.getElementById('selected-gif-title').value },
-                published: document.getElementById('published').checked
+                content,
+                published
               })
             });
             editBlockModal.close();
@@ -1209,8 +1289,13 @@ function getAdminScript(): string {
             content = { text, author, font };
             metadata = { font };
           }
-          await fetch('/admin/entry', {
-            method: 'POST',
+
+          // Check if editing or creating
+          const method = currentEditingId ? 'PUT' : 'POST';
+          const endpoint = currentEditingId ? \`/admin/entry/\${currentEditingId}\` : '/admin/entry';
+
+          await fetch(endpoint, {
+            method,
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ type: currentBlockType, content, published: document.getElementById('published').checked, metadata })
           });
@@ -1227,9 +1312,16 @@ function getAdminScript(): string {
         const entryId = e.target.dataset.id;
         const entryEl = document.querySelector(\`[data-id="\${entryId}"]\`);
         const entryType = entryEl.dataset.type;
-        alert('Edit functionality coming soon! For now, you can delete and recreate the entry.');
-        // TODO: Implement edit functionality
-        // This would require loading the entry data and populating the editor fields
+
+        // Fetch entry data and open editor
+        fetch(\`/admin/entry/\${entryId}\`)
+          .then(res => res.json())
+          .then(entry => {
+            openEditor(entryType, entryId, entry);
+          })
+          .catch(error => {
+            alert('Failed to load entry: ' + error.message);
+          });
       }
       if (e.target.classList.contains('delete-btn')) {
         if (confirm('Are you sure you want to delete this entry?')) {
@@ -1419,6 +1511,22 @@ export function renderAdminLogin(error: string | null = null): string {
 
         // Theme toggle listener
         document.getElementById('theme-toggle')?.addEventListener('click', cycleTheme);
+
+        // Keyboard shortcut: '\\' to cycle themes
+        document.addEventListener('keydown', (e) => {
+          if (e.key === '\\\\' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+            const activeElement = document.activeElement;
+            const isTyping = activeElement && (
+              activeElement.tagName === 'INPUT' ||
+              activeElement.tagName === 'TEXTAREA' ||
+              activeElement.isContentEditable
+            );
+            if (!isTyping) {
+              e.preventDefault();
+              cycleTheme();
+            }
+          }
+        });
       </script>
     </body>
     </html>

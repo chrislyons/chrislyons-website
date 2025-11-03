@@ -25,6 +25,42 @@ let footer = null;
 let themeToggle = null;
 
 /**
+ * Set up global keyboard shortcuts
+ */
+function setupKeyboardShortcuts() {
+  document.addEventListener('keydown', (e) => {
+    // '\' key to cycle themes
+    if (e.key === '\\' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+      // Don't trigger if user is typing in an input field
+      const activeElement = document.activeElement;
+      const isTyping = activeElement && (
+        activeElement.tagName === 'INPUT' ||
+        activeElement.tagName === 'TEXTAREA' ||
+        activeElement.isContentEditable
+      );
+
+      if (!isTyping) {
+        e.preventDefault();
+        themeToggle.toggle();
+
+        // Re-render theme toggle buttons with new icon
+        const themeToggleContainer = document.getElementById('theme-toggle-container');
+        const themeToggleContainerMobile = document.getElementById('theme-toggle-container-mobile');
+
+        if (themeToggleContainer) {
+          themeToggleContainer.innerHTML = themeToggle.render();
+          themeToggle.attachEventListeners();
+        }
+
+        if (themeToggleContainerMobile) {
+          themeToggleContainerMobile.innerHTML = themeToggle.render();
+        }
+      }
+    }
+  });
+}
+
+/**
  * Initialize the application
  */
 function init() {
@@ -32,6 +68,9 @@ function init() {
 
   // Initialize theme (must be first to apply dark mode immediately)
   themeToggle = new ThemeToggle();
+
+  // Set up global keyboard shortcuts
+  setupKeyboardShortcuts();
 
   // Initialize components
   navigation = new Navigation();
@@ -186,7 +225,7 @@ function renderAppsPage() {
 
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
-    <div class="fade-in max-w-4xl mx-auto">
+    <div class="max-w-4xl mx-auto">
       ${PageHeader.render({
         title: 'Apps',
         subtitle: 'Software & Tools',
@@ -228,7 +267,7 @@ function renderIdeasPage() {
 
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
-    <div class="fade-in max-w-4xl mx-auto">
+    <div class="max-w-4xl mx-auto">
       ${PageHeader.render({
         title: 'Ideas',
         subtitle: 'Concepts & Research',
@@ -270,7 +309,7 @@ function renderSystemsPage() {
 
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
-    <div class="fade-in max-w-4xl mx-auto">
+    <div class="max-w-4xl mx-auto">
       ${PageHeader.render({
         title: 'Systems',
         subtitle: 'Design & Studio Builds | Research & Inventions',
@@ -308,7 +347,7 @@ function renderSystemsPage() {
 function renderPlaceholderPage(title, description) {
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
-    <div class="fade-in max-w-4xl mx-auto text-center py-20">
+    <div class="max-w-4xl mx-auto text-center py-20">
       <h1 class="text-5xl font-bold mb-6 text-primary">${title}</h1>
       <p class="text-xl text-gray-600 mb-8">${description}</p>
       <p class="text-base text-gray-500">Content coming soon.</p>
@@ -352,7 +391,7 @@ function renderBootIndustriesPage() {
 
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
-    <div class="fade-in max-w-5xl mx-auto">
+    <div class="max-w-5xl mx-auto">
       ${PageHeader.render({
         title: 'Boot Industries, Inc.',
         subtitle: 'Carbon Nanomaterials Platform',
@@ -488,7 +527,7 @@ function renderHydrophobicPage() {
 
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
-    <div class="fade-in max-w-5xl mx-auto">
+    <div class="max-w-5xl mx-auto">
       ${PageHeader.render({
         title: 'Hydrophobic Field Harvesters',
         subtitle: 'Passive Adsorbers for Waterborne Microplastics Removal',
@@ -623,7 +662,7 @@ function renderSoundsPage() {
 
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
-    <div class="fade-in max-w-4xl mx-auto">
+    <div class="max-w-4xl mx-auto">
       ${PageHeader.render({
         title: 'Sounds',
         subtitle: 'Production Work | Compositions',
@@ -678,7 +717,7 @@ function renderDiscographyPage() {
 
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
-    <div class="fade-in max-w-4xl mx-auto">
+    <div class="max-w-4xl mx-auto">
       ${PageHeader.render({
         title: 'Discography',
         subtitle: 'Albums and Releases',
@@ -703,7 +742,7 @@ function renderAudioSamplesPage() {
 
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
-    <div class="fade-in max-w-4xl mx-auto">
+    <div class="max-w-4xl mx-auto">
       ${PageHeader.render({
         title: 'Audio Samples',
         subtitle: 'Technical Audio Examples',
@@ -728,7 +767,7 @@ function renderWritingPage() {
 
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
-    <div class="fade-in max-w-4xl mx-auto">
+    <div class="max-w-4xl mx-auto">
       ${PageHeader.render({
         title: 'Writing',
         subtitle: 'Essays | Lyrics | Long-form Work',
@@ -790,7 +829,7 @@ function renderEssaysPage() {
 
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
-    <div class="fade-in max-w-3xl mx-auto">
+    <div class="max-w-3xl mx-auto">
       ${PageHeader.render({
         title: 'Essays',
         subtitle: 'Thoughts & Explorations',
@@ -842,7 +881,7 @@ function renderLyricsPage() {
 
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
-    <div class="fade-in max-w-3xl mx-auto">
+    <div class="max-w-3xl mx-auto">
       ${PageHeader.render({
         title: 'Lyrics',
         subtitle: 'Song Compositions',
@@ -878,7 +917,7 @@ function renderPoemsPage() {
 
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
-    <div class="fade-in max-w-3xl mx-auto">
+    <div class="max-w-3xl mx-auto">
       ${PageHeader.render({
         title: 'Poems',
         subtitle: 'Poetry Collection',
@@ -909,7 +948,7 @@ function render27SuppositionsPage() {
 
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
-    <div class="fade-in max-w-4xl mx-auto">
+    <div class="max-w-4xl mx-auto">
       ${PageHeader.render({
         title: '27 Suppositions',
         subtitle: 'Long-form Exploration',
@@ -943,7 +982,7 @@ function renderProtocolsOfSoundPage() {
 
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
-    <div class="fade-in max-w-4xl mx-auto">
+    <div class="max-w-4xl mx-auto">
       ${PageHeader.render({
         title: 'Protocols of Sound',
         subtitle: 'Historical Exploration',
@@ -989,7 +1028,7 @@ function renderCarbonAcxPage() {
 
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
-    <div class="fade-in max-w-4xl mx-auto">
+    <div class="max-w-4xl mx-auto">
       ${PageHeader.render({
         title: 'Carbon ACX',
         subtitle: 'Open Carbon Accounting Stack',
@@ -1068,7 +1107,7 @@ function renderListMakerPage() {
 
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
-    <div class="fade-in max-w-4xl mx-auto">
+    <div class="max-w-4xl mx-auto">
       ${PageHeader.render({
         title: 'ListMaker',
         subtitle: 'Browser-Based List Management',
@@ -1156,7 +1195,7 @@ function renderOrpheusSDKPage() {
 
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
-    <div class="fade-in max-w-4xl mx-auto">
+    <div class="max-w-4xl mx-auto">
       ${PageHeader.render({
         title: 'Orpheus SDK',
         subtitle: 'Professional Audio SDK',
@@ -1246,7 +1285,7 @@ function renderTidalMCPPage() {
 
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
-    <div class="fade-in max-w-4xl mx-auto">
+    <div class="max-w-4xl mx-auto">
       ${PageHeader.render({
         title: 'Tidal MCP Server',
         subtitle: 'Music Library Management via Claude',
@@ -1335,7 +1374,7 @@ function renderWordBirdPage() {
 
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
-    <div class="fade-in max-w-4xl mx-auto">
+    <div class="max-w-4xl mx-auto">
       ${PageHeader.render({
         title: 'WordBird',
         subtitle: 'Offline-First Dictionary Toolkit',
@@ -1415,7 +1454,7 @@ function renderHotboxPage() {
 
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
-    <div class="fade-in max-w-4xl mx-auto">
+    <div class="max-w-4xl mx-auto">
       ${PageHeader.render({
         title: 'Hotbox',
         subtitle: 'Narrative Compiler',
@@ -1527,7 +1566,7 @@ function renderConnectPage() {
 
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
-    <div class="fade-in max-w-2xl mx-auto text-center py-20">
+    <div class="max-w-2xl mx-auto text-center py-20">
       <h1 class="text-5xl font-bold mb-8 text-primary">Connect</h1>
       <p class="text-xl text-gray-700 mb-12">
         Get in touch for collaborations, projects, or inquiries.
@@ -1553,7 +1592,7 @@ function render404Page() {
 
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
-    <div class="fade-in max-w-2xl mx-auto text-center py-20">
+    <div class="max-w-2xl mx-auto text-center py-20">
       <h1 class="text-6xl font-bold mb-6 text-error">404</h1>
       <p class="text-2xl text-gray-700 mb-8">Page not found</p>
       <p class="text-lg text-gray-600 mb-12">

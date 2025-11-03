@@ -165,6 +165,22 @@ dynamicApp.post('/admin/entry', async (c) => {
   return c.json(newEntry, 201);
 });
 
+dynamicApp.get('/admin/entry/:id', async (c) => {
+  if (!isAuthenticated(c)) {
+    return c.json({ error: 'Unauthorized' }, 401);
+  }
+
+  const db = c.env.DB;
+  const id = c.req.param('id');
+  const entry = await db.prepare('SELECT * FROM entries WHERE id = ?').bind(id).first();
+
+  if (!entry) {
+    return c.json({ error: 'Entry not found' }, 404);
+  }
+
+  return c.json(entry);
+});
+
 dynamicApp.put('/admin/entry/:id', async (c) => {
   if (!isAuthenticated(c)) {
     return c.json({ error: 'Unauthorized' }, 401);

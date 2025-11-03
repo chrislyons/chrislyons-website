@@ -50,14 +50,14 @@
       "id": "ideas",
       "children": [
         {
-          "title": "27 Suppositions",
-          "path": "/ideas/27-suppositions",
-          "id": "27-suppositions"
-        },
-        {
           "title": "Blog",
           "path": "/blog",
           "id": "blog"
+        },
+        {
+          "title": "27 Suppositions",
+          "path": "/ideas/27-suppositions",
+          "id": "27-suppositions"
         },
         {
           "title": "Numa Network",

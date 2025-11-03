@@ -17,6 +17,7 @@ export class Navigation {
 
   /**
    * Filter out hidden navigation items and sort children alphabetically
+   * Exception: "Blog" always appears first in any dropdown
    */
   filterHidden(items) {
     return items
@@ -24,7 +25,13 @@ export class Navigation {
       .map(item => ({
         ...item,
         children: item.children
-          ? this.filterHidden(item.children).sort((a, b) => a.title.localeCompare(b.title))
+          ? this.filterHidden(item.children).sort((a, b) => {
+              // Put "Blog" first
+              if (a.title === 'Blog') return -1;
+              if (b.title === 'Blog') return 1;
+              // Otherwise alphabetical
+              return a.title.localeCompare(b.title);
+            })
           : undefined
       }));
   }

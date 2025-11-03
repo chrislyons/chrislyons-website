@@ -55,7 +55,7 @@
     @apply font-sans text-lg text-gray-900 bg-white antialiased;
     min-height: 100vh;
     font-feature-settings: "ss02";
-    transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background-color 0.4s ease, color 0.4s ease;
   }
 
   /* Theme-specific base styles */
@@ -92,7 +92,7 @@
 
   /* Char mode - dark burnt orange/ember variation */
   [data-theme="char"] body {
-    background-color: #2d1410;
+    background-color: #4a2c14;
     color: #fef3d0;
   }
 
@@ -171,6 +171,90 @@
     background-color: #fef8e8;
     border: 1px solid #e8d5a8;
     color: #2d3e50;
+  }
+
+  /* Plum mode cards */
+  [data-theme="plum"] .card {
+    background-color: #faf5ff;
+    border: 1px solid #d8b4fe;
+    color: #581c87;
+  }
+
+  /* Char mode cards */
+  [data-theme="char"] .card {
+    background-color: #5a3820;
+    border: 1px solid #7a4a30;
+    color: #fef3d0;
+  }
+
+  /* Dropdown Menu Styles */
+
+  /* Moonlight mode dropdowns */
+  [data-theme="moonlight"] .dropdown-menu,
+  .dark .dropdown-menu {
+    background-color: #252b3b;
+    border-color: #3a4255;
+    color: #e4e4e7;
+  }
+
+  [data-theme="moonlight"] .dropdown-item:hover,
+  .dark .dropdown-item:hover {
+    background-color: #2d3449;
+  }
+
+  /* Daylight mode dropdowns (default) */
+  [data-theme="daylight"] .dropdown-menu {
+    background-color: #ffffff;
+    border-color: #e5e7eb;
+    color: #111827;
+  }
+
+  [data-theme="daylight"] .dropdown-item:hover {
+    background-color: #f3f4f6;
+  }
+
+  /* Forest mode dropdowns */
+  [data-theme="forest"] .dropdown-menu {
+    background-color: #253b2e;
+    border-color: #3a5544;
+    color: #e7f4e4;
+  }
+
+  [data-theme="forest"] .dropdown-item:hover {
+    background-color: #2d4537;
+  }
+
+  /* Beach mode dropdowns */
+  [data-theme="beach"] .dropdown-menu {
+    background-color: #fef8e8;
+    border-color: #e8d5a8;
+    color: #2d3e50;
+  }
+
+  [data-theme="beach"] .dropdown-item:hover {
+    background-color: #fef3d0;
+  }
+
+  /* Plum mode dropdowns */
+  [data-theme="plum"] .dropdown-menu {
+    background-color: #faf5ff;
+    border-color: #d8b4fe;
+    color: #581c87;
+  }
+
+  [data-theme="plum"] .dropdown-item:hover {
+    background-color: #f3e8ff;
+  }
+
+  /* Char mode dropdowns */
+  [data-theme="char"] .dropdown-menu {
+    background-color: #5a3820;
+    border-color: #7a4a30;
+    color: #fef3d0;
+  }
+
+  [data-theme="char"] .dropdown-item:hover {
+    background-color: #6a4228;
   }
 
   /* Link Styles */
@@ -548,29 +632,29 @@
   }
 
   [data-theme="char"] .bg-white {
-    background-color: #3d2014;
+    background-color: #5a3820;
   }
 
   [data-theme="char"] .bg-gray-50 {
-    background-color: #2d1410;
+    background-color: #3d2414;
   }
 
   [data-theme="char"] .bg-gray-100 {
-    background-color: #3d2014;
+    background-color: #5a3820;
   }
 
   [data-theme="char"] .border-gray-200 {
-    border-color: #5a3320;
+    border-color: #7a4a30;
   }
 
   [data-theme="char"] nav {
-    background-color: #3d2014;
-    border-bottom-color: #5a3320;
+    background-color: #5a3820;
+    border-bottom-color: #7a4a30;
   }
 
   [data-theme="char"] .card {
-    background-color: #3d2014;
-    border: 1px solid #5a3320;
+    background-color: #5a3820;
+    border: 1px solid #7a4a30;
     color: #fef3d0;
   }
 
