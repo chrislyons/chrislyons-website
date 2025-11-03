@@ -1400,7 +1400,7 @@ export function renderAdminLogin(error: string | null = null): string {
           color: #581c87;
         }
         [data-theme="char"] body {
-          background: linear-gradient(to bottom, #2d1410 0%, #1a0f0a 100%);
+          background: linear-gradient(to bottom, #4a2c14 0%, #3d2414 100%);
           color: #fef3d0;
         }
       </style>

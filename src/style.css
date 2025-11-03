@@ -60,6 +60,12 @@
 
   /* Theme-specific base styles */
 
+  /* Legacy dark mode support (maps to moonlight) - must come BEFORE theme-specific rules */
+  .dark body {
+    background-color: #1a1f2e;
+    color: #e4e4e7;
+  }
+
   /* Moonlight mode (formerly Dark mode) - Notion-inspired navy blue */
   [data-theme="moonlight"] body {
     background-color: #1a1f2e;
@@ -94,12 +100,6 @@
   [data-theme="char"] body {
     background-color: #4a2c14;
     color: #fef3d0;
-  }
-
-  /* Legacy dark mode support (maps to moonlight) */
-  .dark body {
-    background-color: #1a1f2e;
-    color: #e4e4e7;
   }
 
   /* Accessible focus styles */
