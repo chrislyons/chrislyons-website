@@ -33,6 +33,11 @@
           "id": "listmaker"
         },
         {
+          "title": "Orpheus SDK",
+          "path": "/apps/orpheus-sdk",
+          "id": "orpheus-sdk"
+        },
+        {
           "title": "Tidal MCP Server",
           "path": "/apps/tidal-mcp",
           "id": "tidal-mcp"
@@ -141,6 +146,12 @@
       "title": "ListMaker",
       "meta": {
         "description": "Browser-based application for creating and managing structured lists with offline support and password protection."
+      }
+    },
+    "orpheus-sdk": {
+      "title": "Orpheus SDK",
+      "meta": {
+        "description": "Professional audio SDK for broadcast, live performance, and DAW applications. Host-neutral C++20 SDK with deterministic session/transport control."
       }
     },
     "tidal-mcp": {
