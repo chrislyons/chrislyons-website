@@ -1091,83 +1091,179 @@ function renderListMakerPage() {
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
     <div class="max-w-4xl mx-auto">
-      ${PageHeader.render({
-        title: 'ListMaker',
-        subtitle: 'Browser-Based List Management',
-        description: 'Create and manage structured lists with offline support and password protection'
-      })}
-
-      <section class="mb-12">
-        <h2 class="text-3xl font-bold mb-6 text-primary">What is ListMaker?</h2>
-        <div class="bg-gray-50 rounded-lg p-6 space-y-4">
-          <p class="text-lg text-gray-700 leading-relaxed">
-            ListMaker is a browser-based application for creating and managing structured lists with
-            custom columns, sections, and data types. All data stays local in your browser—no server
-            required, no accounts needed.
-          </p>
-          <p class="text-gray-700">
-            Perfect for task management, inventory tracking, project planning, or any scenario where
-            you need organized, searchable data that stays private and works offline.
-          </p>
-        </div>
-      </section>
-
-      <section class="mb-12">
-        <h2 class="text-3xl font-bold mb-6 text-primary">Features</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-white rounded-lg border border-gray-200 p-6">
-            <h3 class="text-xl font-semibold mb-3 text-secondary">Structured Data</h3>
-            <p class="text-gray-700">
-              Define custom columns with different data types (text, number, select), mark fields as
-              required, and organize rows into collapsible sections.
-            </p>
-          </div>
-          <div class="bg-white rounded-lg border border-gray-200 p-6">
-            <h3 class="text-xl font-semibold mb-3 text-secondary">Powerful Search</h3>
-            <p class="text-gray-700">
-              Live search across all fields with keyboard shortcuts, result navigation, and automatic
-              section expansion for matched items.
-            </p>
-          </div>
-          <div class="bg-white rounded-lg border border-gray-200 p-6">
-            <h3 class="text-xl font-semibold mb-3 text-secondary">Privacy First</h3>
-            <p class="text-gray-700">
-              Password protection with bcrypt hashing, local-only storage, and optional cloud backup
-              via Cloudflare R2 integration.
-            </p>
-          </div>
-          <div class="bg-white rounded-lg border border-gray-200 p-6">
-            <h3 class="text-xl font-semibold mb-3 text-secondary">Export Anywhere</h3>
-            <p class="text-gray-700">
-              Export to CSV for spreadsheets, JSON for programmatic access, or print-friendly HTML
-              for documentation.
-            </p>
+      <!-- Hero -->
+      <div class="mb-12">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <h1 class="text-4xl md:text-5xl font-bold text-primary">ListMaker</h1>
+          <div class="flex flex-wrap gap-3">
+            <a href="https://listmaker.boot.industries" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+              Launch App
+            </a>
+            <a href="https://github.com/chrislyons/listmaker" target="_blank" rel="noopener noreferrer" class="github-icon-link" aria-label="View on GitHub">
+              <svg class="github-icon" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>
+            </a>
           </div>
         </div>
-      </section>
+        <p class="text-xl text-gray-600 mb-2">
+          Structured lists with custom columns, offline storage, and password protection
+        </p>
+        <p class="text-sm text-gray-500">v0.1.0 • Open Source • Local-First</p>
+      </div>
 
+      <!-- Core Features -->
       <section class="mb-12">
-        <h2 class="text-3xl font-bold mb-6 text-primary">Modes</h2>
-        <div class="space-y-4">
-          <div class="bg-gray-50 rounded-lg p-6">
-            <h3 class="text-xl font-semibold mb-2 text-gray-800">Command Mode</h3>
-            <p class="text-gray-700">
-              Full editing capabilities—create, update, and delete rows and sections. Perfect for
-              active project management.
-            </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-gray-50 rounded-lg p-5 border border-gray-200">
+            <h3 class="font-semibold mb-2 text-gray-900">Custom Columns</h3>
+            <p class="text-sm text-gray-700 mb-2">Text, numbers, dropdowns, checkboxes, commands, URLs</p>
+            <p class="text-xs text-gray-600">Auto-increment • Required validation • Select options</p>
           </div>
-          <div class="bg-gray-50 rounded-lg p-6">
-            <h3 class="text-xl font-semibold mb-2 text-gray-800">Patch Mode</h3>
-            <p class="text-gray-700">
-              Read-only viewing for sharing and collaboration. Lists remain searchable and exportable
-              but cannot be modified.
-            </p>
+
+          <div class="bg-gray-50 rounded-lg p-5 border border-gray-200">
+            <h3 class="font-semibold mb-2 text-gray-900">Project Organization</h3>
+            <p class="text-sm text-gray-700 mb-2">Color-coded projects with collapsible hierarchy</p>
+            <p class="text-xs text-gray-600">Editable labels • Bulk operations • Custom colors</p>
+          </div>
+
+          <div class="bg-gray-50 rounded-lg p-5 border border-gray-200">
+            <h3 class="font-semibold mb-2 text-gray-900">Global Search</h3>
+            <p class="text-sm text-gray-700 mb-2">Search across all lists and fields with inline results</p>
+            <p class="text-xs text-gray-600">Keyboard nav • Live filtering • Auto-expand</p>
+          </div>
+
+          <div class="bg-gray-50 rounded-lg p-5 border border-gray-200">
+            <h3 class="font-semibold mb-2 text-gray-900">Password Protection</h3>
+            <p class="text-sm text-gray-700 mb-2">Bcrypt hashing with rate limiting</p>
+            <p class="text-xs text-gray-600">Session management • Reset capability</p>
+          </div>
+
+          <div class="bg-gray-50 rounded-lg p-5 border border-gray-200">
+            <h3 class="font-semibold mb-2 text-gray-900">Export Options</h3>
+            <p class="text-sm text-gray-700 mb-2">CSV, JSON, or print-friendly HTML</p>
+            <p class="text-xs text-gray-600">Metadata preservation • Timestamp naming</p>
+          </div>
+
+          <div class="bg-gray-50 rounded-lg p-5 border border-gray-200">
+            <h3 class="font-semibold mb-2 text-gray-900">Six Themes</h3>
+            <p class="text-sm text-gray-700 mb-2">Daylight, Moonlight, Forest, Beach, Plum, Char</p>
+            <p class="text-xs text-gray-600">Cycle with backslash • Epilogue variable font</p>
           </div>
         </div>
       </section>
 
-      <div class="mt-12 text-center">
-        <a href="/systems" class="link text-lg">← Back to Systems</a>
+      <!-- Templates -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold mb-4 text-primary">Templates</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-white rounded-lg p-4 border border-gray-200">
+            <div class="flex items-center gap-2 mb-1">
+              <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              <span class="font-semibold text-gray-900">Grocery List</span>
+            </div>
+            <p class="text-sm text-gray-600">Store sections • Quantity tracking • Checkboxes</p>
+          </div>
+          <div class="bg-white rounded-lg p-4 border border-gray-200">
+            <div class="flex items-center gap-2 mb-1">
+              <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+              </svg>
+              <span class="font-semibold text-gray-900">Errand Tracker</span>
+            </div>
+            <p class="text-sm text-gray-600">Priority levels • Notes • Completion status</p>
+          </div>
+          <div class="bg-white rounded-lg p-4 border border-gray-200">
+            <div class="flex items-center gap-2 mb-1">
+              <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+              </svg>
+              <span class="font-semibold text-gray-900">Gift Planner</span>
+            </div>
+            <p class="text-sm text-gray-600">Recipients • Budget • Purchase tracking</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Use Cases -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold mb-4 text-primary">Use Cases</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+          <div class="text-gray-700">Project management</div>
+          <div class="text-gray-700">Inventory tracking</div>
+          <div class="text-gray-700">Event planning</div>
+          <div class="text-gray-700">Research notes</div>
+          <div class="text-gray-700">Equipment logs</div>
+          <div class="text-gray-700">Contact management</div>
+        </div>
+      </section>
+
+      <!-- Tech Stack -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold mb-4 text-primary">Stack</h2>
+        <div class="flex flex-wrap gap-2">
+          <span class="bg-gray-100 px-3 py-1 rounded border border-gray-200">React 18</span>
+          <span class="bg-gray-100 px-3 py-1 rounded border border-gray-200">TypeScript</span>
+          <span class="bg-gray-100 px-3 py-1 rounded border border-gray-200">Vite 5</span>
+          <span class="bg-gray-100 px-3 py-1 rounded border border-gray-200">Tailwind CSS</span>
+          <span class="bg-gray-100 px-3 py-1 rounded border border-gray-200">IndexedDB</span>
+          <span class="bg-gray-100 px-3 py-1 rounded border border-gray-200">Dexie.js</span>
+          <span class="bg-gray-100 px-3 py-1 rounded border border-gray-200">Cloudflare Pages</span>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold mb-6 text-primary">FAQ</h2>
+        <div class="space-y-6">
+          <div>
+            <h3 class="font-semibold text-gray-900 mb-2">Why not just use Google Sheets?</h3>
+            <p class="text-gray-700">
+              Google Sheets requires an account, stores your data on Google's servers, and needs constant internet access.
+              ListMaker works offline, keeps data local, and has no login requirements. Plus, collapsible sections,
+              global search, and password protection are built in.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="font-semibold text-gray-900 mb-2">Where is my data stored?</h3>
+            <p class="text-gray-700">
+              All data lives in your browser's IndexedDB. Nothing is sent to a server unless you explicitly export it.
+              Clear your browser data and it's gone—make sure to export important lists.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="font-semibold text-gray-900 mb-2">Can I sync across devices?</h3>
+            <p class="text-gray-700">
+              Not yet. The architecture supports optional Cloudflare R2 sync, but it's not enabled in v0.1.0.
+              For now, export as JSON and import on other devices.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="font-semibold text-gray-900 mb-2">What happens if I forget my password?</h3>
+            <p class="text-gray-700">
+              Passwords are bcrypt-hashed and not recoverable. You'll need to use the reset function, which clears
+              the password but keeps your data intact.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="font-semibold text-gray-900 mb-2">Is this suitable for large datasets?</h3>
+            <p class="text-gray-700">
+              ListMaker handles hundreds of rows comfortably. Beyond ~1,000 rows per list, you might notice slower search.
+              For massive datasets, export to CSV and use a database.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Back Navigation -->
+      <div class="text-center">
+        <a href="/apps" class="link text-lg">← Back to Apps</a>
       </div>
     </div>
   `;

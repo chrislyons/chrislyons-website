@@ -131,7 +131,7 @@
   }
 
   .btn-primary {
-    @apply btn bg-primary text-white hover:bg-opacity-90 focus:ring-primary;
+    @apply btn transition-all duration-200;
   }
 
   .btn-secondary {
@@ -719,6 +719,20 @@
     -ms-user-select: none;
   }
 
+  /* GitHub Icon Link - Base Styles */
+  .github-icon-link {
+    @apply inline-flex items-center justify-center p-2 ml-2 rounded-lg transition-all duration-200 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2;
+    align-self: center;
+  }
+
+  .github-icon {
+    @apply transition-transform duration-200;
+  }
+
+  .github-icon-link:hover .github-icon {
+    @apply scale-110;
+  }
+
   /* Blog Button - Base Styles */
   .blog-button {
     @apply inline-block px-8 py-3 text-lg font-semibold rounded-lg transition-all duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2;
@@ -822,6 +836,146 @@
 
   [data-theme="char"] .blog-button:focus {
     ring-color: #dc2626;
+  }
+
+  /* Primary Button (Launch App, etc.) - Theme-Specific Colors */
+
+  /* Moonlight mode primary button */
+  [data-theme="moonlight"] .btn-primary,
+  .dark .btn-primary {
+    background-color: #60a5fa;
+    color: #1a1f2e;
+  }
+
+  [data-theme="moonlight"] .btn-primary:hover,
+  .dark .btn-primary:hover {
+    background-color: #93c5fd;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Daylight mode primary button */
+  [data-theme="daylight"] .btn-primary {
+    background-color: #2563eb;
+    color: #ffffff;
+  }
+
+  [data-theme="daylight"] .btn-primary:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Forest mode primary button */
+  [data-theme="forest"] .btn-primary {
+    background-color: #4ade80;
+    color: #1a2e1f;
+  }
+
+  [data-theme="forest"] .btn-primary:hover {
+    background-color: #86efac;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Beach mode primary button */
+  [data-theme="beach"] .btn-primary {
+    background-color: #0891b2;
+    color: #ffffff;
+  }
+
+  [data-theme="beach"] .btn-primary:hover {
+    background-color: #06b6d4;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Plum mode primary button */
+  [data-theme="plum"] .btn-primary {
+    background-color: #a855f7;
+    color: #ffffff;
+  }
+
+  [data-theme="plum"] .btn-primary:hover {
+    background-color: #c084fc;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Char mode primary button */
+  [data-theme="char"] .btn-primary {
+    background-color: #fb923c;
+    color: #4a2c14;
+  }
+
+  [data-theme="char"] .btn-primary:hover {
+    background-color: #f97316;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  }
+
+  /* GitHub Icon - Theme-Specific Colors */
+
+  /* Moonlight mode GitHub icon */
+  [data-theme="moonlight"] .github-icon-link,
+  .dark .github-icon-link {
+    color: #60a5fa;
+  }
+
+  [data-theme="moonlight"] .github-icon-link:hover,
+  .dark .github-icon-link:hover {
+    color: #93c5fd;
+    background-color: rgba(96, 165, 250, 0.1);
+  }
+
+  /* Daylight mode GitHub icon */
+  [data-theme="daylight"] .github-icon-link {
+    color: #2563eb;
+  }
+
+  [data-theme="daylight"] .github-icon-link:hover {
+    color: #1d4ed8;
+    background-color: rgba(37, 99, 235, 0.05);
+  }
+
+  /* Forest mode GitHub icon */
+  [data-theme="forest"] .github-icon-link {
+    color: #4ade80;
+  }
+
+  [data-theme="forest"] .github-icon-link:hover {
+    color: #86efac;
+    background-color: rgba(74, 222, 128, 0.1);
+  }
+
+  /* Beach mode GitHub icon */
+  [data-theme="beach"] .github-icon-link {
+    color: #0891b2;
+  }
+
+  [data-theme="beach"] .github-icon-link:hover {
+    color: #ff6b8a;
+    background-color: rgba(255, 107, 138, 0.05);
+  }
+
+  /* Plum mode GitHub icon */
+  [data-theme="plum"] .github-icon-link {
+    color: #a855f7;
+  }
+
+  [data-theme="plum"] .github-icon-link:hover {
+    color: #d946ef;
+    background-color: rgba(168, 85, 247, 0.05);
+  }
+
+  /* Char mode GitHub icon */
+  [data-theme="char"] .github-icon-link {
+    color: #fb923c;
+  }
+
+  [data-theme="char"] .github-icon-link:hover {
+    color: #dc2626;
+    background-color: rgba(220, 38, 38, 0.1);
   }
 }
 
