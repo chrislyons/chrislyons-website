@@ -69,13 +69,27 @@ function parseLyrics(markdown) {
   for (const line of lyricsLines) {
     const trimmed = line.trim();
 
+    // Skip markdown title lines (starting with "# ")
+    if (trimmed.startsWith('# ')) {
+      continue;
+    }
+
     if (trimmed === '') {
       if (currentPara.length > 0) {
         paragraphs.push(currentPara.join('<br>\n'));
         currentPara = [];
       }
     } else {
+      // Add line to current paragraph
       currentPara.push(trimmed);
+
+      // If line contains "Lyons" (author credit), add extra spacing after this paragraph
+      if (trimmed.includes('Lyons')) {
+        if (currentPara.length > 0) {
+          paragraphs.push(currentPara.join('<br>\n') + '<br>');
+          currentPara = [];
+        }
+      }
     }
   }
 

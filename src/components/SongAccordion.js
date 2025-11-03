@@ -88,6 +88,11 @@ export class SongAccordion {
         const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
         const newExpandedState = !isExpanded;
 
+        // If expanding this song, collapse all others first
+        if (newExpandedState) {
+          SongAccordion.collapseAll();
+        }
+
         // Update ARIA state
         toggle.setAttribute('aria-expanded', newExpandedState.toString());
 

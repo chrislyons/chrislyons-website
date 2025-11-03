@@ -105,9 +105,7 @@ export const songs = [
   {
     title: 'Anything Else',
     lyrics: `
-<p># Anything Else</p>
-
-<p>A. Smith, C. Lyons</p>
+<p>A. Smith, C. Lyons<br></p>
 
 <p>No aim, no limit.</p>
 
@@ -461,9 +459,7 @@ export const songs = [
   {
     title: 'Fins Of A Shark',
     lyrics: `
-<p># Fins Of A Shark</p>
-
-<p>A. Smith, C. Lyons</p>
+<p>A. Smith, C. Lyons<br></p>
 
 <p>Wednesday morning</p>
 
@@ -1367,9 +1363,7 @@ export const songs = [
   {
     title: 'Take My Heart',
     lyrics: `
-<p># Take My Heart</p>
-
-<p>C.Lyons</p>
+<p>C.Lyons<br></p>
 
 <p>Take my heart</p>
 
@@ -1498,9 +1492,7 @@ export const songs = [
   {
     title: 'The Hello Barrel',
     lyrics: `
-<p># The Hello Barrel</p>
-
-<p>A. Smith, C. Lyons</p>
+<p>A. Smith, C. Lyons<br></p>
 
 <p>Promise not to bother,</p>
 
