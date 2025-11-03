@@ -652,12 +652,7 @@ export function renderBlog(entries: Entry[]): string {
       ${renderFloatingNav('/blog')}
 
       <div class="canvas-container max-w-3xl mx-auto px-4 py-12" style="padding-top: 6rem;">
-        <header class="mb-16 text-center">
-          <h1 class="text-4xl font-bold text-gray-900 mb-2">Infinite Canvas</h1>
-          <p class="text-gray-600">Visual thoughts in an endless scroll</p>
-        </header>
-
-        <div id="entries-container">
+        <div id="entries-container" style="margin-top: 4rem;">
           ${entries.map(entry => renderEntry(entry, false)).join('\n')}
         </div>
 
