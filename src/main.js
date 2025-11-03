@@ -14,6 +14,7 @@ import { CollapsibleSection } from './components/CollapsibleSection.js';
 import { TableResponsive } from './components/TableResponsive.js';
 import { PageHeader } from './components/PageHeader.js';
 import { ThemeToggle } from './components/ThemeToggle.js';
+import { SongAccordion } from './components/SongAccordion.js';
 
 // Import utilities
 import router from './utils/router.js';
@@ -858,58 +859,72 @@ function renderEssaysPage() {
 function renderLyricsPage() {
   contentLoader.updateDocumentTitle('Lyrics');
 
+  // Song data - lyrics can be added to each song object
   const songs = [
-    '2-Bit Blues', 'All The Time', 'Anything Else', 'Blurred', 'Bootsteps',
-    'Coal', 'Dieter, The Winged Saint', 'Dimed', 'Drifting Bird',
-    'Failures in Forgiveness', 'Fins Of A Shark', 'Flares',
-    'Friday Morning Suicide (Again)', 'Friends', 'Hiding', 'Holding Pattern',
-    'I, the Hog-Tied Villain', 'Know My Love',
-    'Look Elsewhere For Wisdom (Look This Way With Love)', 'Mayday',
-    'Monday\'s Tea & Bagel', 'Moonbulbs', 'Mychoters', 'Pocket Fulla Stones',
-    'Sailors Of The Seven Seas', 'Saskachussets', 'So Gone', 'So Rral',
-    'Sunshine', 'Take My Heart', 'The Dumb Fambly Song',
-    'The Flashing Light In Your Eyes As You Move Rapidly Beneath The Treetops',
-    'The Hello Barrel', 'The House Song', 'The Wind & Me',
-    'There & Back Again', 'Weeds', 'Windowsill #1', 'Windowsill #2'
+    { title: '2-Bit Blues', lyrics: null },
+    { title: 'All The Time', lyrics: null },
+    { title: 'Anything Else', lyrics: null },
+    { title: 'Blurred', lyrics: null },
+    { title: 'Bootsteps', lyrics: null },
+    { title: 'Coal', lyrics: null },
+    { title: 'Dieter, The Winged Saint', lyrics: null },
+    { title: 'Dimed', lyrics: null },
+    { title: 'Drifting Bird', lyrics: null },
+    { title: 'Failures in Forgiveness', lyrics: null },
+    { title: 'Fins Of A Shark', lyrics: null },
+    { title: 'Flares', lyrics: null },
+    { title: 'Friday Morning Suicide (Again)', lyrics: null },
+    { title: 'Friends', lyrics: null },
+    { title: 'Hiding', lyrics: null },
+    { title: 'Holding Pattern', lyrics: null },
+    { title: 'I, the Hog-Tied Villain', lyrics: null },
+    { title: 'Know My Love', lyrics: null },
+    { title: 'Look Elsewhere For Wisdom (Look This Way With Love)', lyrics: null },
+    { title: 'Mayday', lyrics: null },
+    { title: 'Monday\'s Tea & Bagel', lyrics: null },
+    { title: 'Moonbulbs', lyrics: null },
+    { title: 'Mychoters', lyrics: null },
+    { title: 'Pocket Fulla Stones', lyrics: null },
+    { title: 'Sailors Of The Seven Seas', lyrics: null },
+    { title: 'Saskachussets', lyrics: null },
+    { title: 'So Gone', lyrics: null },
+    { title: 'So Rral', lyrics: null },
+    { title: 'Sunshine', lyrics: null },
+    { title: 'Take My Heart', lyrics: null },
+    { title: 'The Dumb Fambly Song', lyrics: null },
+    { title: 'The Flashing Light In Your Eyes As You Move Rapidly Beneath The Treetops', lyrics: null },
+    { title: 'The Hello Barrel', lyrics: null },
+    { title: 'The House Song', lyrics: null },
+    { title: 'The Wind & Me', lyrics: null },
+    { title: 'There & Back Again', lyrics: null },
+    { title: 'Weeds', lyrics: null },
+    { title: 'Windowsill #1', lyrics: null },
+    { title: 'Windowsill #2', lyrics: null }
   ];
-
-  const songList = songs.map((song, index) => `
-    <li class="py-3 px-4 hover:bg-gray-50 rounded-md transition-colors">
-      <span class="text-lg text-gray-800">${song}</span>
-    </li>
-  `).join('');
 
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
-    <div class="max-w-3xl mx-auto">
+    <div class="max-w-4xl mx-auto">
       ${PageHeader.render({
-        title: 'Lyrics',
+        title: 'Collected Lyrics',
         subtitle: 'Song Compositions',
-        description: 'Songs by Chris Lyons'
+        description: 'A collection of unfinished songs by Chris Lyons'
       })}
 
-      <!-- Song List -->
+      <!-- Song Accordion -->
       <section class="mb-12">
-        <div class="bg-white rounded-lg border border-gray-200 shadow-sm">
-          <ul class="divide-y divide-gray-100">
-            ${songList}
-          </ul>
-        </div>
+        ${SongAccordion.render(songs)}
       </section>
-
-      <!-- Note -->
-      <div class="bg-gray-50 rounded-lg p-6 mb-12 text-center">
-        <p class="text-base text-gray-600">
-          Individual song lyrics will be added soon.
-        </p>
-      </div>
 
       <!-- Back Navigation -->
       <div class="mt-12 text-center">
-        <a href="/writing" class="link text-lg">← Back to Writing</a>
+        <a href="/sounds" class="link text-lg">← Back to Sounds</a>
       </div>
     </div>
   `;
+
+  // Attach event listeners after rendering
+  SongAccordion.attachEventListeners();
 }
 
 function renderPoemsPage() {
