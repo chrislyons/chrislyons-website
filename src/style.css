@@ -55,7 +55,7 @@
     @apply font-sans text-lg text-gray-900 bg-white antialiased;
     min-height: 100vh;
     font-feature-settings: "ss02";
-    transition: background-color 0.4s ease, color 0.4s ease;
+    transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   /* Theme-specific base styles */
