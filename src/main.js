@@ -779,25 +779,22 @@ function renderDiscographyPage() {
   const pageContent = document.getElementById('page-content');
   pageContent.innerHTML = `
     <div class="max-w-7xl mx-auto">
-      <!-- Header with Volume Control -->
-      <div class="flex items-start justify-between mb-8">
-        <div class="flex-1">
-          ${PageHeader.render({
-            title: 'Discography',
-            subtitle: 'Albums and Releases'
-          })}
-        </div>
-        <div class="volume-control-container">
-          <button id="volume-button" class="volume-button" aria-label="Volume control">
-            <svg id="volume-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
-            </svg>
-          </button>
-          <div id="volume-slider-container" class="volume-slider-container">
-            <input type="range" id="volume-slider" class="volume-slider" min="0" max="100" value="90" aria-label="Volume slider">
-            <span id="volume-percentage" class="volume-percentage">90%</span>
+      <!-- Header with inline Volume Control -->
+      <div class="mb-8">
+        <div class="flex items-center gap-4">
+          <h1 class="text-4xl md:text-5xl font-bold text-primary">Discography</h1>
+          <div class="volume-control-container">
+            <button id="volume-button" class="volume-button" aria-label="Volume control">
+              <svg id="volume-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+              </svg>
+            </button>
+            <div id="volume-slider-container" class="volume-slider-container">
+              <input type="range" id="volume-slider" class="volume-slider" min="0" max="100" value="90" aria-label="Volume slider">
+              <span id="volume-percentage" class="volume-percentage">90%</span>
+            </div>
           </div>
         </div>
       </div>
@@ -972,7 +969,7 @@ function renderDiscographyPage() {
 
       .volume-slider-container {
         position: absolute;
-        right: 60px;
+        left: 60px;
         top: 50%;
         transform: translateY(-50%);
         background: var(--card-bg, rgba(255, 255, 255, 0.98));
@@ -987,6 +984,7 @@ function renderDiscographyPage() {
         pointer-events: none;
         transition: opacity 0.3s ease, transform 0.3s ease;
         z-index: 1000;
+        white-space: nowrap;
       }
 
       .volume-slider-container.visible {
