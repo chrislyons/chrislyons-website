@@ -1,6 +1,9 @@
 # Claude Code scratch space
 .claude/scratch/
 
+# Boot Industries proprietary content backup
+.claude/scratch/boot-industries-backup/
+
 # Dependencies
 node_modules/
 .pnp
