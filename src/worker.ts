@@ -1,5 +1,6 @@
 import { Hono } from 'hono';
-import { renderBlog, renderAdmin, renderCanvasCreator } from './templates';
+import { getCookie, setCookie, deleteCookie } from 'hono/cookie';
+import { renderBlog, renderAdmin, renderCanvasCreator, renderAdminLogin } from './templates';
 import assetManifest from './asset-manifest.json';
 
 // TypeScript type definitions for Cloudflare Workers environment
@@ -12,6 +13,18 @@ type Bindings = {
 
 // Create Hono app for dynamic routes only
 const dynamicApp = new Hono<{ Bindings: Bindings }>();
+
+// Authentication constants
+const ADMIN_USERNAME = 'clyons';
+const ADMIN_PASSWORD = 'supermario';
+const SESSION_COOKIE = 'admin_session';
+const SESSION_TOKEN = 'authenticated'; // Simple token for single-user system
+
+// Check if user is authenticated
+function isAuthenticated(c: any): boolean {
+  const session = getCookie(c, SESSION_COOKIE);
+  return session === SESSION_TOKEN;
+}
 
 // Blog routes (public)
 dynamicApp.get('/blog', async (c) => {
@@ -91,14 +104,53 @@ dynamicApp.get('/rss.xml', async (c) => {
   return c.text(rss, 200, { 'Content-Type': 'application/rss+xml; charset=utf-8' });
 });
 
-// Admin routes
+// Admin authentication routes
 dynamicApp.get('/admin', async (c) => {
+  // Check if user is authenticated
+  if (!isAuthenticated(c)) {
+    return c.html(renderAdminLogin(null));
+  }
+
+  // User is authenticated, show admin dashboard
   const db = c.env.DB;
   const { results } = await db.prepare('SELECT * FROM entries ORDER BY created_at DESC').all();
   return c.html(renderAdmin(results as any[]));
 });
 
+dynamicApp.post('/admin/login', async (c) => {
+  const formData = await c.req.formData();
+  const username = formData.get('username')?.toString() || '';
+  const password = formData.get('password')?.toString() || '';
+
+  // Validate credentials
+  if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+    // Set session cookie (expires in 7 days)
+    setCookie(c, SESSION_COOKIE, SESSION_TOKEN, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'Lax',
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+      path: '/',
+    });
+
+    // Redirect to admin dashboard
+    return c.redirect('/admin');
+  }
+
+  // Invalid credentials, show login page with error
+  return c.html(renderAdminLogin('Invalid username or password'));
+});
+
+dynamicApp.get('/admin/logout', async (c) => {
+  deleteCookie(c, SESSION_COOKIE, { path: '/' });
+  return c.redirect('/admin');
+});
+
 dynamicApp.post('/admin/entry', async (c) => {
+  if (!isAuthenticated(c)) {
+    return c.json({ error: 'Unauthorized' }, 401);
+  }
+
   const db = c.env.DB;
   const body = await c.req.json();
   const { type, content, published, metadata } = body;
@@ -114,6 +166,10 @@ dynamicApp.post('/admin/entry', async (c) => {
 });
 
 dynamicApp.put('/admin/entry/:id', async (c) => {
+  if (!isAuthenticated(c)) {
+    return c.json({ error: 'Unauthorized' }, 401);
+  }
+
   const db = c.env.DB;
   const id = c.req.param('id');
   const body = await c.req.json();
@@ -146,6 +202,10 @@ dynamicApp.put('/admin/entry/:id', async (c) => {
 });
 
 dynamicApp.delete('/admin/entry/:id', async (c) => {
+  if (!isAuthenticated(c)) {
+    return c.json({ error: 'Unauthorized' }, 401);
+  }
+
   const db = c.env.DB;
   const id = c.req.param('id');
   await db.prepare('DELETE FROM entries WHERE id = ?').bind(id).run();
@@ -153,6 +213,10 @@ dynamicApp.delete('/admin/entry/:id', async (c) => {
 });
 
 dynamicApp.post('/admin/upload', async (c) => {
+  if (!isAuthenticated(c)) {
+    return c.json({ error: 'Unauthorized' }, 401);
+  }
+
   const bucket = c.env.BLOG_IMAGES;
   const formData = await c.req.formData();
   const file = formData.get('file') as File;
@@ -192,10 +256,18 @@ dynamicApp.get('/images/:filename', async (c) => {
 
 // Canvas Creator routes
 dynamicApp.get('/admin/create', async (c) => {
+  if (!isAuthenticated(c)) {
+    return c.redirect('/admin');
+  }
+
   return c.html(renderCanvasCreator());
 });
 
 dynamicApp.post('/admin/canvas', async (c) => {
+  if (!isAuthenticated(c)) {
+    return c.json({ error: 'Unauthorized' }, 401);
+  }
+
   const db = c.env.DB;
   const body = await c.req.json();
   const { title, background, dimensions, elements, published } = body;
@@ -217,6 +289,10 @@ dynamicApp.post('/admin/canvas', async (c) => {
 });
 
 dynamicApp.get('/admin/canvas/:id', async (c) => {
+  if (!isAuthenticated(c)) {
+    return c.json({ error: 'Unauthorized' }, 401);
+  }
+
   const db = c.env.DB;
   const id = c.req.param('id');
 
@@ -238,6 +314,10 @@ dynamicApp.get('/admin/canvas/:id', async (c) => {
 });
 
 dynamicApp.get('/admin/giphy', async (c) => {
+  if (!isAuthenticated(c)) {
+    return c.json({ error: 'Unauthorized' }, 401);
+  }
+
   const query = c.req.query('q');
   if (!query) {
     return c.json({ error: 'Query required' }, 400);

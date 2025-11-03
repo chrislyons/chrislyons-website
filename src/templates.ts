@@ -1268,6 +1268,163 @@ export function renderFontPicker(): string {
 
 export { FONTS };
 
+// Admin Login Page
+export function renderAdminLogin(error: string | null = null): string {
+  return `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Admin Login</title>
+      <link rel="stylesheet" href="${assetManifest.css}">
+      <style>
+        body {
+          transition: background 0.4s ease, color 0.4s ease;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        [data-theme="moonlight"] body, .dark body {
+          background: linear-gradient(to bottom, #1a1f2e 0%, #0f1419 100%);
+          color: #e4e4e7;
+        }
+        [data-theme="daylight"] body {
+          background: linear-gradient(to bottom, #ffffff 0%, #f9fafb 100%);
+          color: #111827;
+        }
+        [data-theme="forest"] body {
+          background: linear-gradient(to bottom, #1a2e1f 0%, #0f1a13 100%);
+          color: #e7f4e4;
+        }
+        [data-theme="beach"] body {
+          background: linear-gradient(to bottom, #fffef7 0%, #fefce8 100%);
+          color: #2d3e50;
+        }
+        [data-theme="plum"] body {
+          background: linear-gradient(to bottom, #faf5ff 0%, #f3e8ff 100%);
+          color: #581c87;
+        }
+        [data-theme="char"] body {
+          background: linear-gradient(to bottom, #2d1410 0%, #1a0f0a 100%);
+          color: #fef3d0;
+        }
+      </style>
+    </head>
+    <body class="antialiased">
+      <div class="w-full max-w-md px-4">
+        <div class="bg-white dark:bg-gray-800 shadow-2xl rounded-lg p-8">
+          <h1 class="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-gray-100">Admin Login</h1>
+
+          ${error ? `<div class="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-md">
+            <p class="text-sm text-red-600 dark:text-red-400">${error}</p>
+          </div>` : ''}
+
+          <form method="POST" action="/admin/login" class="space-y-6">
+            <div>
+              <label for="username" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Username
+              </label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                required
+                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                placeholder="Enter username"
+              />
+            </div>
+
+            <div>
+              <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                required
+                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                placeholder="Enter password"
+              />
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200"
+            >
+              Sign In
+            </button>
+          </form>
+
+          <div class="mt-6 text-center">
+            <a href="/" class="text-sm text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300">
+              ← Back to site
+            </a>
+          </div>
+        </div>
+
+        <!-- Theme toggle button -->
+        <div class="mt-6 flex justify-center">
+          <button
+            type="button"
+            id="theme-toggle"
+            class="p-3 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all"
+            aria-label="Cycle theme"
+          >
+            <svg id="theme-icon" class="w-6 h-6 text-gray-700 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <script>
+        // Theme management
+        const STORAGE_KEY = 'chrislyons-theme';
+        const THEMES = ['moonlight', 'daylight', 'forest', 'beach', 'plum', 'char'];
+        const THEME_ICONS = {
+          moonlight: '<path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>',
+          daylight: '<circle cx="12" cy="12" r="4"></circle><path stroke-linecap="round" stroke-linejoin="round" d="M12 2v2M12 20v2m-8-10H2m20 0h-2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"></path>',
+          forest: '<path stroke-linecap="round" stroke-linejoin="round" d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>',
+          beach: '<path stroke-linecap="round" stroke-linejoin="round" d="M12 2 6 8l6 6 6-6Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="m8 12-3 3 3 3 3-3Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="m14 12 3 3-3 3-3-3Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="m12 14 0 8"></path><path stroke-linecap="round" stroke-linejoin="round" d="m9 20 3 2 3-2"></path>',
+          plum: '<ellipse cx="12" cy="13" rx="7" ry="8"></ellipse><path stroke-linecap="round" stroke-linejoin="round" d="M12 5 Q 12 2, 14 2 Q 15 2, 15 3 Q 15 4, 13 5"></path><line stroke-linecap="round" stroke-linejoin="round" x1="12" y1="5" x2="12" y2="8"></line>',
+          char: '<path stroke-linecap="round" stroke-linejoin="round" d="M8.5 14.5 A6 6 0 0 0 15.5 14.5 A5 5 0 0 1 12 20 A5 5 0 0 1 8.5 14.5Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M12 11 Q 9 8, 11 4 Q 12 2, 13 4 Q 15 8, 12 11Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M12 11 Q 11 9, 12 7"></path>'
+        };
+
+        function applyTheme(theme) {
+          document.documentElement.setAttribute('data-theme', theme);
+          const isDark = theme === 'moonlight' || theme === 'forest' || theme === 'char';
+          document.documentElement.classList.toggle('dark', isDark);
+          document.documentElement.style.setProperty('color-scheme', isDark ? 'dark' : 'light');
+
+          const icon = document.getElementById('theme-icon');
+          if (icon) icon.innerHTML = THEME_ICONS[theme] || THEME_ICONS.moonlight;
+        }
+
+        function cycleTheme() {
+          const current = localStorage.getItem(STORAGE_KEY) || 'moonlight';
+          const currentIndex = THEMES.indexOf(current);
+          const nextIndex = (currentIndex + 1) % THEMES.length;
+          const newTheme = THEMES[nextIndex];
+          localStorage.setItem(STORAGE_KEY, newTheme);
+          applyTheme(newTheme);
+        }
+
+        // Apply initial theme
+        const storedTheme = localStorage.getItem(STORAGE_KEY) || 'moonlight';
+        applyTheme(storedTheme);
+
+        // Theme toggle listener
+        document.getElementById('theme-toggle')?.addEventListener('click', cycleTheme);
+      </script>
+    </body>
+    </html>
+  `;
+}
+
 // Canvas Creator view (Instagram Stories-style editor)
 export function renderCanvasCreator(): string {
   return `
