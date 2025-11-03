@@ -126,12 +126,13 @@ export class Navigation {
 
     // Item with dropdown
     return `
-      <div class="relative group">
+      <div class="relative" data-dropdown-wrapper>
         <button
           type="button"
           class="nav-link px-3 py-2 rounded-md text-lg font-medium text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-secondary inline-flex items-center"
           aria-expanded="false"
           aria-haspopup="true"
+          data-dropdown-button
         >
           ${item.title}
           <svg class="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
@@ -140,11 +141,11 @@ export class Navigation {
         </button>
 
         <!-- Dropdown menu with invisible bridge -->
-        <div class="absolute left-0 top-full w-56 z-10">
+        <div class="absolute left-0 top-full w-56 z-10 opacity-0 invisible pointer-events-none transition-all duration-150" data-dropdown-menu>
           <!-- Invisible bridge to maintain hover state across gap -->
-          <div class="h-2 group-hover:pointer-events-auto pointer-events-none"></div>
+          <div class="h-2"></div>
           <!-- Actual dropdown content -->
-          <div class="rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto transition-all duration-150">
+          <div class="rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
             <div class="py-1" role="menu" aria-orientation="vertical">
               ${item.children.map(child => `
                 <a
@@ -212,6 +213,55 @@ export class Navigation {
    * Attach event listeners after rendering
    */
   attachEventListeners() {
+    // Dropdown hover behavior
+    document.querySelectorAll('[data-dropdown-wrapper]').forEach(wrapper => {
+      const button = wrapper.querySelector('[data-dropdown-button]');
+      const menu = wrapper.querySelector('[data-dropdown-menu]');
+
+      if (!button || !menu) return;
+
+      let isOpen = false;
+
+      const showDropdown = () => {
+        isOpen = true;
+        menu.classList.remove('opacity-0', 'invisible', 'pointer-events-none');
+        menu.classList.add('opacity-100', 'visible', 'pointer-events-auto');
+        button.setAttribute('aria-expanded', 'true');
+      };
+
+      const hideDropdown = () => {
+        isOpen = false;
+        menu.classList.remove('opacity-100', 'visible', 'pointer-events-auto');
+        menu.classList.add('opacity-0', 'invisible', 'pointer-events-none');
+        button.setAttribute('aria-expanded', 'false');
+      };
+
+      // Show dropdown when hovering button
+      button.addEventListener('mouseenter', showDropdown);
+
+      // Keep dropdown open when hovering the menu (including bridge)
+      menu.addEventListener('mouseenter', showDropdown);
+
+      // Hide when leaving button (only if not moving to menu)
+      button.addEventListener('mouseleave', (e) => {
+        // Small delay to allow moving to menu
+        setTimeout(() => {
+          if (!menu.matches(':hover')) {
+            hideDropdown();
+          }
+        }, 50);
+      });
+
+      // Hide when leaving menu (only if not moving back to button)
+      menu.addEventListener('mouseleave', (e) => {
+        setTimeout(() => {
+          if (!button.matches(':hover') && !menu.matches(':hover')) {
+            hideDropdown();
+          }
+        }, 50);
+      });
+    });
+
     // Admin trapdoor: Alt+Shift+Click on Connect
     document.querySelectorAll('[data-admin-trapdoor="true"]').forEach(link => {
       link.addEventListener('click', (e) => {
