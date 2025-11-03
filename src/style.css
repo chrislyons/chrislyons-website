@@ -718,6 +718,111 @@
     -moz-user-select: none;
     -ms-user-select: none;
   }
+
+  /* Blog Button - Base Styles */
+  .blog-button {
+    @apply inline-block px-8 py-3 text-lg font-semibold rounded-lg transition-all duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  /* Moonlight mode blog button */
+  [data-theme="moonlight"] .blog-button,
+  .dark .blog-button {
+    background-color: #60a5fa;
+    color: #1a1f2e;
+    border: 2px solid transparent;
+  }
+
+  [data-theme="moonlight"] .blog-button:hover,
+  .dark .blog-button:hover {
+    background-color: #93c5fd;
+    transform: translateY(-2px);
+  }
+
+  [data-theme="moonlight"] .blog-button:focus,
+  .dark .blog-button:focus {
+    ring-color: #60a5fa;
+  }
+
+  /* Daylight mode blog button */
+  [data-theme="daylight"] .blog-button {
+    background-color: #2563eb;
+    color: #ffffff;
+    border: 2px solid transparent;
+  }
+
+  [data-theme="daylight"] .blog-button:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-2px);
+  }
+
+  [data-theme="daylight"] .blog-button:focus {
+    ring-color: #2563eb;
+  }
+
+  /* Forest mode blog button */
+  [data-theme="forest"] .blog-button {
+    background-color: #4ade80;
+    color: #1a2e1f;
+    border: 2px solid transparent;
+  }
+
+  [data-theme="forest"] .blog-button:hover {
+    background-color: #86efac;
+    transform: translateY(-2px);
+  }
+
+  [data-theme="forest"] .blog-button:focus {
+    ring-color: #4ade80;
+  }
+
+  /* Beach mode blog button */
+  [data-theme="beach"] .blog-button {
+    background-color: #0891b2;
+    color: #ffffff;
+    border: 2px solid transparent;
+  }
+
+  [data-theme="beach"] .blog-button:hover {
+    background-color: #ff6b8a;
+    transform: translateY(-2px);
+  }
+
+  [data-theme="beach"] .blog-button:focus {
+    ring-color: #ff6b8a;
+  }
+
+  /* Plum mode blog button */
+  [data-theme="plum"] .blog-button {
+    background-color: #a855f7;
+    color: #ffffff;
+    border: 2px solid transparent;
+  }
+
+  [data-theme="plum"] .blog-button:hover {
+    background-color: #d946ef;
+    transform: translateY(-2px);
+  }
+
+  [data-theme="plum"] .blog-button:focus {
+    ring-color: #d946ef;
+  }
+
+  /* Char mode blog button */
+  [data-theme="char"] .blog-button {
+    background-color: #fb923c;
+    color: #4a2c14;
+    border: 2px solid transparent;
+  }
+
+  [data-theme="char"] .blog-button:hover {
+    background-color: #dc2626;
+    color: #fef3d0;
+    transform: translateY(-2px);
+  }
+
+  [data-theme="char"] .blog-button:focus {
+    ring-color: #dc2626;
+  }
 }
 
 /* Utility Styles */

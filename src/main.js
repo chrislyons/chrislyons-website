@@ -186,10 +186,7 @@ function renderHomePage() {
 
         <!-- Blog Button -->
         <div class="mt-8 fade-in" style="animation-delay: 0.9s">
-          <a
-            href="/blog"
-            class="inline-block px-8 py-3 bg-primary text-white text-lg font-semibold rounded-lg hover:bg-opacity-90 transition-all duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-          >
+          <a href="/blog" class="blog-button">
             Blog
           </a>
         </div>
