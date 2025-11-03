@@ -139,9 +139,12 @@ export class Navigation {
           </svg>
         </button>
 
-        <!-- Dropdown menu -->
-        <div class="absolute left-0 top-full w-56 z-10 pointer-events-none">
-          <div class="rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto transition-all duration-150 mt-1">
+        <!-- Dropdown menu with invisible bridge -->
+        <div class="absolute left-0 top-full w-56 z-10">
+          <!-- Invisible bridge to maintain hover state across gap -->
+          <div class="h-2 group-hover:pointer-events-auto pointer-events-none"></div>
+          <!-- Actual dropdown content -->
+          <div class="rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto transition-all duration-150">
             <div class="py-1" role="menu" aria-orientation="vertical">
               ${item.children.map(child => `
                 <a
