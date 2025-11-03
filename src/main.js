@@ -183,6 +183,17 @@ function renderHomePage() {
         <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-primary leading-tight">
           hey it's ChrisLyons.com
         </h1>
+
+        <!-- Blog Button -->
+        <div class="mt-8 fade-in" style="animation-delay: 0.9s">
+          <a
+            href="/blog"
+            class="inline-block px-8 py-3 bg-primary text-white text-lg font-semibold rounded-lg hover:bg-opacity-90 transition-all duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+          >
+            Blog
+          </a>
+        </div>
+
         <!-- Temporarily hidden - will be re-enabled later
         <p class="text-lg md:text-xl lg:text-2xl text-gray-700 leading-relaxed px-4">
           Since 2007 I've been building multichannel recording studios and broadcast systems,
