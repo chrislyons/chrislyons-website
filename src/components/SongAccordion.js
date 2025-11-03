@@ -53,7 +53,7 @@ export class SongAccordion {
             aria-labelledby="${headerId}"
             role="region"
           >
-            <div class="song-lyrics px-6 py-8 bg-gray-50 rounded-b-lg border-x-2 border-b-2 border-gray-200 prose prose-lg max-w-none">
+            <div class="song-lyrics lyrics-protected px-6 py-8 bg-gray-50 rounded-b-lg border-x-2 border-b-2 border-gray-200 prose prose-lg max-w-none">
               ${lyricsContent}
             </div>
           </div>
@@ -79,6 +79,7 @@ export class SongAccordion {
       const toggle = card.querySelector('.song-toggle');
       const content = card.querySelector('.song-content');
       const icon = card.querySelector('.song-icon');
+      const lyricsDiv = card.querySelector('.lyrics-protected');
 
       if (!toggle || !content || !icon) return;
 
@@ -116,6 +117,40 @@ export class SongAccordion {
           toggleSong();
         }
       });
+
+      // Copy protection for lyrics content
+      if (lyricsDiv) {
+        // Prevent right-click context menu
+        lyricsDiv.addEventListener('contextmenu', (e) => {
+          e.preventDefault();
+          return false;
+        });
+
+        // Prevent copy, cut, and paste
+        lyricsDiv.addEventListener('copy', (e) => {
+          e.preventDefault();
+          return false;
+        });
+
+        lyricsDiv.addEventListener('cut', (e) => {
+          e.preventDefault();
+          return false;
+        });
+
+        // Prevent drag selection
+        lyricsDiv.addEventListener('dragstart', (e) => {
+          e.preventDefault();
+          return false;
+        });
+
+        // Prevent keyboard shortcuts (Ctrl+C, Cmd+C, etc.)
+        lyricsDiv.addEventListener('keydown', (e) => {
+          if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'x' || e.key === 'a')) {
+            e.preventDefault();
+            return false;
+          }
+        });
+      }
     });
   }
 

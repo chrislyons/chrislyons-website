@@ -691,6 +691,33 @@
     white-space: nowrap;
     border-width: 0;
   }
+
+  /* Copy Protection for Lyrics */
+  .lyrics-protected {
+    /* Disable text selection */
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+
+    /* Disable dragging */
+    -webkit-user-drag: none;
+
+    /* Add visual indicator that content is protected (subtle) */
+    cursor: default;
+
+    /* Prevent highlighting on touch devices */
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Disable selection on child elements too */
+  .lyrics-protected * {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+  }
 }
 
 /* Utility Styles */
