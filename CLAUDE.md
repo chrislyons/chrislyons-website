@@ -130,9 +130,18 @@ Skills are lazy-loaded based on file patterns to reduce context overhead.
 chrislyons-website/
 ├── CLAUDE.md              # This file (repo conventions)
 ├── README.md              # Project overview
-├── docs/clw/    # Documentation (CLW### Title.md files)
+├── docs/clw/              # Documentation (CLW### Title.md files)
 │   └── INDEX.md           # Document registry
 ├── src/                   # Source code
+│   ├── components/        # Reusable UI components
+│   │   └── SongAccordion.js  # Expandable song cards
+│   ├── data/              # Application data
+│   │   ├── songs.js       # Song lyrics (auto-generated)
+│   │   └── songs/         # Markdown source files
+│   ├── utils/             # Utility functions
+│   └── main.js            # Application entry point
+├── scripts/               # Build and utility scripts
+│   └── parse-song-lyrics.js  # Convert markdown to songs.js
 ├── tests/                 # Test suite
 ├── .claude/               # Claude Code configuration
 │   ├── skills.json        # Skill loading configuration
@@ -214,11 +223,54 @@ npm run build
 - Generates asset manifest (`scripts/generate-asset-manifest.js`)
 - Output: `dist/` directory
 
+### Song Lyrics Management
+
+Song lyrics are stored as markdown files in `src/data/songs/` and converted to JavaScript.
+
+**Workflow:**
+1. Edit markdown files in `src/data/songs/`
+2. Run conversion script: `node scripts/parse-song-lyrics.js`
+3. Script generates `src/data/songs.js` with formatted HTML
+4. Lyrics appear in expandable accordion on `/sounds/lyrics`
+
+**Markdown Format:**
+```markdown
+# Song Title
+
+C. Lyons
+
+Verse one line one
+Verse one line two
+
+Verse two line one
+Verse two line two
+```
+
+**Manual Editing:**
+You can also edit `src/data/songs.js` directly. Each song has:
+```javascript
+{
+  title: 'Song Title',
+  lyrics: `
+    <p>Verse one line one<br>
+    Verse one line two</p>
+
+    <p>Verse two line one<br>
+    Verse two line two</p>
+  `
+}
+```
+
 ---
 
 ## Quick Reference
 
 ### Common Tasks
+
+**Update song lyrics from markdown:**
+```bash
+node scripts/parse-song-lyrics.js
+```
 
 **Check for documentation clutter:**
 ```bash
