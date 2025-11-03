@@ -26,13 +26,16 @@ User requested a horizontal scrolling carousel styled like the classic macOS/iPo
 - Far items (±3+): 20% opacity, 40% brightness, 60% scale
 
 **Volume Control:**
-- Speaker icon in top right of page header
+- Speaker icon positioned inline to the right of "Discography" header
+- 1rem margin between header and volume button
+- Vertically center-aligned with header text
 - Toggle visibility with click (auto-hide after 3s)
+- Slider expands to the right of the button
 - Vertical slider with percentage display
 - Default: 90% volume
 - LocalStorage persistence
 - Dynamic icon based on volume level (muted, low, high)
-- Theme-compatible styling using CSS variables
+- Theme-compatible styling using CSS variables (`--card-bg`, `--text-primary`, `--border-color`, `--primary-color`)
 
 **Navigation:**
 - Left/right arrow buttons
@@ -74,9 +77,10 @@ User requested a horizontal scrolling carousel styled like the classic macOS/iPo
 1. **Absolute positioning** for carousel items within fixed-height wrapper to ensure proper 3D rotation
 2. **14rem top margin** on back navigation link to prevent collision with carousel content
 3. **Removed album counter** to reduce clutter
-4. **Removed subtitle description** ("Music releases and collaborations...") per user feedback
-5. **Perspective origin at 50% 45%** to give more headroom for front-facing item
-6. **Overflow: visible** on carousel scene to prevent clipping of scaled items
+4. **Removed subtitle** ("Albums and Releases") - user noted "we know what a discography is"
+5. **Inline volume control** - positioned directly in header row instead of separate column for better UX
+6. **Perspective origin at 50% 45%** to give more headroom for front-facing item
+7. **Overflow: visible** on carousel scene to prevent clipping of scaled items
 
 ## Spacing Fixes
 
@@ -91,6 +95,17 @@ Multiple iterations to resolve element collisions:
 - `src/main.js` (lines 142-650) - Marketing page render functions
 - `content/content.json` - Added Orpheus SDK navigation entry
 - `src/data/discography-embeds.md` - New file with Bandcamp embed codes
+
+## Design Iterations
+
+**Volume Control Positioning:**
+1. Initial: Top right of page header in separate column
+2. Revised: Inline with "Discography" header, center-aligned, slider expands right
+
+**Header Simplification:**
+1. Initial: Title + subtitle "Albums and Releases" + description
+2. Revised: Title + subtitle only
+3. Final: Title only (inline with volume control)
 
 ## Next Actions
 
