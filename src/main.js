@@ -908,7 +908,7 @@ function renderLyricsPage() {
       ${PageHeader.render({
         title: 'Collected Lyrics',
         subtitle: 'Song Compositions',
-        description: 'A collection of unfinished songs by Chris Lyons'
+        description: ''
       })}
 
       <!-- Song Accordion -->
