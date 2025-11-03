@@ -140,8 +140,8 @@ export class Navigation {
         </button>
 
         <!-- Dropdown menu -->
-        <div class="absolute left-0 mt-0 pt-2 w-56 z-10">
-          <div class="rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 pointer-events-auto">
+        <div class="absolute left-0 mt-0 pt-2 w-56 z-10 pointer-events-none">
+          <div class="rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:pointer-events-auto transition-all duration-150">
             <div class="py-1" role="menu" aria-orientation="vertical">
               ${item.children.map(child => `
                 <a
