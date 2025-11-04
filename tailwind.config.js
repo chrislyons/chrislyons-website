@@ -18,9 +18,7 @@ module.exports = {
         neutral: '#6B7280',
       },
       fontFamily: {
-        sans: ['Switzer', 'HK Grotesk', 'system-ui', '-apple-system', 'sans-serif'],
-        serif: ['Melodrama', 'Georgia', 'serif'],
-        display: ['Melodrama', 'Georgia', 'serif'],
+        sans: ['HK Grotesk', 'system-ui', '-apple-system', 'sans-serif'],
       },
       fontSize: {
         // Proportional scale with accessibility rounding
