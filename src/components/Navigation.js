@@ -15,6 +15,9 @@ export class Navigation {
     this.currentPath = window.location.pathname;
     this.boundDocumentClickHandler = null;
     this.boundDocumentKeydownHandler = null;
+    this.boundNavMouseEnterHandler = null;
+    this.boundNavMouseLeaveHandler = null;
+    this.boundNavClickHandler = null;
   }
 
   /**
@@ -224,6 +227,23 @@ export class Navigation {
       document.removeEventListener('keydown', this.boundDocumentKeydownHandler);
       this.boundDocumentKeydownHandler = null;
     }
+
+    // Remove nav container listeners if they exist
+    const navContainer = document.getElementById('nav-container');
+    if (navContainer) {
+      if (this.boundNavMouseEnterHandler) {
+        navContainer.removeEventListener('mouseenter', this.boundNavMouseEnterHandler, true);
+        this.boundNavMouseEnterHandler = null;
+      }
+      if (this.boundNavMouseLeaveHandler) {
+        navContainer.removeEventListener('mouseleave', this.boundNavMouseLeaveHandler, true);
+        this.boundNavMouseLeaveHandler = null;
+      }
+      if (this.boundNavClickHandler) {
+        navContainer.removeEventListener('click', this.boundNavClickHandler);
+        this.boundNavClickHandler = null;
+      }
+    }
   }
 
   /**
@@ -232,87 +252,104 @@ export class Navigation {
   attachEventListeners() {
     // Clean up any existing listeners first to prevent duplicates
     this.cleanup();
-    // Dropdown hover behavior
-    document.querySelectorAll('[data-dropdown-wrapper]').forEach(wrapper => {
-      const button = wrapper.querySelector('[data-dropdown-button]');
-      const menu = wrapper.querySelector('[data-dropdown-menu]');
 
-      if (!button || !menu) return;
+    // Dropdown hover behavior - use event delegation to avoid listener spam
+    const navContainer = document.getElementById('nav-container');
+    if (!navContainer) return;
 
-      let isOpen = false;
-      let hideTimeout = null; // Track timeout to prevent race conditions
+    // State for each dropdown (stored by button element)
+    const dropdownStates = new WeakMap();
 
-      const showDropdown = () => {
-        // Clear any pending hide timeout
-        if (hideTimeout) {
-          clearTimeout(hideTimeout);
-          hideTimeout = null;
+    const getDropdownState = (button) => {
+      if (!dropdownStates.has(button)) {
+        dropdownStates.set(button, {
+          isOpen: false,
+          hideTimeout: null
+        });
+      }
+      return dropdownStates.get(button);
+    };
+
+    // Event delegation for dropdown interactions - store as bound handlers
+    this.boundNavMouseEnterHandler = (e) => {
+      const button = e.target.closest('[data-dropdown-button]');
+      if (!button) return;
+
+      const wrapper = button.closest('[data-dropdown-wrapper]');
+      const menu = wrapper?.querySelector('[data-dropdown-menu]');
+      if (!menu) return;
+
+      const state = getDropdownState(button);
+
+      // Clear any pending hide timeout
+      if (state.hideTimeout) {
+        clearTimeout(state.hideTimeout);
+        state.hideTimeout = null;
+      }
+
+      state.isOpen = true;
+      menu.classList.remove('opacity-0', 'invisible', 'pointer-events-none');
+      menu.classList.add('opacity-100', 'visible', 'pointer-events-auto');
+      button.setAttribute('aria-expanded', 'true');
+    };
+    navContainer.addEventListener('mouseenter', this.boundNavMouseEnterHandler, true);
+
+    this.boundNavMouseLeaveHandler = (e) => {
+      const button = e.target.closest('[data-dropdown-button]');
+      const menu = e.target.closest('[data-dropdown-menu]');
+
+      if (!button && !menu) return;
+
+      const actualButton = button || menu?.closest('[data-dropdown-wrapper]')?.querySelector('[data-dropdown-button]');
+      if (!actualButton) return;
+
+      const wrapper = actualButton.closest('[data-dropdown-wrapper]');
+      const actualMenu = wrapper?.querySelector('[data-dropdown-menu]');
+      if (!actualMenu) return;
+
+      const state = getDropdownState(actualButton);
+
+      // Clear any existing timeout
+      if (state.hideTimeout) {
+        clearTimeout(state.hideTimeout);
+      }
+
+      // Small delay to allow moving between button and menu
+      state.hideTimeout = setTimeout(() => {
+        if (!actualButton.matches(':hover') && !actualMenu.matches(':hover')) {
+          state.isOpen = false;
+          actualMenu.classList.remove('opacity-100', 'visible', 'pointer-events-auto');
+          actualMenu.classList.add('opacity-0', 'invisible', 'pointer-events-none');
+          actualButton.setAttribute('aria-expanded', 'false');
         }
+        state.hideTimeout = null;
+      }, 50);
+    };
+    navContainer.addEventListener('mouseleave', this.boundNavMouseLeaveHandler, true);
 
-        isOpen = true;
-        menu.classList.remove('opacity-0', 'invisible', 'pointer-events-none');
-        menu.classList.add('opacity-100', 'visible', 'pointer-events-auto');
-        button.setAttribute('aria-expanded', 'true');
-      };
+    // Close dropdowns when clicking items - let router handle navigation
+    this.boundNavClickHandler = (e) => {
+      const dropdownItem = e.target.closest('.dropdown-item');
+      if (!dropdownItem) return;
 
-      const hideDropdown = () => {
-        // Clear any pending hide timeout
-        if (hideTimeout) {
-          clearTimeout(hideTimeout);
-          hideTimeout = null;
+      const wrapper = dropdownItem.closest('[data-dropdown-wrapper]');
+      const menu = wrapper?.querySelector('[data-dropdown-menu]');
+      const button = wrapper?.querySelector('[data-dropdown-button]');
+
+      if (menu && button) {
+        const state = getDropdownState(button);
+        if (state.hideTimeout) {
+          clearTimeout(state.hideTimeout);
+          state.hideTimeout = null;
         }
-
-        isOpen = false;
+        state.isOpen = false;
         menu.classList.remove('opacity-100', 'visible', 'pointer-events-auto');
         menu.classList.add('opacity-0', 'invisible', 'pointer-events-none');
         button.setAttribute('aria-expanded', 'false');
-      };
-
-      // Show dropdown when hovering button
-      button.addEventListener('mouseenter', showDropdown);
-
-      // Keep dropdown open when hovering the menu (including bridge)
-      menu.addEventListener('mouseenter', showDropdown);
-
-      // Hide when leaving button (only if not moving to menu)
-      button.addEventListener('mouseleave', () => {
-        // Clear any existing timeout
-        if (hideTimeout) {
-          clearTimeout(hideTimeout);
-        }
-        // Small delay to allow moving to menu
-        hideTimeout = setTimeout(() => {
-          if (!menu.matches(':hover')) {
-            hideDropdown();
-          }
-          hideTimeout = null;
-        }, 50);
-      });
-
-      // Hide when leaving menu (only if not moving back to button)
-      menu.addEventListener('mouseleave', () => {
-        // Clear any existing timeout
-        if (hideTimeout) {
-          clearTimeout(hideTimeout);
-        }
-        hideTimeout = setTimeout(() => {
-          if (!button.matches(':hover') && !menu.matches(':hover')) {
-            hideDropdown();
-          }
-          hideTimeout = null;
-        }, 50);
-      });
-
-      // Close dropdown when clicking any dropdown item
-      const dropdownItems = menu.querySelectorAll('.dropdown-item');
-      dropdownItems.forEach(item => {
-        item.addEventListener('click', (e) => {
-          // Hide dropdown immediately (no timeout)
-          hideDropdown();
-          // Don't prevent default - let router handle navigation
-        });
-      });
-    });
+      }
+      // Don't prevent default - let router handle navigation
+    };
+    navContainer.addEventListener('click', this.boundNavClickHandler);
 
     // Admin trapdoor: Alt+Shift+Click on Connect
     document.querySelectorAll('[data-admin-trapdoor="true"]').forEach(link => {
