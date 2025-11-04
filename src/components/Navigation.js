@@ -221,8 +221,15 @@ export class Navigation {
       if (!button || !menu) return;
 
       let isOpen = false;
+      let hideTimeout = null; // Track timeout to prevent race conditions
 
       const showDropdown = () => {
+        // Clear any pending hide timeout
+        if (hideTimeout) {
+          clearTimeout(hideTimeout);
+          hideTimeout = null;
+        }
+
         isOpen = true;
         menu.classList.remove('opacity-0', 'invisible', 'pointer-events-none');
         menu.classList.add('opacity-100', 'visible', 'pointer-events-auto');
@@ -230,6 +237,12 @@ export class Navigation {
       };
 
       const hideDropdown = () => {
+        // Clear any pending hide timeout
+        if (hideTimeout) {
+          clearTimeout(hideTimeout);
+          hideTimeout = null;
+        }
+
         isOpen = false;
         menu.classList.remove('opacity-100', 'visible', 'pointer-events-auto');
         menu.classList.add('opacity-0', 'invisible', 'pointer-events-none');
@@ -243,29 +256,41 @@ export class Navigation {
       menu.addEventListener('mouseenter', showDropdown);
 
       // Hide when leaving button (only if not moving to menu)
-      button.addEventListener('mouseleave', (e) => {
+      button.addEventListener('mouseleave', () => {
+        // Clear any existing timeout
+        if (hideTimeout) {
+          clearTimeout(hideTimeout);
+        }
         // Small delay to allow moving to menu
-        setTimeout(() => {
+        hideTimeout = setTimeout(() => {
           if (!menu.matches(':hover')) {
             hideDropdown();
           }
+          hideTimeout = null;
         }, 50);
       });
 
       // Hide when leaving menu (only if not moving back to button)
-      menu.addEventListener('mouseleave', (e) => {
-        setTimeout(() => {
+      menu.addEventListener('mouseleave', () => {
+        // Clear any existing timeout
+        if (hideTimeout) {
+          clearTimeout(hideTimeout);
+        }
+        hideTimeout = setTimeout(() => {
           if (!button.matches(':hover') && !menu.matches(':hover')) {
             hideDropdown();
           }
+          hideTimeout = null;
         }, 50);
       });
 
       // Close dropdown when clicking any dropdown item
       const dropdownItems = menu.querySelectorAll('.dropdown-item');
       dropdownItems.forEach(item => {
-        item.addEventListener('click', () => {
+        item.addEventListener('click', (e) => {
+          // Hide dropdown immediately (no timeout)
           hideDropdown();
+          // Don't prevent default - let router handle navigation
         });
       });
     });
