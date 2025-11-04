@@ -471,45 +471,6 @@
       color var(--duration-fast) var(--ease-out-expo);
   }
 
-  /* Nav Link Hover States (Theme-Specific) */
-
-  /* Moonlight mode nav links */
-  [data-theme="moonlight"] .nav-link:hover,
-  .dark .nav-link:hover {
-    background-color: rgba(45, 52, 73, 0.5) !important;
-    color: #93c5fd !important;
-  }
-
-  /* Daylight mode nav links */
-  [data-theme="daylight"] .nav-link:hover {
-    background-color: rgba(243, 244, 246, 0.8) !important;
-    color: #3b82f6 !important;
-  }
-
-  /* Forest mode nav links */
-  [data-theme="forest"] .nav-link:hover {
-    background-color: rgba(45, 69, 55, 0.5) !important;
-    color: #86efac !important;
-  }
-
-  /* Beach mode nav links */
-  [data-theme="beach"] .nav-link:hover {
-    background-color: rgba(254, 243, 208, 0.8) !important;
-    color: #0891b2 !important;
-  }
-
-  /* Plum mode nav links */
-  [data-theme="plum"] .nav-link:hover {
-    background-color: rgba(243, 232, 255, 0.8) !important;
-    color: #a855f7 !important;
-  }
-
-  /* Char mode nav links */
-  [data-theme="char"] .nav-link:hover {
-    background-color: rgba(106, 66, 40, 0.5) !important;
-    color: #fbbf24 !important;
-  }
-
   /* Link Styles */
   .link {
     @apply text-secondary underline hover:text-primary;
@@ -1230,6 +1191,48 @@
     color: #dc2626;
     background-color: rgba(220, 38, 38, 0.1);
   }
+}
+
+/* ============================================
+   NAV LINK HOVER STATES (Theme-Specific)
+   Outside @layer to prevent Tailwind purging
+   ============================================ */
+
+/* Moonlight mode nav links */
+[data-theme="moonlight"] .nav-link:hover,
+.dark .nav-link:hover {
+  background-color: rgba(45, 52, 73, 0.5) !important;
+  color: #93c5fd !important;
+}
+
+/* Daylight mode nav links */
+[data-theme="daylight"] .nav-link:hover {
+  background-color: rgba(243, 244, 246, 0.8) !important;
+  color: #3b82f6 !important;
+}
+
+/* Forest mode nav links */
+[data-theme="forest"] .nav-link:hover {
+  background-color: rgba(45, 69, 55, 0.5) !important;
+  color: #86efac !important;
+}
+
+/* Beach mode nav links */
+[data-theme="beach"] .nav-link:hover {
+  background-color: rgba(254, 243, 208, 0.8) !important;
+  color: #0891b2 !important;
+}
+
+/* Plum mode nav links */
+[data-theme="plum"] .nav-link:hover {
+  background-color: rgba(243, 232, 255, 0.8) !important;
+  color: #a855f7 !important;
+}
+
+/* Char mode nav links */
+[data-theme="char"] .nav-link:hover {
+  background-color: rgba(106, 66, 40, 0.5) !important;
+  color: #fbbf24 !important;
 }
 
 /* Utility Styles */
