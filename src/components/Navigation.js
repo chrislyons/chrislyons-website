@@ -13,6 +13,8 @@ export class Navigation {
   constructor() {
     this.isMenuOpen = false;
     this.currentPath = window.location.pathname;
+    this.boundDocumentClickHandler = null;
+    this.boundDocumentKeydownHandler = null;
   }
 
   /**
@@ -210,9 +212,26 @@ export class Navigation {
   }
 
   /**
+   * Clean up event listeners before re-attaching
+   */
+  cleanup() {
+    // Remove document-level listeners if they exist
+    if (this.boundDocumentClickHandler) {
+      document.removeEventListener('click', this.boundDocumentClickHandler);
+      this.boundDocumentClickHandler = null;
+    }
+    if (this.boundDocumentKeydownHandler) {
+      document.removeEventListener('keydown', this.boundDocumentKeydownHandler);
+      this.boundDocumentKeydownHandler = null;
+    }
+  }
+
+  /**
    * Attach event listeners after rendering
    */
   attachEventListeners() {
+    // Clean up any existing listeners first to prevent duplicates
+    this.cleanup();
     // Dropdown hover behavior
     document.querySelectorAll('[data-dropdown-wrapper]').forEach(wrapper => {
       const button = wrapper.querySelector('[data-dropdown-button]');
@@ -331,8 +350,8 @@ export class Navigation {
         }
       });
 
-      // Close menu when clicking outside
-      document.addEventListener('click', (e) => {
+      // Close menu when clicking outside - use bound handler to allow removal
+      this.boundDocumentClickHandler = (e) => {
         if (this.isMenuOpen && !mobileMenuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
           this.isMenuOpen = false;
           mobileMenu.classList.add('hidden');
@@ -345,10 +364,11 @@ export class Navigation {
             closeIcon.classList.add('hidden');
           }
         }
-      });
+      };
+      document.addEventListener('click', this.boundDocumentClickHandler);
 
-      // Close menu on Escape key
-      document.addEventListener('keydown', (e) => {
+      // Close menu on Escape key - use bound handler to allow removal
+      this.boundDocumentKeydownHandler = (e) => {
         if (e.key === 'Escape' && this.isMenuOpen) {
           this.isMenuOpen = false;
           mobileMenu.classList.add('hidden');
@@ -362,7 +382,8 @@ export class Navigation {
             closeIcon.classList.add('hidden');
           }
         }
-      });
+      };
+      document.addEventListener('keydown', this.boundDocumentKeydownHandler);
     }
   }
 }
