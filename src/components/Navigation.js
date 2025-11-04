@@ -260,6 +260,14 @@ export class Navigation {
           }
         }, 50);
       });
+
+      // Close dropdown when clicking any dropdown item
+      const dropdownItems = menu.querySelectorAll('.dropdown-item');
+      dropdownItems.forEach(item => {
+        item.addEventListener('click', () => {
+          hideDropdown();
+        });
+      });
     });
 
     // Admin trapdoor: Alt+Shift+Click on Connect
