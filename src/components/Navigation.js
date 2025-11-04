@@ -115,7 +115,7 @@ export class Navigation {
             isActive
               ? 'text-primary bg-gray-100'
               : 'text-gray-700 hover:text-primary hover:bg-gray-50'
-          } transition-colors focus:outline-none focus:ring-2 focus:ring-secondary"
+          } transition-colors focus:outline-none"
           ${isActive ? 'aria-current="page"' : ''}
           ${isConnect ? 'data-admin-trapdoor="true"' : ''}
         >
@@ -129,7 +129,7 @@ export class Navigation {
       <div class="relative" data-dropdown-wrapper>
         <button
           type="button"
-          class="nav-link px-3 py-2 rounded-md text-lg font-medium text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-secondary inline-flex items-center"
+          class="nav-link px-3 py-2 rounded-md text-lg font-medium text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors focus:outline-none inline-flex items-center"
           aria-expanded="false"
           aria-haspopup="true"
           data-dropdown-button
