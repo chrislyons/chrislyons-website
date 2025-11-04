@@ -232,11 +232,11 @@ export class Navigation {
     const navContainer = document.getElementById('nav-container');
     if (navContainer) {
       if (this.boundNavMouseEnterHandler) {
-        navContainer.removeEventListener('mouseenter', this.boundNavMouseEnterHandler, true);
+        navContainer.removeEventListener('mouseenter', this.boundNavMouseEnterHandler);
         this.boundNavMouseEnterHandler = null;
       }
       if (this.boundNavMouseLeaveHandler) {
-        navContainer.removeEventListener('mouseleave', this.boundNavMouseLeaveHandler, true);
+        navContainer.removeEventListener('mouseleave', this.boundNavMouseLeaveHandler);
         this.boundNavMouseLeaveHandler = null;
       }
       if (this.boundNavClickHandler) {
@@ -271,6 +271,7 @@ export class Navigation {
     };
 
     // Event delegation for dropdown interactions - store as bound handlers
+    // Note: NOT using capture phase to avoid interfering with CSS :hover
     this.boundNavMouseEnterHandler = (e) => {
       const button = e.target.closest('[data-dropdown-button]');
       if (!button) return;
@@ -292,7 +293,7 @@ export class Navigation {
       menu.classList.add('opacity-100', 'visible', 'pointer-events-auto');
       button.setAttribute('aria-expanded', 'true');
     };
-    navContainer.addEventListener('mouseenter', this.boundNavMouseEnterHandler, true);
+    navContainer.addEventListener('mouseenter', this.boundNavMouseEnterHandler);
 
     this.boundNavMouseLeaveHandler = (e) => {
       const button = e.target.closest('[data-dropdown-button]');
@@ -325,7 +326,7 @@ export class Navigation {
         state.hideTimeout = null;
       }, 50);
     };
-    navContainer.addEventListener('mouseleave', this.boundNavMouseLeaveHandler, true);
+    navContainer.addEventListener('mouseleave', this.boundNavMouseLeaveHandler);
 
     // Close dropdowns when clicking items - let router handle navigation
     this.boundNavClickHandler = (e) => {
