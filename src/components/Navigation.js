@@ -144,13 +144,13 @@ export class Navigation {
         <div class="absolute left-0 top-full w-56 z-10 opacity-0 invisible pointer-events-none transition-all duration-150" data-dropdown-menu>
           <!-- Invisible bridge to maintain hover state across gap -->
           <div class="h-2"></div>
-          <!-- Actual dropdown content -->
-          <div class="rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+          <!-- Actual dropdown content with glassmorphism -->
+          <div class="dropdown-menu rounded-lg">
             <div class="py-1" role="menu" aria-orientation="vertical">
               ${item.children.map(child => `
                 <a
                   href="${child.path}"
-                  class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100 hover:text-primary transition-colors focus:outline-none focus:bg-gray-100"
+                  class="dropdown-item block px-4 py-2 text-base transition-colors focus:outline-none"
                   role="menuitem"
                 >
                   ${child.title}
