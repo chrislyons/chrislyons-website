@@ -1193,48 +1193,6 @@
   }
 }
 
-/* ============================================
-   NAV LINK HOVER STATES (Theme-Specific)
-   Outside @layer to prevent Tailwind purging
-   ============================================ */
-
-/* Moonlight mode nav links */
-[data-theme="moonlight"] nav .nav-link:hover,
-.dark nav .nav-link:hover {
-  background-color: rgba(45, 52, 73, 0.5);
-  color: #93c5fd;
-}
-
-/* Daylight mode nav links */
-[data-theme="daylight"] nav .nav-link:hover {
-  background-color: rgba(243, 244, 246, 0.8);
-  color: #3b82f6;
-}
-
-/* Forest mode nav links */
-[data-theme="forest"] nav .nav-link:hover {
-  background-color: rgba(45, 69, 55, 0.5);
-  color: #86efac;
-}
-
-/* Beach mode nav links */
-[data-theme="beach"] nav .nav-link:hover {
-  background-color: rgba(254, 243, 208, 0.8);
-  color: #0891b2;
-}
-
-/* Plum mode nav links */
-[data-theme="plum"] nav .nav-link:hover {
-  background-color: rgba(243, 232, 255, 0.8);
-  color: #a855f7;
-}
-
-/* Char mode nav links */
-[data-theme="char"] nav .nav-link:hover {
-  background-color: rgba(106, 66, 40, 0.5);
-  color: #fbbf24;
-}
-
 /* Utility Styles */
 
 @layer utilities {
