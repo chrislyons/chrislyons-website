@@ -19,8 +19,9 @@ export class Router {
 
     // Intercept link clicks (except for worker routes)
     document.addEventListener('click', (e) => {
-      if (e.target.matches('a[href^="/"]')) {
-        const path = e.target.getAttribute('href');
+      const link = e.target.closest('a[href^="/"]');
+      if (link) {
+        const path = link.getAttribute('href');
 
         // Don't intercept worker routes - let them perform full page navigation
         if (path.startsWith('/blog') || path.startsWith('/admin')) {

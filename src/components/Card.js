@@ -1,7 +1,7 @@
 /**
  * Card Component
  *
- * Reusable card component for displaying content sections
+ * Reusable card component with 3D tilt effects on hover
  */
 
 export class Card {
@@ -15,9 +15,11 @@ export class Card {
    * @param {string} options.linkText - Optional link text (defaults to "Learn more")
    * @param {string} options.className - Additional CSS classes
    * @param {boolean} options.clickable - Make entire card clickable
+   * @param {boolean} options.tilt - Enable 3D tilt effect (default: true)
    */
-  static render({ title, description, link, linkText = 'Learn more', className = '', clickable = false }) {
-    const cardClasses = `card ${className} ${clickable ? 'cursor-pointer transform hover:scale-105' : ''}`;
+  static render({ title, description, link, linkText = 'Learn more', className = '', clickable = false, tilt = true }) {
+    const tiltClass = tilt ? 'card-tilt' : '';
+    const cardClasses = `card ${tiltClass} ${className} ${clickable ? 'cursor-pointer' : ''}`;
 
     if (clickable && link) {
       return `
@@ -60,6 +62,35 @@ export class Card {
         ${cards.map(card => Card.render(card)).join('')}
       </div>
     `;
+  }
+
+  /**
+   * Attach 3D tilt effect to all cards with card-tilt class
+   * Call this after rendering cards to enable interactivity
+   */
+  static attachTiltEffects() {
+    const cards = document.querySelectorAll('.card-tilt');
+
+    cards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        // Calculate rotation (max 10 degrees)
+        const rotateX = (y - centerY) / 20;
+        const rotateY = (centerX - x) / 20;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    });
   }
 }
 

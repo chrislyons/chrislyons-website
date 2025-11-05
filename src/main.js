@@ -1251,7 +1251,7 @@ function renderEssaysPage() {
 
       <!-- Back Navigation -->
       <div class="mt-12 text-center">
-        <a href="/writing" class="link text-lg">← Back to Writing</a>
+        <a href="/ideas" class="link text-lg">← Back to Ideas</a>
       </div>
     </div>
   `;
@@ -1310,7 +1310,7 @@ function renderPoemsPage() {
 
       <!-- Back Navigation -->
       <div class="mt-12 text-center">
-        <a href="/writing" class="link text-lg">← Back to Writing</a>
+        <a href="/ideas" class="link text-lg">← Back to Ideas</a>
       </div>
     </div>
   `;
@@ -1344,7 +1344,7 @@ function render27SuppositionsPage() {
 
       <!-- Back Navigation -->
       <div class="mt-12 text-center">
-        <a href="/writing" class="link text-lg">← Back to Writing</a>
+        <a href="/ideas" class="link text-lg">← Back to Ideas</a>
       </div>
     </div>
   `;
@@ -1388,7 +1388,7 @@ function renderProtocolsOfSoundPage() {
 
       <!-- Back Navigation -->
       <div class="mt-12 text-center">
-        <a href="/writing" class="link text-lg">← Back to Writing</a>
+        <a href="/ideas" class="link text-lg">← Back to Ideas</a>
       </div>
     </div>
   `;

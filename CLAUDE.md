@@ -263,6 +263,276 @@ You can also edit `src/data/songs.js` directly. Each song has:
 
 ---
 
+## Typography and Design Resources
+
+### Shared Font Library Access
+
+**Source:** `~/dev/shared-fonts/fontshare/` (workspace-level shared resource)
+
+**Current Setup:**
+- HK Grotesk — Currently used (not in shared library)
+- Opportunity to upgrade with sophisticated editorial pairing
+
+**Recommended Editorial/Portfolio Pairing:**
+
+```bash
+# 1. Copy recommended fonts for editorial design
+mkdir -p public/fonts/fontshare
+cp -r ~/dev/shared-fonts/fontshare/serif/melodrama \
+      public/fonts/fontshare/
+cp -r ~/dev/shared-fonts/fontshare/body-text/switzer \
+      public/fonts/fontshare/
+
+# Alternative: Keep current clean aesthetic
+cp -r ~/dev/shared-fonts/fontshare/display/cabinet-grotesk \
+      public/fonts/fontshare/
+cp -r ~/dev/shared-fonts/fontshare/body-text/satoshi \
+      public/fonts/fontshare/
+```
+
+**Integration Pattern (Vanilla JS + Vite):**
+
+```css
+/* Add to src/style.css */
+
+/* Editorial Pairing */
+@font-face {
+  font-family: 'Melodrama';
+  src: url('/fonts/fontshare/melodrama/Melodrama-Variable.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Switzer';
+  src: url('/fonts/fontshare/switzer/Switzer-Variable.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-heading: 'Melodrama', Georgia, serif;
+  --font-body: 'Switzer', system-ui, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+body {
+  font-family: var(--font-body);
+}
+```
+
+**Design System Reference:**
+- `~/dev/docs/frontend-ux-guide.md` — Comprehensive UX patterns and best practices
+- `~/dev/docs/fontshare-integration-guide.md` — Font integration quick reference
+- `~/dev/shared-fonts/INVENTORY.md` — Complete font inventory
+
+**Performance:**
+- Preload primary body font (Switzer-Variable.woff2)
+- Use font-display: swap for all fonts
+- Consider font subsetting for production
+
+**Theme System Compatibility:**
+- Current 4-theme system (Moonlight, Daylight, Forest, Beach) works with any font pairing
+- Melodrama adds editorial sophistication to all themes
+- Switzer provides excellent readability across all color schemes
+
+### File Access for Typography
+
+**READ freely:**
+- `~/dev/shared-fonts/fontshare/**/*.{woff2,woff,ttf}`
+- `~/dev/docs/frontend-ux-guide.md`
+- `~/dev/docs/fontshare-*.md`
+
+**MODIFY after copying to project:**
+- `src/style.css` (add @font-face declarations)
+- `tailwind.config.js` (optional: add font families)
+
+**NEVER modify:**
+- Source font files in `~/dev/shared-fonts/`
+- Shared workspace documentation without user approval
+
+---
+
+## Audio-Visual Asset Handling
+
+### Workspace Standards Reference
+
+**Comprehensive Guide:** `~/dev/docs/media-asset-handling-guide.md`
+
+**Follow workspace standards for:**
+- Image optimization (AVIF/WebP/JPEG)
+- Audio delivery (songs, podcast-style content)
+- Video delivery (if adding portfolio/demo content)
+- Accessibility (WCAG 2.2 Level AA)
+
+### Audio Assets (Song Lyrics + Playback)
+
+**Current Setup:**
+- Song lyrics stored in `src/data/songs/*.md`
+- Converted to HTML via `scripts/parse-song-lyrics.js`
+- Displayed in `SongAccordion.js` component
+
+**Recommended Audio Player Integration:**
+
+```bash
+# Directory structure for audio files
+mkdir -p public/audio/songs
+```
+
+**Audio Format Strategy:**
+
+For each song, provide:
+1. **Opus** (128kbps) — Modern, excellent compression
+2. **MP3** (192kbps) — Universal fallback
+
+```bash
+# Encoding example (FFmpeg)
+# From high-quality source (WAV, FLAC)
+ffmpeg -i "song-title.wav" -c:a libopus -b:a 128k "song-title.opus"
+ffmpeg -i "song-title.wav" -c:a libmp3lame -b:a 192k "song-title.mp3"
+```
+
+**HTML Integration:**
+
+```html
+<!-- In src/components/SongAccordion.js -->
+<div class="song-player">
+  <h3>{{ song.title }}</h3>
+
+  <!-- Audio player -->
+  <audio controls preload="metadata">
+    <source src="/audio/songs/{{ song.slug }}.opus" type="audio/opus">
+    <source src="/audio/songs/{{ song.slug }}.mp3" type="audio/mpeg">
+    Your browser doesn't support the audio element.
+  </audio>
+
+  <!-- Lyrics (acts as transcript for accessibility) -->
+  <details class="lyrics">
+    <summary>Lyrics</summary>
+    <div>{{{ song.lyrics }}}</div>
+  </details>
+</div>
+```
+
+**Accessibility Requirements:**
+- ✅ Lyrics serve as transcript (WCAG 2.2 Level AA compliant)
+- ✅ Audio player has native keyboard controls
+- ✅ Provide both formats (Opus + MP3)
+
+### Image Assets
+
+**Format Strategy:**
+
+For photos, artwork, and album covers:
+
+```html
+<picture>
+  <source srcset="/images/{{ slug }}.avif" type="image/avif">
+  <source srcset="/images/{{ slug }}.webp" type="image/webp">
+  <img src="/images/{{ slug }}.jpg" alt="..." loading="lazy">
+</picture>
+```
+
+**Optimization Pipeline:**
+
+```bash
+# Install Sharp for image processing
+npm install sharp --save-dev
+
+# Create optimization script
+# scripts/optimize-images.js
+```
+
+```javascript
+import sharp from 'sharp';
+import { readdirSync } from 'fs';
+
+const sizes = [640, 1280, 1920];
+const formats = ['avif', 'webp', 'jpeg'];
+
+readdirSync('src/images/original').forEach(async (file) => {
+  if (!file.match(/\.(jpg|png)$/)) return;
+
+  for (const size of sizes) {
+    for (const format of formats) {
+      await sharp(`src/images/original/${file}`)
+        .resize(size, null, { withoutEnlargement: true })
+        .toFormat(format, { quality: 80 })
+        .toFile(`public/images/${format}/${file.replace(/\.(jpg|png)$/, '')}-${size}w.${format}`);
+    }
+  }
+});
+```
+
+### Special Features
+
+**Cover Flow Graphics:**
+- Apple Cover Flow-style 3D graphics implemented
+- Unlikely to be reused in other repos (project-specific)
+- Visual-only feature, no audio/video integration needed
+- ⚠️ **Not verified for WCAG 2.2 AA compliance** — May need keyboard navigation and screen reader support
+
+### Performance Targets
+
+**Images:**
+- Hero/LCP image: <100KB (AVIF or WebP)
+- Thumbnails: <20KB
+- Lazy load all below-fold images
+
+**Audio:**
+- Song files: <5MB per track (Opus @ 128kbps)
+- Preload: `metadata` only (not full audio)
+- Progressive download (no streaming needed for songs <5min)
+
+### File Access Rules
+
+**READ freely:**
+- `~/dev/docs/media-asset-handling-guide.md`
+- Audio files in `public/audio/`
+- Images in `public/images/`
+
+**GENERATE when needed:**
+- Optimized images (AVIF, WebP, responsive sizes)
+- Audio files from source recordings
+- Never commit source audio files (WAV, FLAC) to git
+
+**NEVER commit:**
+- Uncompressed audio (WAV, FLAC, >10MB)
+- Unoptimized images
+- Use R2 or external storage for source files
+
+**ALWAYS include:**
+- Lyrics/transcripts for all audio (already implemented ✅)
+- Alt text for all images
+- Multiple audio formats (Opus + MP3)
+
+### Quick Commands
+
+**Process song audio:**
+```bash
+# From high-quality source
+ffmpeg -i source/song.wav \
+  -c:a libopus -b:a 128k public/audio/songs/song.opus \
+  -c:a libmp3lame -b:a 192k public/audio/songs/song.mp3
+```
+
+**Optimize images:**
+```bash
+node scripts/optimize-images.js
+```
+
+**Update song data:**
+```bash
+node scripts/parse-song-lyrics.js
+```
+
+---
+
 ## Quick Reference
 
 ### Common Tasks
@@ -300,7 +570,9 @@ node scripts/parse-song-lyrics.js
 - **Global config:** `~/.claude/CLAUDE.md`
 - **Skill templates:** `~/dev/.claude/skill-templates/`
 - **Automation scripts:** `~/dev/scripts/`
+- **Design system:** `~/dev/docs/frontend-ux-guide.md`
+- **Font library:** `~/dev/shared-fonts/INVENTORY.md`
 
 ---
 
-**Last Updated:** 2025-11-02
+**Last Updated:** 2025-11-03
