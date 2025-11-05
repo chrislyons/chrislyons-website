@@ -130,8 +130,8 @@ export class Navigation {
     // Item with dropdown
     return `
       <div class="relative" data-dropdown-wrapper>
-        <button
-          type="button"
+        <a
+          href="${item.path}"
           class="nav-link px-3 py-2 rounded-md text-lg font-medium text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-secondary inline-flex items-center"
           aria-expanded="false"
           aria-haspopup="true"
@@ -141,7 +141,7 @@ export class Navigation {
           <svg class="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
           </svg>
-        </button>
+        </a>
 
         <!-- Dropdown menu with invisible bridge -->
         <div class="absolute left-0 top-full w-56 z-10 opacity-0 invisible pointer-events-none transition-all duration-150" data-dropdown-menu>
