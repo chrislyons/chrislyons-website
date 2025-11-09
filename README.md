@@ -47,6 +47,21 @@ npm run deploy
 - SPA: http://localhost:5173
 - Worker (if running): http://localhost:8787
 
+### Admin Setup
+
+To use the `/admin` panel, you must configure authentication credentials as Cloudflare Worker secrets:
+
+```bash
+# Set admin credentials (prompted for values)
+npx wrangler secret put ADMIN_USERNAME
+npx wrangler secret put ADMIN_PASSWORD
+
+# Optional: Set Giphy API key for GIF search
+npx wrangler secret put GIPHY_API_KEY
+```
+
+**Security Note:** Never commit credentials to version control. These are stored securely in Cloudflare's secret manager.
+
 ---
 
 ## Song Lyrics Management

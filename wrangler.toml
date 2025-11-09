@@ -21,8 +21,15 @@ database_id = "741a89af-1617-491f-991b-0bde7cf81d69"
 # binding = "BLOG_IMAGES"
 # bucket_name = "blog-images"
 
-# Secrets (set with: npx wrangler secret put GIPHY_API_KEY)
-# GIPHY_API_KEY - Set this via CLI
+# Secrets (set with: npx wrangler secret put SECRET_NAME)
+# GIPHY_API_KEY - Giphy API key for GIF search
+# ADMIN_USERNAME - Admin panel username
+# ADMIN_PASSWORD - Admin panel password (use a strong password!)
+#
+# Example setup:
+#   npx wrangler secret put ADMIN_USERNAME
+#   npx wrangler secret put ADMIN_PASSWORD
+#   npx wrangler secret put GIPHY_API_KEY
 
 [build]
 command = "npm run build"

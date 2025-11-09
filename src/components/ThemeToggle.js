@@ -37,27 +37,39 @@ export class ThemeToggle {
 
   /**
    * Resolve initial theme on page load
-   * SHUFFLE MODE: Always randomize theme on page load, ignoring localStorage cache
-   * Never picks the same theme twice in a row (n+1 logic)
-   * User can still cycle themes during session via toggle button
+   * Priority:
+   * 1. User's stored preference (if they've manually selected a theme)
+   * 2. Random theme on first visit (never same theme twice using n+1 logic)
+   * 3. System preference (prefers-color-scheme) if no stored preference
    */
   resolveInitialTheme() {
     if (typeof window === 'undefined') return 'moonlight';
 
-    // Get the last theme shown (from previous page load or manual toggle)
-    const lastTheme = window.localStorage.getItem(this.LAST_THEME_KEY);
+    // Check if user has a stored theme preference
+    const storedTheme = window.localStorage.getItem(this.STORAGE_KEY);
 
-    // Filter out the last theme to ensure we never repeat (n+1 logic)
-    const availableThemes = lastTheme
-      ? this.THEMES.filter(theme => theme !== lastTheme)
+    // If user has manually selected a theme, use it
+    if (storedTheme && this.THEMES.includes(storedTheme)) {
+      return storedTheme;
+    }
+
+    // First time visitor - show random theme
+    // Get the last random theme to avoid repetition (n+1 logic)
+    const lastRandomTheme = window.localStorage.getItem(this.LAST_THEME_KEY);
+
+    // Filter out the last theme to ensure variety
+    const availableThemes = lastRandomTheme
+      ? this.THEMES.filter(theme => theme !== lastRandomTheme)
       : this.THEMES;
 
     // Randomly select from available themes
     const randomIndex = Math.floor(Math.random() * availableThemes.length);
     const selectedTheme = availableThemes[randomIndex];
 
-    // Store this as the last theme for next page load
+    // Store as the last random theme (not as user preference)
     window.localStorage.setItem(this.LAST_THEME_KEY, selectedTheme);
+    // Also store as current preference for consistency during session
+    window.localStorage.setItem(this.STORAGE_KEY, selectedTheme);
 
     return selectedTheme;
   }
