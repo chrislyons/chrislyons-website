@@ -2,6 +2,7 @@
 // Using raw template literals instead
 
 import assetManifest from './asset-manifest.json';
+import contentData from '../content/content.json';
 
 // Type for entry from database
 type Entry = {
@@ -59,49 +60,8 @@ function buildFontUrl(fonts: string[]): string {
   return `https://fonts.googleapis.com/css2?${families}&display=swap`;
 }
 
-// Navigation data (matches content.json structure)
-const NAV_DATA = [
-  {
-    title: "Apps",
-    path: "/apps",
-    id: "apps",
-    children: [
-      { title: "Carbon ACX", path: "/apps/carbon-acx" },
-      { title: "Clip Composer", path: "/apps/clip-composer" },
-      { title: "Hotbox", path: "/apps/hotbox" },
-      { title: "ListMaker", path: "/apps/listmaker" },
-      { title: "Tidal MCP Server", path: "/apps/tidal-mcp" },
-      { title: "WordBird", path: "/apps/wordbird" }
-    ]
-  },
-  {
-    title: "Ideas",
-    path: "/ideas",
-    id: "ideas",
-    children: [
-      { title: "Blog", path: "/blog" },
-      { title: "27 Suppositions", path: "/ideas/27-suppositions" },
-      { title: "Numa Network", path: "/ideas/numa-network" },
-      { title: "OSD Events", path: "/ideas/osd-events" },
-      { title: "Protocols of Sound", path: "/ideas/protocols-of-sound" }
-    ]
-  },
-  {
-    title: "Sounds",
-    path: "/sounds",
-    id: "sounds",
-    children: [
-      { title: "Collected Lyrics", path: "/sounds/lyrics" },
-      { title: "Discography", path: "/sounds/discography" },
-      { title: "Portfolio", path: "/sounds/portfolio" }
-    ]
-  },
-  {
-    title: "Connect",
-    path: "/connect",
-    id: "connect"
-  }
-];
+// Navigation data imported from content.json (single source of truth)
+const NAV_DATA = contentData.navigation;
 
 // Render floating navigation (for blog/admin pages)
 function renderFloatingNav(currentPath: string = ''): string {

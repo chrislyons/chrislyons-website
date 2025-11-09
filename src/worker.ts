@@ -8,6 +8,8 @@ type Bindings = {
   DB: D1Database;
   BLOG_IMAGES: R2Bucket;
   GIPHY_API_KEY: string;
+  ADMIN_USERNAME: string;
+  ADMIN_PASSWORD: string;
   ASSETS: Fetcher;
 };
 
@@ -15,8 +17,6 @@ type Bindings = {
 const dynamicApp = new Hono<{ Bindings: Bindings }>();
 
 // Authentication constants
-const ADMIN_USERNAME = 'clyons';
-const ADMIN_PASSWORD = 'supermario';
 const SESSION_COOKIE = 'admin_session';
 const SESSION_TOKEN = 'authenticated'; // Simple token for single-user system
 
@@ -122,8 +122,16 @@ dynamicApp.post('/admin/login', async (c) => {
   const username = formData.get('username')?.toString() || '';
   const password = formData.get('password')?.toString() || '';
 
-  // Validate credentials
-  if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+  // Validate credentials from environment variables
+  const adminUsername = c.env.ADMIN_USERNAME;
+  const adminPassword = c.env.ADMIN_PASSWORD;
+
+  if (!adminUsername || !adminPassword) {
+    console.error('ADMIN_USERNAME or ADMIN_PASSWORD not configured');
+    return c.html(renderAdminLogin('Server configuration error'));
+  }
+
+  if (username === adminUsername && password === adminPassword) {
     // Set session cookie (expires in 7 days)
     setCookie(c, SESSION_COOKIE, SESSION_TOKEN, {
       httpOnly: true,
