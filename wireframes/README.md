@@ -30,6 +30,38 @@ Each topic has **two paired files**:
 
 ## Available Wireframes
 
+### Version 2 (2025-11-18) - Current
+
+Located in `v2-2025-11-18/`:
+
+1. **repo-structure** - Complete directory tree visualization
+   - [Diagram](v2-2025-11-18/repo-structure.mermaid.md)
+   - [Notes](v2-2025-11-18/repo-structure.notes.md)
+
+2. **architecture-overview** - High-level system design
+   - [Diagram](v2-2025-11-18/architecture-overview.mermaid.md)
+   - [Notes](v2-2025-11-18/architecture-overview.notes.md)
+
+3. **component-map** - Detailed component breakdown
+   - [Diagram](v2-2025-11-18/component-map.mermaid.md)
+   - [Notes](v2-2025-11-18/component-map.notes.md)
+
+4. **data-flow** - How data moves through the system
+   - [Diagram](v2-2025-11-18/data-flow.mermaid.md)
+   - [Notes](v2-2025-11-18/data-flow.notes.md)
+
+5. **entry-points** - All ways to interact with the codebase
+   - [Diagram](v2-2025-11-18/entry-points.mermaid.md)
+   - [Notes](v2-2025-11-18/entry-points.notes.md)
+
+6. **database-schema** - Data model visualization
+   - [Diagram](v2-2025-11-18/database-schema.mermaid.md)
+   - [Notes](v2-2025-11-18/database-schema.notes.md)
+
+7. **deployment-infrastructure** - How the code runs
+   - [Diagram](v2-2025-11-18/deployment-infrastructure.mermaid.md)
+   - [Notes](v2-2025-11-18/deployment-infrastructure.notes.md)
+
 ### Version 1 (2025-11-08)
 
 Located in `v1-2025-11-08/`:
@@ -93,6 +125,12 @@ Simply open the corresponding `.notes.md` file in any markdown viewer or text ed
 
 ## Version History
 
+- **v2-2025-11-18**: Updated comprehensive wireframe documentation
+  - Refined all 7 core topics with enhanced detail
+  - Expanded notes with more actionable guidance
+  - Better organized for developer onboarding
+  - Improved Mermaid diagram clarity and formatting
+
 - **v1-2025-11-08**: Initial comprehensive wireframe documentation
   - Complete system architecture
   - All 7 core topics covered
@@ -122,6 +160,6 @@ If you find errors or areas that need clarification, please:
 
 ---
 
-**Last Updated**: 2025-11-08
-**Version**: v1
+**Last Updated**: 2025-11-18
+**Version**: v2
 **Maintainer**: Claude Code (AI-generated, human-reviewed)
