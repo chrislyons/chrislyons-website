@@ -12,7 +12,7 @@ Personal website for Chris Lyons featuring portfolio projects, blog, collected s
 - **Four-Theme System** — Moonlight, Daylight, Forest, Beach
 - **Collected Lyrics** — 39 songs with expandable accordion interface
 - **Blog System** — D1 database + R2 storage with admin panel
-- **Portfolio Sections** — Apps, Ideas, Sounds, Writing
+- **Portfolio Sections** — Apps, Ideas, Sounds, Connect
 
 ---
 
@@ -40,7 +40,7 @@ npm run dev:all
 npm run build
 
 # Deploy
-npm run deploy
+npx wrangler deploy
 ```
 
 **Access:**

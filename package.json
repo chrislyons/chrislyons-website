@@ -2,7 +2,7 @@
   "name": "chrislyons-website",
   "version": "1.0.0",
   "type": "module",
-  "description": "Brief project description here.",
+  "description": "Personal website for Chris Lyons featuring portfolio projects, blog, and song lyrics",
   "main": "index.js",
   "directories": {
     "doc": "docs",
