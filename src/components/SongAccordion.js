@@ -27,14 +27,16 @@ export class SongAccordion {
           <button
             type="button"
             id="${headerId}"
-            class="song-toggle w-full text-left px-6 py-4 rounded-lg transition-all duration-300 bg-white hover:bg-gray-50 border-2 border-gray-200 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            class="song-toggle w-full text-left px-6 py-4 rounded-lg bg-white hover:bg-gray-50 border-2 border-gray-200 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            style="transition: all var(--duration-base) var(--ease-out-back);"
             aria-expanded="false"
             aria-controls="${contentId}"
           >
             <div class="flex items-center justify-between">
               <span class="text-lg font-semibold text-gray-800">${song.title}</span>
               <svg
-                class="song-icon w-6 h-6 text-gray-600 transform transition-transform duration-300"
+                class="song-icon w-6 h-6 text-gray-600 transform"
+                style="transition: transform var(--duration-base) var(--ease-out-back);"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -49,7 +51,8 @@ export class SongAccordion {
           <!-- Lyrics Content (Collapsible) -->
           <div
             id="${contentId}"
-            class="song-content overflow-hidden transition-all duration-300 max-h-0 opacity-0"
+            class="song-content overflow-hidden max-h-0 opacity-0"
+            style="transition: all var(--duration-slow) var(--ease-out-expo);"
             aria-labelledby="${headerId}"
             role="region"
           >

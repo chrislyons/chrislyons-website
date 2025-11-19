@@ -46,7 +46,6 @@ Light, LightItalic
 Italic
 MediumItalic
 SemiBoldItalic
-Bold (already covered by weight 700)
 BoldItalic
 ExtraBold, ExtraBoldItalic
 Black, BlackItalic

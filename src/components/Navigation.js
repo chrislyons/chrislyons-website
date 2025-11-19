@@ -13,6 +13,9 @@ export class Navigation {
   constructor() {
     this.isMenuOpen = false;
     this.currentPath = window.location.pathname;
+    // Only track document-level listeners that need cleanup
+    this.boundDocumentClickHandler = null;
+    this.boundDocumentKeydownHandler = null;
   }
 
   /**
@@ -127,8 +130,8 @@ export class Navigation {
     // Item with dropdown
     return `
       <div class="relative" data-dropdown-wrapper>
-        <button
-          type="button"
+        <a
+          href="${item.path}"
           class="nav-link px-3 py-2 rounded-md text-lg font-medium text-gray-700 hover:text-primary hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-secondary inline-flex items-center"
           aria-expanded="false"
           aria-haspopup="true"
@@ -138,19 +141,19 @@ export class Navigation {
           <svg class="ml-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
           </svg>
-        </button>
+        </a>
 
         <!-- Dropdown menu with invisible bridge -->
         <div class="absolute left-0 top-full w-56 z-10 opacity-0 invisible pointer-events-none transition-all duration-150" data-dropdown-menu>
           <!-- Invisible bridge to maintain hover state across gap -->
           <div class="h-2"></div>
-          <!-- Actual dropdown content -->
-          <div class="rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+          <!-- Actual dropdown content with glassmorphism -->
+          <div class="dropdown-menu rounded-lg">
             <div class="py-1" role="menu" aria-orientation="vertical">
               ${item.children.map(child => `
                 <a
                   href="${child.path}"
-                  class="block px-4 py-2 text-base text-gray-700 hover:bg-gray-100 hover:text-primary transition-colors focus:outline-none focus:bg-gray-100"
+                  class="dropdown-item block px-4 py-2 text-base text-gray-700 hover:bg-gray-100 hover:text-primary transition-colors focus:outline-none focus:bg-gray-100"
                   role="menuitem"
                 >
                   ${child.title}
@@ -210,10 +213,30 @@ export class Navigation {
   }
 
   /**
+   * Clean up document-level event listeners before re-attaching
+   * Note: Dropdown element listeners don't need cleanup - they're removed when DOM is replaced
+   */
+  cleanup() {
+    // Remove mobile menu document-level listeners if they exist
+    if (this.boundDocumentClickHandler) {
+      document.removeEventListener('click', this.boundDocumentClickHandler);
+      this.boundDocumentClickHandler = null;
+    }
+    if (this.boundDocumentKeydownHandler) {
+      document.removeEventListener('keydown', this.boundDocumentKeydownHandler);
+      this.boundDocumentKeydownHandler = null;
+    }
+  }
+
+  /**
    * Attach event listeners after rendering
    */
   attachEventListeners() {
-    // Dropdown hover behavior
+    // Clean up document-level listeners before re-attaching
+    this.cleanup();
+
+    // Dropdown hover behavior - individual listeners on each element
+    // These don't need cleanup because DOM elements are replaced on re-render
     document.querySelectorAll('[data-dropdown-wrapper]').forEach(wrapper => {
       const button = wrapper.querySelector('[data-dropdown-button]');
       const menu = wrapper.querySelector('[data-dropdown-menu]');
@@ -221,8 +244,15 @@ export class Navigation {
       if (!button || !menu) return;
 
       let isOpen = false;
+      let hideTimeout = null;
 
       const showDropdown = () => {
+        // Clear any pending hide timeout
+        if (hideTimeout) {
+          clearTimeout(hideTimeout);
+          hideTimeout = null;
+        }
+
         isOpen = true;
         menu.classList.remove('opacity-0', 'invisible', 'pointer-events-none');
         menu.classList.add('opacity-100', 'visible', 'pointer-events-auto');
@@ -230,6 +260,12 @@ export class Navigation {
       };
 
       const hideDropdown = () => {
+        // Clear any pending hide timeout
+        if (hideTimeout) {
+          clearTimeout(hideTimeout);
+          hideTimeout = null;
+        }
+
         isOpen = false;
         menu.classList.remove('opacity-100', 'visible', 'pointer-events-auto');
         menu.classList.add('opacity-0', 'invisible', 'pointer-events-none');
@@ -243,22 +279,42 @@ export class Navigation {
       menu.addEventListener('mouseenter', showDropdown);
 
       // Hide when leaving button (only if not moving to menu)
-      button.addEventListener('mouseleave', (e) => {
+      button.addEventListener('mouseleave', () => {
+        // Clear any existing timeout
+        if (hideTimeout) {
+          clearTimeout(hideTimeout);
+        }
         // Small delay to allow moving to menu
-        setTimeout(() => {
+        hideTimeout = setTimeout(() => {
           if (!menu.matches(':hover')) {
             hideDropdown();
           }
+          hideTimeout = null;
         }, 50);
       });
 
       // Hide when leaving menu (only if not moving back to button)
-      menu.addEventListener('mouseleave', (e) => {
-        setTimeout(() => {
+      menu.addEventListener('mouseleave', () => {
+        // Clear any existing timeout
+        if (hideTimeout) {
+          clearTimeout(hideTimeout);
+        }
+        hideTimeout = setTimeout(() => {
           if (!button.matches(':hover') && !menu.matches(':hover')) {
             hideDropdown();
           }
+          hideTimeout = null;
         }, 50);
+      });
+
+      // Close dropdown when clicking any dropdown item
+      const dropdownItems = menu.querySelectorAll('.dropdown-item');
+      dropdownItems.forEach(item => {
+        item.addEventListener('click', () => {
+          // Hide dropdown immediately (no timeout)
+          hideDropdown();
+          // Don't prevent default - let router handle navigation
+        });
       });
     });
 
@@ -298,8 +354,8 @@ export class Navigation {
         }
       });
 
-      // Close menu when clicking outside
-      document.addEventListener('click', (e) => {
+      // Close menu when clicking outside - use bound handler to allow removal
+      this.boundDocumentClickHandler = (e) => {
         if (this.isMenuOpen && !mobileMenuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
           this.isMenuOpen = false;
           mobileMenu.classList.add('hidden');
@@ -312,10 +368,11 @@ export class Navigation {
             closeIcon.classList.add('hidden');
           }
         }
-      });
+      };
+      document.addEventListener('click', this.boundDocumentClickHandler);
 
-      // Close menu on Escape key
-      document.addEventListener('keydown', (e) => {
+      // Close menu on Escape key - use bound handler to allow removal
+      this.boundDocumentKeydownHandler = (e) => {
         if (e.key === 'Escape' && this.isMenuOpen) {
           this.isMenuOpen = false;
           mobileMenu.classList.add('hidden');
@@ -329,7 +386,8 @@ export class Navigation {
             closeIcon.classList.add('hidden');
           }
         }
-      });
+      };
+      document.addEventListener('keydown', this.boundDocumentKeydownHandler);
     }
   }
 }
