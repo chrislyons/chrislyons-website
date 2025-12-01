@@ -3,7 +3,11 @@
  *
  * Expandable song cards for lyrics display
  * Each song can be expanded inline to show full lyrics
+ *
+ * Uses spring physics for smooth, natural-feeling animations
  */
+
+import { Spring, MOTION_PRESETS } from '../utils/spring.js';
 
 export class SongAccordion {
   /**
@@ -27,8 +31,7 @@ export class SongAccordion {
           <button
             type="button"
             id="${headerId}"
-            class="song-toggle w-full text-left px-6 py-4 rounded-lg bg-white hover:bg-gray-50 border-2 border-gray-200 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            style="transition: all var(--duration-base) var(--ease-out-back);"
+            class="song-toggle w-full text-left px-6 py-4 rounded-lg bg-white hover:bg-gray-50 border-2 border-gray-200 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200"
             aria-expanded="false"
             aria-controls="${contentId}"
           >
@@ -36,7 +39,6 @@ export class SongAccordion {
               <span class="text-lg font-semibold text-gray-800">${song.title}</span>
               <svg
                 class="song-icon w-6 h-6 text-gray-600 transform"
-                style="transition: transform var(--duration-base) var(--ease-out-back);"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -51,8 +53,8 @@ export class SongAccordion {
           <!-- Lyrics Content (Collapsible) -->
           <div
             id="${contentId}"
-            class="song-content overflow-hidden max-h-0 opacity-0"
-            style="transition: all var(--duration-slow) var(--ease-out-expo);"
+            class="song-content overflow-hidden"
+            style="max-height: 0; opacity: 0;"
             aria-labelledby="${headerId}"
             role="region"
           >
@@ -86,7 +88,17 @@ export class SongAccordion {
 
       if (!toggle || !content || !icon) return;
 
-      // Toggle function
+      // Create springs for height and opacity
+      const heightSpring = new Spring(MOTION_PRESETS.interface);
+      const opacitySpring = new Spring(MOTION_PRESETS.interface);
+      const iconSpring = new Spring(MOTION_PRESETS.interface);
+
+      // Initialize springs
+      heightSpring.set(0);
+      opacitySpring.set(0);
+      iconSpring.set(0);
+
+      // Toggle function with spring physics
       const toggleSong = () => {
         const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
         const newExpandedState = !isExpanded;
@@ -99,18 +111,38 @@ export class SongAccordion {
         // Update ARIA state
         toggle.setAttribute('aria-expanded', newExpandedState.toString());
 
-        // Toggle classes for animation
+        // Animate with spring physics
         if (newExpandedState) {
-          // Expand
-          content.classList.remove('max-h-0', 'opacity-0');
-          content.classList.add('max-h-[2000px]', 'opacity-100');
-          icon.classList.add('rotate-180');
+          // Expand with spring animation
+          const targetHeight = content.scrollHeight;
+
+          heightSpring.to(targetHeight, (value) => {
+            content.style.maxHeight = `${value}px`;
+          });
+
+          opacitySpring.to(1, (value) => {
+            content.style.opacity = value;
+          });
+
+          iconSpring.to(180, (value) => {
+            icon.style.transform = `rotate(${value}deg)`;
+          });
+
           toggle.classList.add('rounded-b-none');
         } else {
-          // Collapse
-          content.classList.remove('max-h-[2000px]', 'opacity-100');
-          content.classList.add('max-h-0', 'opacity-0');
-          icon.classList.remove('rotate-180');
+          // Collapse with spring animation
+          heightSpring.to(0, (value) => {
+            content.style.maxHeight = `${value}px`;
+          });
+
+          opacitySpring.to(0, (value) => {
+            content.style.opacity = value;
+          });
+
+          iconSpring.to(0, (value) => {
+            icon.style.transform = `rotate(${value}deg)`;
+          });
+
           toggle.classList.remove('rounded-b-none');
         }
       };

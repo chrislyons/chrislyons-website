@@ -48,23 +48,53 @@ export class MagneticButton {
   /**
    * Attach magnetic effect to all buttons with magnetic-button class
    * Call this after rendering to enable interactivity
+   *
+   * Performance optimizations:
+   * - Cache getBoundingClientRect() on mouseenter
+   * - Use requestAnimationFrame for smooth 60fps updates
+   * - Prevent layout thrashing
    */
   static attachMagneticEffects() {
     const magneticButtons = document.querySelectorAll('.magnetic-button');
 
     magneticButtons.forEach(button => {
       const strength = parseFloat(button.getAttribute('data-magnetic-strength') || '0.3');
+      let cachedRect = null;
+      let animationFrameId = null;
+
+      // Cache rect on mouseenter to avoid repeated getBoundingClientRect calls
+      button.addEventListener('mouseenter', () => {
+        cachedRect = button.getBoundingClientRect();
+      });
 
       button.addEventListener('mousemove', (e) => {
-        const rect = button.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
+        if (!cachedRect) return;
 
-        button.style.transform = `translate(${x * strength}px, ${y * strength}px) scale(1.02)`;
+        // Cancel previous animation frame if still pending
+        if (animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
+        }
+
+        // Calculate offset from center
+        const x = e.clientX - cachedRect.left - cachedRect.width / 2;
+        const y = e.clientY - cachedRect.top - cachedRect.height / 2;
+
+        // Schedule transform update on next frame
+        animationFrameId = requestAnimationFrame(() => {
+          button.style.transform = `translate(${x * strength}px, ${y * strength}px) scale(1.02)`;
+        });
       });
 
       button.addEventListener('mouseleave', () => {
+        // Cancel any pending animation
+        if (animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
+          animationFrameId = null;
+        }
+
+        // Reset transform
         button.style.transform = '';
+        cachedRect = null;
       });
     });
   }
