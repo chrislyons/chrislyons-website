@@ -44,64 +44,69 @@
    CSS CUSTOM PROPERTIES - THEME VARIABLES
    ============================================ */
 
-/* Daylight Theme (Light Mode) - Default */
+/* Daylight Theme (Light Mode) - Default
+ * Migrated to OKLCH for perceptual uniformity
+ * L: Lightness (0-100%)
+ * C: Chroma/saturation (0-0.4)
+ * H: Hue angle (0-360deg)
+ */
 :root,
 [data-theme="daylight"] {
   /* Body */
-  --bg-body: #ffffff;
-  --text-body: #111827;
+  --bg-body: oklch(100% 0 0);                    /* Pure white */
+  --text-body: oklch(20% 0.01 260);              /* Near-black with slight blue tint */
 
   /* Cards */
-  --bg-card: #ffffff;
-  --border-card: #e5e7eb;
-  --text-card: #111827;
+  --bg-card: oklch(100% 0 0);                    /* Pure white */
+  --border-card: oklch(92% 0.005 260);           /* Light gray border */
+  --text-card: oklch(20% 0.01 260);              /* Near-black */
 
   /* Dropdowns */
-  --bg-dropdown: #ffffff;
-  --border-dropdown: #e5e7eb;
-  --text-dropdown: #111827;
-  --bg-dropdown-hover: #f3f4f6;
+  --bg-dropdown: oklch(100% 0 0);                /* White */
+  --border-dropdown: oklch(92% 0.005 260);       /* Light gray */
+  --text-dropdown: oklch(20% 0.01 260);          /* Near-black */
+  --bg-dropdown-hover: oklch(97% 0.003 260);     /* Subtle gray hover */
 
   /* Links */
-  --text-link: #2563eb;
-  --text-link-hover: #1d4ed8;
+  --text-link: oklch(55% 0.18 265);              /* Blue - perceptually balanced */
+  --text-link-hover: oklch(48% 0.2 265);         /* Darker blue hover */
 
   /* Typography */
-  --text-heading: #111827;
-  --text-gray-700: #374151;
-  --text-gray-600: #4b5563;
-  --text-gray-800: #1f2937;
-  --text-gray-900: #111827;
-  --text-primary: #2563eb;
-  --text-secondary: #4f46e5;
+  --text-heading: oklch(20% 0.01 260);           /* Near-black */
+  --text-gray-700: oklch(35% 0.02 260);          /* Dark gray */
+  --text-gray-600: oklch(45% 0.02 260);          /* Medium-dark gray */
+  --text-gray-800: oklch(25% 0.015 260);         /* Very dark gray */
+  --text-gray-900: oklch(20% 0.01 260);          /* Near-black */
+  --text-primary: oklch(55% 0.18 265);           /* Blue primary */
+  --text-secondary: oklch(50% 0.2 280);          /* Indigo secondary */
 
   /* Backgrounds */
-  --bg-white: #ffffff;
-  --bg-gray-50: #f9fafb;
-  --bg-gray-100: #f3f4f6;
+  --bg-white: oklch(100% 0 0);                   /* Pure white */
+  --bg-gray-50: oklch(98% 0.002 260);            /* Very light gray */
+  --bg-gray-100: oklch(97% 0.003 260);           /* Light gray */
 
   /* Borders */
-  --border-gray-200: #e5e7eb;
+  --border-gray-200: oklch(92% 0.005 260);       /* Light border */
 
   /* Navigation */
-  --bg-nav: #ffffff;
-  --border-nav: #e5e7eb;
+  --bg-nav: oklch(100% 0 0);                     /* White */
+  --border-nav: oklch(92% 0.005 260);            /* Light border */
 
   /* Blog Button */
-  --bg-blog-btn: #2563eb;
-  --text-blog-btn: #ffffff;
-  --bg-blog-btn-hover: #1d4ed8;
-  --ring-blog-btn: #2563eb;
+  --bg-blog-btn: oklch(55% 0.18 265);            /* Blue */
+  --text-blog-btn: oklch(100% 0 0);              /* White text */
+  --bg-blog-btn-hover: oklch(48% 0.2 265);       /* Darker blue hover */
+  --ring-blog-btn: oklch(55% 0.18 265);          /* Blue ring */
 
   /* Primary Button */
-  --bg-btn-primary: #2563eb;
-  --text-btn-primary: #ffffff;
-  --bg-btn-primary-hover: #1d4ed8;
+  --bg-btn-primary: oklch(55% 0.18 265);         /* Blue */
+  --text-btn-primary: oklch(100% 0 0);           /* White text */
+  --bg-btn-primary-hover: oklch(48% 0.2 265);    /* Darker blue hover */
 
   /* GitHub Icon */
-  --text-github-icon: #2563eb;
-  --text-github-icon-hover: #1d4ed8;
-  --bg-github-icon-hover: rgba(37, 99, 235, 0.05);
+  --text-github-icon: oklch(55% 0.18 265);       /* Blue */
+  --text-github-icon-hover: oklch(48% 0.2 265);  /* Darker blue hover */
+  --bg-github-icon-hover: oklch(97% 0.02 265 / 0.5); /* Subtle blue bg */
 }
 
 /* Moonlight Theme (Dark Mode) - Navy Blue */
@@ -491,12 +496,28 @@
     @apply btn bg-secondary text-white hover:bg-opacity-90 focus:ring-secondary;
   }
 
-  /* Card Component */
+  /* Card Component with Visual Materiality */
   .card {
     @apply rounded-lg shadow-md p-6 transition-shadow duration-200 hover:shadow-lg;
-    background-color: var(--bg-card);
+    background: radial-gradient(
+      circle at 30% 20%,
+      color-mix(in oklch, var(--bg-card), white 3%),
+      var(--bg-card)
+    );
     border: 1px solid var(--border-card);
     color: var(--text-card);
+    position: relative;
+  }
+
+  /* Subtle noise texture for materiality */
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.015'/%3E%3C/svg%3E");
+    pointer-events: none;
+    mix-blend-mode: overlay;
   }
 
   /* Dropdown Menu Styles */

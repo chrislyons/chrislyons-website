@@ -48,8 +48,14 @@
     <main id="main-content" class="container-custom py-8 min-h-screen" role="main">
       <!-- Dynamic page content will be injected here -->
       <div id="page-content">
-        <div class="text-center py-20">
-          <h1 class="text-5xl font-bold mb-4">Loading...</h1>
+        <!-- Skeleton loader - instant render, no spinner -->
+        <div class="max-w-4xl mx-auto animate-pulse">
+          <div class="text-center mb-12 mt-12">
+            <!-- Hero title skeleton -->
+            <div class="h-16 bg-gray-200 rounded-lg max-w-2xl mx-auto mb-6"></div>
+            <!-- Blog button skeleton -->
+            <div class="h-14 bg-gray-300 rounded-lg max-w-xs mx-auto mt-8"></div>
+          </div>
         </div>
       </div>
     </main>
