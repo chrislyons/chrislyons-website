@@ -719,10 +719,99 @@ Following the 7-week roadmap will elevate this site from a solid Tier 2 implemen
 
 ---
 
+## ADDENDUM: Option B Implementation (Selective Sovereign)
+
+**Date Implemented:** 2025-11-30
+**Branch:** `feature/polish-pass-option-a` (continued)
+
+Following the honest assessment and proportionality review, **Option B (Selective Sovereign)** was implemented, building on Option A's foundation.
+
+### What Was Added Beyond Option A
+
+#### 1. Proper Typographic Scale (Major Third 1.25 Ratio)
+**File:** `src/style.css:51-80`
+
+- Fluid typography with `clamp()` scaling from mobile (375px) to desktop (1440px)
+- 8 size tokens: `--font-xs` through `--font-4xl`
+- 5 line-height tokens: `--leading-tight` through `--leading-loose`
+- Tokenized spacing scale (geometric progression base × 1.5^n)
+- **Impact:** Consistent rhythm, smooth responsive scaling, no magic numbers
+
+#### 2. Motion Token System (Consistent Physics)
+**Files:** `src/utils/spring.js:121-179`, `src/main.js:16,69`
+
+- 4 motion presets with duration + easing curves
+  - `--motion-immediate` (150ms, slight overshoot)
+  - `--motion-interface` (300ms, smooth acceleration)
+  - `--motion-page` (500ms, gentle deceleration)
+  - `--motion-gentle` (800ms, very smooth)
+- CSS custom properties injected on app init
+- Cubic-bezier approximations of spring physics for CSS transitions
+- **Impact:** Unified motion language, predictable animation timings
+
+#### 3. State Machine for ThemeToggle (6 Themes)
+**Files:** `src/utils/stateMachine.js` (new), `src/components/ThemeToggle.js:16,28-44,125-155`
+
+- Created lightweight Finite State Machine utility
+- Cyclic machine for theme transitions (6 states)
+- Explicit state management replaces manual array indexing
+- Added `goTo(theme)` method for direct theme selection
+- **Impact:** Impossible states are now unrepresentable, clearer logic
+
+#### 4. Semantic OKLCH Color Tokens
+**File:** `src/style.css:86-149`
+
+- Semantic naming system:
+  - Surface: `--surface-canvas`, `--surface-raised`, `--surface-overlay`, `--surface-hover`
+  - Content: `--content-primary`, `--content-secondary`, `--content-tertiary`
+  - Interactive: `--interactive-primary`, `--interactive-hover`, `--interactive-active`
+  - Border: `--border-subtle`, `--border-moderate`, `--border-strong`
+- Legacy aliases maintained for backward compatibility
+- **Impact:** Intent-based naming, easier theming, future-proof
+
+### Files Changed (Option B)
+
+```
+src/style.css                      (+68 design tokens, semantic colors)
+src/utils/spring.js                (+motion token injection)
+src/utils/stateMachine.js          (+145 lines, new FSM utility)
+src/components/ThemeToggle.js      (refactored to use state machine)
+src/main.js                        (+motion token initialization)
+```
+
+### Option B Status: COMPLETE
+
+**Tier Re-Classification:**
+- **Before:** Tier 2 (Interactive/Form)
+- **After Option A:** Tier 2+ (with performance fixes)
+- **After Option B:** Tier 2.5 (Selective Sovereign - right-sized patterns)
+
+**What We Still Didn't Do (Appropriately):**
+- ❌ IndexedDB (no data to store offline)
+- ❌ Web Workers (no heavy computation)
+- ❌ Virtualization (12 songs, not 10,000)
+- ❌ Full OKLCH migration of all themes (daylight only, proof-of-concept)
+
+**What We Achieved:**
+- ✅ Fixed real performance bug (MagneticButton)
+- ✅ Added spring physics for quality boost
+- ✅ Implemented visual materiality (depth, noise)
+- ✅ Migrated to OKLCH (perceptual colors)
+- ✅ Created typographic system (fluid, tokenized)
+- ✅ Built motion token library (consistent physics)
+- ✅ Added state machine (explicit transitions)
+- ✅ Established semantic color tokens (intent-based)
+
+**Conclusion:**
+Option B represents **right-sized engineering** - applying sovereign principles where they solve real problems, without over-engineering for imaginary scale. The codebase is now more maintainable, scalable, and professional without sacrificing vanilla JavaScript simplicity.
+
+---
+
 **Next Actions:**
-- Review this audit with stakeholder
-- Prioritize Phase 1 tasks (state machines + IndexedDB)
-- Implement Quick Wins this week
-- Schedule weekly progress reviews
+- Review this audit with stakeholder ✅
+- Implement Option A (Quick Wins) ✅
+- Implement Option B (Selective Sovereign) ✅
+- Test in browser
+- Merge to main
 
 **Reference Skill:** `/Users/chrislyons/dev/.claude/skills/frontend-2026.md`
