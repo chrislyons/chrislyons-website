@@ -120,6 +120,9 @@ export class Spring {
 
 /**
  * Motion presets based on Frontend Architecture Sovereign guidelines
+ *
+ * These tokens ensure consistent physics across all animations.
+ * Export as CSS custom properties for use in transitions.
  */
 export const MOTION_PRESETS = {
   // High-frequency actions (typing, sliders) - Critical damping (no overshoot)
@@ -127,6 +130,7 @@ export const MOTION_PRESETS = {
     stiffness: 400,
     damping: 40,
     mass: 1,
+    duration: 150, // approximate ms
   },
 
   // Interface transitions (modals, dropdowns) - Slight bounce (under-damped)
@@ -134,6 +138,7 @@ export const MOTION_PRESETS = {
     stiffness: 280,
     damping: 26,
     mass: 1,
+    duration: 300, // approximate ms
   },
 
   // Page transitions - Smooth and gentle
@@ -141,6 +146,7 @@ export const MOTION_PRESETS = {
     stiffness: 200,
     damping: 30,
     mass: 1,
+    duration: 500, // approximate ms
   },
 
   // Gentle - Very smooth for large movements
@@ -148,8 +154,29 @@ export const MOTION_PRESETS = {
     stiffness: 120,
     damping: 20,
     mass: 1,
+    duration: 800, // approximate ms
   },
 };
+
+/**
+ * Export motion tokens as CSS custom properties
+ * Call this on app initialization to set CSS variables
+ */
+export function injectMotionTokens() {
+  const root = document.documentElement;
+
+  // Duration tokens
+  root.style.setProperty('--motion-immediate', `${MOTION_PRESETS.immediate.duration}ms`);
+  root.style.setProperty('--motion-interface', `${MOTION_PRESETS.interface.duration}ms`);
+  root.style.setProperty('--motion-page', `${MOTION_PRESETS.page.duration}ms`);
+  root.style.setProperty('--motion-gentle', `${MOTION_PRESETS.gentle.duration}ms`);
+
+  // Easing curves (approximate spring with cubic-bezier)
+  root.style.setProperty('--ease-immediate', 'cubic-bezier(0.34, 1.56, 0.64, 1)'); // slight overshoot
+  root.style.setProperty('--ease-interface', 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'); // smooth acceleration
+  root.style.setProperty('--ease-page', 'cubic-bezier(0.16, 1, 0.3, 1)'); // gentle deceleration
+  root.style.setProperty('--ease-gentle', 'cubic-bezier(0.05, 0.7, 0.1, 1)'); // very smooth
+}
 
 /**
  * Helper function to animate an element's CSS property with spring physics

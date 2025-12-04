@@ -2,22 +2,45 @@
  * Theme Toggle Component
  *
  * Implements six-theme switching with localStorage persistence:
- * - Night (dark mode)
+ * - Moonlight (dark mode)
  * - Daylight (light mode)
  * - Forest (dark green variation)
  * - Beach (warm light variation)
  * - Plum (purple/fuchsia light variation)
  * - Char (dark burnt orange/ember variation)
+ *
+ * Uses a finite state machine to manage theme transitions
+ * and prevent impossible states.
  */
+
+import { createCyclicMachine } from '../utils/stateMachine.js';
 
 export class ThemeToggle {
   constructor() {
     this.STORAGE_KEY = 'chrislyons-theme';
     this.LAST_THEME_KEY = 'chrislyons-last-theme';
     this.THEMES = ['moonlight', 'daylight', 'forest', 'beach', 'plum', 'char'];
-    this.theme = this.resolveInitialTheme();
-    this.applyTheme(this.theme);
+
+    // Initialize with theme from storage or random
+    const initialTheme = this.resolveInitialTheme();
+
+    // Create state machine for theme transitions
+    this.machine = createCyclicMachine(
+      this.THEMES,
+      initialTheme,
+      ({ to }) => this.applyTheme(to)
+    );
+
+    // Apply initial theme
+    this.applyTheme(this.machine.getState());
     this.setupMediaQueryListener();
+  }
+
+  /**
+   * Get current theme from state machine
+   */
+  get theme() {
+    return this.machine.getState();
   }
 
   /**
@@ -92,24 +115,40 @@ export class ThemeToggle {
     } else {
       document.documentElement.classList.remove('dark');
     }
-
-    this.theme = theme;
   }
 
   /**
-   * Cycle to next theme
+   * Cycle to next theme using state machine
    */
   toggle() {
-    const currentIndex = this.THEMES.indexOf(this.theme);
-    const nextIndex = (currentIndex + 1) % this.THEMES.length;
-    const newTheme = this.THEMES[nextIndex];
+    // Send NEXT event to state machine
+    this.machine.send('NEXT');
 
-    this.applyTheme(newTheme);
+    const newTheme = this.machine.getState();
 
     if (typeof window !== 'undefined') {
       window.localStorage.setItem(this.STORAGE_KEY, newTheme);
       // Also update last theme to prevent showing same theme on next page load
       window.localStorage.setItem(this.LAST_THEME_KEY, newTheme);
+    }
+  }
+
+  /**
+   * Go to specific theme using state machine
+   *
+   * @param {string} theme - Target theme name
+   */
+  goTo(theme) {
+    if (!this.THEMES.includes(theme)) {
+      console.warn(`Theme "${theme}" is not valid`);
+      return;
+    }
+
+    this.machine.send('GOTO', { target: theme });
+
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(this.STORAGE_KEY, theme);
+      window.localStorage.setItem(this.LAST_THEME_KEY, theme);
     }
   }
 
@@ -153,13 +192,14 @@ export class ThemeToggle {
    * Render theme toggle button
    */
   render() {
-    const currentLabel = this.getThemeLabel(this.theme);
-    const currentIndex = this.THEMES.indexOf(this.theme);
+    const currentTheme = this.theme;
+    const currentLabel = this.getThemeLabel(currentTheme);
+    const currentIndex = this.THEMES.indexOf(currentTheme);
     const nextIndex = (currentIndex + 1) % this.THEMES.length;
     const nextTheme = this.THEMES[nextIndex];
     const nextLabel = this.getThemeLabel(nextTheme);
 
-    const icon = this.renderIcon(this.theme);
+    const icon = this.renderIcon(currentTheme);
 
     return `
       <button

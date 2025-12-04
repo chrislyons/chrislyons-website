@@ -13,6 +13,7 @@ import { ThemeToggle } from './components/ThemeToggle.js';
 
 // Import utilities
 import router from './utils/router.js';
+import { injectMotionTokens } from './utils/spring.js';
 
 // Import route configuration
 import { routes, notFoundRoute } from './routes.js';
@@ -63,6 +64,9 @@ function setupKeyboardShortcuts() {
  */
 function init() {
   console.log('🚀 Chris Lyons Website Initializing...');
+
+  // Inject motion tokens as CSS custom properties
+  injectMotionTokens();
 
   // Initialize theme (must be first to apply dark mode immediately)
   themeToggle = new ThemeToggle();
